@@ -1,0 +1,303 @@
+package com.mygdx.forkliftaone.entity;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.PrismaticJoint;
+import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
+import com.badlogic.gdx.physics.box2d.joints.WheelJoint;
+import com.badlogic.gdx.physics.box2d.joints.WheelJointDef;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygdx.forkliftaone.ForkliftModel;
+import com.mygdx.forkliftaone.config.GameConfig;
+
+//To be done: Code refactoring, disposement
+
+public class ForkliftActorBase extends Actor {
+
+    private World world;
+    private Body forklift, rearWheel, frontWheel, fork;
+    private Body[] forkliftTubes;
+    private WheelJoint rearWheelJoint, frontWheelJoint;
+    private PrismaticJoint[] prismaticJoints;
+    private RevoluteJoint revoluteJointFork;
+    private TextureRegion region;
+    private ForkliftModel model; //Not used...
+
+    public ForkliftActorBase(World world, ForkliftModel model){
+        this.world = world;
+        this.model = model;
+    }
+
+    public void createForklift(ForkliftModel model){
+        // Creating body
+        BodyDef forkLiftBodyDef = new BodyDef();
+        forkLiftBodyDef.type = BodyDef.BodyType.DynamicBody;
+        forkLiftBodyDef.fixedRotation = false;
+        forkLiftBodyDef.position.set(model.getSpawnPosition());
+//        forkLiftBodyDef.position.set(1f, 2.5f); // Should be obtained from the map
+
+        forklift = world.createBody(forkLiftBodyDef);
+
+        PolygonShape shape = new PolygonShape(); //can be created N times to get the desired result
+        shape.set(model.getCabin());
+
+        FixtureDef fixDef = new FixtureDef();
+        fixDef.shape = shape;
+        fixDef.density = 0.3f;
+        fixDef.filter.categoryBits = GameConfig.BIT_FORKLIFT;
+        fixDef.filter.maskBits = (GameConfig.BIT_MAP | GameConfig.BIT_OBSTACLE);
+        forklift.createFixture(fixDef);
+//        forklift.createFixture(shape, 0.3f);
+
+        shape.set(model.getEngine());
+        fixDef.shape = shape;
+        fixDef.density = 1f;
+        fixDef.filter.categoryBits = GameConfig.BIT_FORKLIFT;
+        fixDef.filter.maskBits = (GameConfig.BIT_MAP | GameConfig.BIT_OBSTACLE);
+        forklift.createFixture(fixDef);
+//        forklift.createFixture(shape, 1.0f);
+
+        // Creating forklift tubes
+        forkliftTubes = new Body[model.getNumberOfTubes()];
+        BodyDef tubeBodyDef = new BodyDef();
+        tubeBodyDef.type = BodyDef.BodyType.DynamicBody;
+        tubeBodyDef.fixedRotation = false;
+//        tubeBodyDef.position.set(10f, 25f); // Should be obtained from the map
+        float offset = 0;
+
+        for (int i = 0; i < model.getNumberOfTubes(); i++ ){
+            tubeBodyDef.position.set(model.getSpawnPosition().x + offset, model.getSpawnPosition().y);
+//            tubeBodyDef.position.set(1.0f + offset, 2.5f);
+            forkliftTubes[i] = world.createBody(tubeBodyDef);
+            offset += model.getTubeSize()[0];
+        }
+
+        PolygonShape ps = new PolygonShape();
+        ps.setAsBox(model.getTubeSize()[0], model.getTubeSize()[1]);
+//        forkliftTubes = new Body[model.getNumberOfTubes()];
+
+        for (int i = 0; i < model.getNumberOfTubes(); i++ ){
+            fixDef.shape = ps;
+            fixDef.density = 0.25f;
+            fixDef.filter.categoryBits = GameConfig.BIT_FORKLIFT;
+            fixDef.filter.maskBits = (GameConfig.BIT_MAP | GameConfig.BIT_OBSTACLE);
+            forkliftTubes[i].createFixture(fixDef);
+//            forkliftTubes[i].createFixture(ps, 0.25f);
+        }
+        ps.dispose();
+
+        // Creating Fork
+        BodyDef forkDef = new BodyDef();
+        forkDef.type = BodyDef.BodyType.DynamicBody;
+        forkDef.fixedRotation = false;
+        forkDef.position.set(model.getSpawnPosition().x * 5, model.getSpawnPosition().y);
+
+//        forkDef.position.set(forkliftTubes[model.getNumberOfTubes()-1].getPosition().x * 5, // 5 is a random number
+//                forkliftTubes[model.getNumberOfTubes()-1].getPosition().y); // Should be obtained from the map
+
+        fork = world.createBody(forkDef);
+
+        PolygonShape forkShape = new PolygonShape();
+        forkShape.setAsBox(GameConfig.FORK_WIDTH, GameConfig.FORK_HEIGHT);
+
+        fixDef.shape = forkShape;
+        fixDef.density = 0.25f;
+        fixDef.friction = 1f;
+        fixDef.filter.categoryBits = GameConfig.BIT_FORKLIFT;
+        fixDef.filter.maskBits = (GameConfig.BIT_MAP | GameConfig.BIT_OBSTACLE);
+        fork.createFixture(fixDef);
+//        fork.createFixture(forkShape, 0.25f);
+
+        forkShape.dispose();
+
+        // Creating Prismatic Joints
+        prismaticJoints = new PrismaticJoint[model.getNumberOfTubes()];
+        PrismaticJointDef pjd = new PrismaticJointDef();
+        float offsetTwo = 0;
+        for (int i = 0; i < model.getNumberOfTubes(); i++ ){
+            pjd.enableMotor = true;
+            pjd.maxMotorForce = 10f;
+            pjd.motorSpeed = 0;
+            pjd.enableLimit = true;
+            pjd.upperTranslation = (i+1) * (1.5f * model.getTubeSize()[1]); // Limit of movement based on length of the tube
+
+            pjd.bodyA = forklift;
+            pjd.bodyB = forkliftTubes[i];
+            pjd.collideConnected = false;
+            pjd.localAnchorA.set(model.getLocationOfTubes() + offsetTwo, model.getTubeSize()[1]); // Data should be taken from the Forklift class
+            pjd.localAxisA.set(0, 1.0f);
+            prismaticJoints[i] = (PrismaticJoint) world.createJoint(pjd);
+            offsetTwo += model.getTubeSize()[0] * 2;
+        }
+
+        // Revolute Joint Fork to Tube
+        RevoluteJointDef rjd  = new RevoluteJointDef();
+
+        rjd.enableMotor = true;
+        rjd.maxMotorTorque = 50f;
+        rjd.motorSpeed = 0;
+
+        rjd.bodyA = forkliftTubes[model.getNumberOfTubes()-1];
+        rjd.bodyB = fork;
+        rjd.collideConnected = false;
+        rjd.localAnchorA.set(0,  -model.getTubeSize()[1]);
+//        rjd.localAnchorA.set(GameConfig.FORK_WIDTH,  -model.getTubeSize()[1]); // Data should be taken from the Forklift class
+        rjd.localAnchorB.set(-GameConfig.FORK_WIDTH, 0f);
+        revoluteJointFork = (RevoluteJoint) world.createJoint(rjd);
+
+        // Creating wheels (should be declared as a new body)
+        // RearWheel
+        BodyDef wheelBodyDef = new BodyDef();
+        wheelBodyDef.type = BodyDef.BodyType.DynamicBody;
+        wheelBodyDef.fixedRotation = false;
+        wheelBodyDef.position.set(model.getSpawnPosition());
+
+        rearWheel = world.createBody(wheelBodyDef);
+
+        CircleShape circle = new CircleShape();
+        circle.setRadius(model.getRearWheelRadius());
+        FixtureDef fd = new FixtureDef();
+        fd.density = 1.0f;
+        fd.friction = 0.7f;
+        fd.shape = circle;
+        fd.filter.categoryBits = GameConfig.BIT_FORKLIFT;
+        fd.filter.maskBits = (GameConfig.BIT_MAP | GameConfig.BIT_OBSTACLE);
+        rearWheel.createFixture(fd);
+
+        // FrontWheel
+        frontWheel = world.createBody(wheelBodyDef);
+        circle.setRadius(model.getFrontWheelRadius());
+        fd.shape = circle;
+        frontWheel.createFixture(fd);
+
+        shape.dispose();
+        circle.dispose();
+
+        // WheelJoints
+        WheelJointDef wjd = new WheelJointDef();
+        wjd.enableMotor = true;
+        wjd.maxMotorTorque = 10.0f;
+        wjd.motorSpeed = 0;
+        wjd.dampingRatio = 0.8f;
+        wjd.frequencyHz = 7f;
+
+        wjd.bodyA = forklift;
+        wjd.bodyB = frontWheel;
+        wjd.collideConnected = false;
+        wjd.localAnchorA.set(model.getFrontWheelPosition());
+        wjd.localAxisA.set(0, 1.0f);
+        frontWheelJoint = (WheelJoint) world.createJoint(wjd);
+
+        WheelJointDef rearWheelJointdef = new WheelJointDef();
+        rearWheelJointdef.enableMotor = false;
+        rearWheelJointdef.dampingRatio = 1f;
+        rearWheelJointdef.frequencyHz = 7f;
+
+        rearWheelJointdef.bodyA = forklift;
+        rearWheelJointdef.bodyB = rearWheel;
+        rearWheelJointdef.collideConnected = false;
+        rearWheelJointdef.localAnchorA.set(model.getRearWheelPosition());
+        rearWheelJointdef.localAxisA.set(0, 1.0f);
+        world.createJoint(rearWheelJointdef);
+
+
+
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+//        if(region == null) {
+////            log.error("Region not set on Actor " + getClass().getName());
+//            return;
+//        }
+
+//        batch.draw(region,
+//                getX(), getY(),
+//                getOriginX(), getOriginY(),
+//                getWidth(), getHeight(),
+//                getScaleX(), getScaleY(),
+//                getRotation()
+//        );
+    }
+
+    public void moveForkliftRight(){
+        System.out.println("Key D is pressed");
+        //Movement logic
+        frontWheelJoint.setMotorSpeed(-3);
+    }
+
+    public void moveForkliftLeft(){
+        System.out.println("Key A is pressed");
+        //Movement logic
+        frontWheelJoint.setMotorSpeed(3);
+    }
+
+    public void moveTubeUp(){
+        System.out.println("Key W is pressed");
+        for (PrismaticJoint joint : prismaticJoints){
+            joint.setMotorSpeed(0.5f);
+        }
+    }
+
+    public void moveTubeDown(){
+        System.out.println("Key S is pressed");
+        for (PrismaticJoint joint : prismaticJoints){
+            joint.setMotorSpeed(-0.5f);
+        }
+    }
+
+    public void stopMoveForkliftRight(){
+        System.out.println("Key D is pressed");
+        //Movement logic
+        frontWheelJoint.setMotorSpeed(0);
+    }
+
+    public void stopMoveForkliftLeft(){
+        System.out.println("Key A is pressed");
+        //Movement logic
+        frontWheelJoint.setMotorSpeed(0);
+    }
+
+    public void stopMoveTubeUp(){
+        System.out.println("Key W is pressed");
+        for (PrismaticJoint joint : prismaticJoints){
+            joint.setMotorSpeed(0);
+        }
+    }
+
+    public void stopMoveTubeDown(){
+        System.out.println("Key S is pressed");
+        for (PrismaticJoint joint : prismaticJoints){
+            joint.setMotorSpeed(0);
+        }
+    }
+
+    public void rotateForkUp(){
+        System.out.println("Key A is pressed");
+        //Movement logic
+        revoluteJointFork.setMotorSpeed(-0.5f);
+    }
+
+    public void rotateForkDown(){
+        System.out.println("Key A is pressed");
+        //Movement logic
+        revoluteJointFork.setMotorSpeed(0.5f);
+    }
+
+    public void stopRotatingFork(){
+        revoluteJointFork.setMotorSpeed(0);
+    }
+
+}

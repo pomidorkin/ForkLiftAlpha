@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.2.5" orientation="orthogonal" renderorder="right-down" width="30" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="9">
+ <tileset firstgid="1" source="main.tsx"/>
+ <layer id="4" name="Слой тайлов 1" width="30" height="30">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMApGwSgYBaMAAkTRMD3txcYetXfUXnrbKzhAmHGAMAALIwNt
+  </data>
+ </layer>
+ <objectgroup id="3" name="collision-layer">
+  <object id="5" x="0" y="896">
+   <polyline points="0,0 960,0"/>
+  </object>
+  <object id="8" x="544" y="672">
+   <polyline points="0,0 128,0"/>
+  </object>
+ </objectgroup>
+</map>
