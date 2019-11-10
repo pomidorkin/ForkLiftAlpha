@@ -53,26 +53,28 @@ public class ForkliftModel {
 
             case MEDIUM:
                 cabin = new Vector2[5];
-                cabin[0] = new Vector2(1.6f, 1.6f);
-                cabin[1] = new Vector2(1f, 1.6f);
-                cabin[2] = new Vector2(0.8f, 0.8f);
-                cabin[3] = new Vector2(0.8f, 0);
-                cabin[4] = new Vector2(1.6f, 0);
+                cabin[0] = new Vector2(1.7f, 0.9f);
+                cabin[1] = new Vector2(1.4f, 1.6f);
+                cabin[2] = new Vector2(0.9f, 1.6f);
+                cabin[3] = new Vector2(0.9f, 0);
+                cabin[4] = new Vector2(1.7f, 0);
 
                 engine = new Vector2[4];
-                engine[0] = new Vector2(0.8f, 0.8f);
+                engine[0] = new Vector2(0.9f, 0.9f);
                 engine[1] = new Vector2(0, 0.6f);
                 engine[2] = new Vector2(0, 0);
-                engine[3] = new Vector2(0.8f, 0);
+                engine[3] = new Vector2(0.9f, 0);
 
                 tubeSize = new float[2];
                 tubeSize[0] = 0.032f;
-                tubeSize[1] = 0.8f;
+                tubeSize[1] = 0.5f;
 
                 rearWheelRadius = 0.2f;
-                frontWheelRadius = 0.25f;
-                numberOfTubes = 3;
-                locationOfTubes = 1.65f;
+                frontWheelRadius = 0.22f;
+                numberOfTubes = 6;
+                locationOfTubes = 1.75f;
+                frontWheelPosition = new Vector2(1.3f, 0);
+                rearWheelPosition = new Vector2(0.3f, 0);
 
                 break;
         }

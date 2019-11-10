@@ -12,7 +12,7 @@ import com.mygdx.forkliftaone.ForkLiftGame;
 
 public abstract class MenuScreenBase extends ScreenAdapter {
     protected final ForkLiftGame game;
-//    protected final AssetManager assetManager;
+    protected final AssetManager assetManager;
 
     private Viewport viewport;
     private Stage stage;
@@ -20,7 +20,7 @@ public abstract class MenuScreenBase extends ScreenAdapter {
 
     public MenuScreenBase(ForkLiftGame game){
         this.game = game;
-//        assetManager = game.getAssetManager();
+        assetManager = game.getAssetManager();
     }
 
     @Override

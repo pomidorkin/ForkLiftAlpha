@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.forkliftaone.screens.menu.MenuScreen;
@@ -28,6 +29,8 @@ public class ForkLiftGame extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		assetManager = new AssetManager();
+		assetManager.getLogger().setLevel(Logger.DEBUG);
 
 		setScreen(new MenuScreen(this));
 	}
@@ -35,10 +38,15 @@ public class ForkLiftGame extends Game {
 	
 	@Override
 	public void dispose () {
+		assetManager.dispose();
 		batch.dispose();
 	}
 
 	public SpriteBatch getBatch() {
 		return batch;
+	}
+
+	public AssetManager getAssetManager() {
+		return assetManager;
 	}
 }

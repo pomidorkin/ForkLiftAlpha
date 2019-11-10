@@ -1,11 +1,7 @@
 package com.mygdx.forkliftaone.entity;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -32,7 +28,7 @@ public class ForkliftActorBase extends Actor {
     private WheelJoint rearWheelJoint, frontWheelJoint;
     private PrismaticJoint[] prismaticJoints;
     private RevoluteJoint revoluteJointFork;
-    private TextureRegion region;
+    private TextureRegion bodyTexture, tubeTexture, wheelTexture, forkTexture;
     private ForkliftModel model; //Not used...
 
     public ForkliftActorBase(World world, ForkliftModel model){
@@ -102,7 +98,7 @@ public class ForkliftActorBase extends Actor {
         BodyDef forkDef = new BodyDef();
         forkDef.type = BodyDef.BodyType.DynamicBody;
         forkDef.fixedRotation = false;
-        forkDef.position.set(model.getSpawnPosition().x * 5, model.getSpawnPosition().y);
+        forkDef.position.set(model.getSpawnPosition().x * 4, model.getSpawnPosition().y);
 
 //        forkDef.position.set(forkliftTubes[model.getNumberOfTubes()-1].getPosition().x * 5, // 5 is a random number
 //                forkliftTubes[model.getNumberOfTubes()-1].getPosition().y); // Should be obtained from the map
@@ -136,7 +132,8 @@ public class ForkliftActorBase extends Actor {
             pjd.bodyA = forklift;
             pjd.bodyB = forkliftTubes[i];
             pjd.collideConnected = false;
-            pjd.localAnchorA.set(model.getLocationOfTubes() + offsetTwo, model.getTubeSize()[1]); // Data should be taken from the Forklift class
+            // model.getFrontWheelRadius() * 0.8f is required to make the position of the tubes lower
+            pjd.localAnchorA.set(model.getLocationOfTubes() + offsetTwo, model.getTubeSize()[1] - model.getFrontWheelRadius() * 0.8f);
             pjd.localAxisA.set(0, 1.0f);
             prismaticJoints[i] = (PrismaticJoint) world.createJoint(pjd);
             offsetTwo += model.getTubeSize()[0] * 2;
@@ -149,12 +146,16 @@ public class ForkliftActorBase extends Actor {
         rjd.maxMotorTorque = 50f;
         rjd.motorSpeed = 0;
 
+        rjd.enableLimit = true;
+        rjd.lowerAngle = 0;
+        rjd.upperAngle = 0.5f;
+
         rjd.bodyA = forkliftTubes[model.getNumberOfTubes()-1];
         rjd.bodyB = fork;
         rjd.collideConnected = false;
-        rjd.localAnchorA.set(0,  -model.getTubeSize()[1]);
+        rjd.localAnchorA.set(0,  -model.getTubeSize()[1] + GameConfig.FORK_HEIGHT);
 //        rjd.localAnchorA.set(GameConfig.FORK_WIDTH,  -model.getTubeSize()[1]); // Data should be taken from the Forklift class
-        rjd.localAnchorB.set(-GameConfig.FORK_WIDTH, 0f);
+        rjd.localAnchorB.set(-GameConfig.FORK_WIDTH, 0);
         revoluteJointFork = (RevoluteJoint) world.createJoint(rjd);
 
         // Creating wheels (should be declared as a new body)
@@ -218,18 +219,26 @@ public class ForkliftActorBase extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-//        if(region == null) {
-////            log.error("Region not set on Actor " + getClass().getName());
-//            return;
-//        }
+        if(bodyTexture == null) {
+            System.out.println("Region not set on Actor " + getClass().getName());
+            return;
+        }
 
-//        batch.draw(region,
-//                getX(), getY(),
-//                getOriginX(), getOriginY(),
-//                getWidth(), getHeight(),
-//                getScaleX(), getScaleY(),
-//                getRotation()
-//        );
+                batch.draw(bodyTexture, // Texture
+                        forklift.getPosition().x, forklift.getPosition().y, // Texture position
+                getOriginX(), getOriginY(), // Rotation point (width / 2, height /2 = center)
+                2f, 2f, // Width and height of the texture
+                getScaleX(), getScaleY(), //scaling
+                        forklift.getAngle()*57.2957f); // Rotation (radiants to degrees)
+
+        batch.draw(wheelTexture, // Texture
+                frontWheel.getPosition().x-0.18f, frontWheel.getPosition().y -0.18f, // Texture position
+                0.36f/2, 0.36f/2, // Rotation point (width / 2, height /2 = center)
+                0.36f, 0.36f, // Width and height of the texture
+                getScaleX(), getScaleY(), //scaling
+                frontWheel.getAngle()*57.2957f);
+
+
     }
 
     public void moveForkliftRight(){
@@ -300,4 +309,10 @@ public class ForkliftActorBase extends Actor {
         revoluteJointFork.setMotorSpeed(0);
     }
 
+    public void setRegion(TextureRegion bodyRegion, TextureRegion tubeRegion, TextureRegion wheelRegion, TextureRegion forkRegion) {
+        bodyTexture = bodyRegion;
+        tubeTexture = tubeRegion;
+        wheelTexture = wheelRegion;
+        forkTexture = forkRegion;
+    }
 }

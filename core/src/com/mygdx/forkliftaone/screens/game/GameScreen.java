@@ -4,9 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -20,11 +23,13 @@ import com.mygdx.forkliftaone.entity.ForkliftActorBase;
 import com.mygdx.forkliftaone.ForkliftModel;
 import com.mygdx.forkliftaone.entity.RubbishBox;
 import com.mygdx.forkliftaone.maps.MapBase;
-import com.mygdx.forkliftaone.utils.TiledObjectUtil;
+import com.mygdx.forkliftaone.utils.AssetDescriptors;
+import com.mygdx.forkliftaone.utils.RegionNames;
 
 public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     private final ForkLiftGame game;
+    private final AssetManager assetManager;
     private final SpriteBatch batch;
 
     private Viewport viewport;
@@ -43,11 +48,17 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     public GameScreen(ForkLiftGame game) {
         this.game = game;
+        assetManager = game.getAssetManager();
         batch = game.getBatch();
     }
 
     @Override
     public void show() {
+        // Разборки с текстурами
+        assetManager.load(AssetDescriptors.TEST_ATLAS);
+        assetManager.finishLoading();
+        // Разборки с текстурами end here
+
         camera = new OrthographicCamera();
         viewport = new FitViewport(8f,4.8f, camera);
         stage = new Stage(viewport, batch);
@@ -69,8 +80,18 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         tmr = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/ GameConfig.SCALE);
 
         // Rubbish
+
         RubbishBox box = new RubbishBox();
         box.createRubbishBox(world);
+        box.createRubbishBox(world);
+
+        // Разборки с текстурами
+        // Texture drawing
+        TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
+        TextureRegion forkliftRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT);
+
+        forklift.setRegion(forkliftRegion, forkliftRegion, forkliftRegion, forkliftRegion);
+        stage.addActor(forklift);
     }
 
     @Override
@@ -82,11 +103,19 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
         tmr.render();
         b2dr.render(world, camera.combined);
+
+        // Разборки с текстурами
+//        viewport.apply();
+        stage.draw();
+
     }
 
     private void update(float delta) {
         world.step(1 / 60f, 6, 2);
         tmr.setView(camera);
+
+        // Разборки с текстурами
+//        stage.setViewport(viewport);
 //        batch.setProjectionMatrix(camera.combined);
     }
 
