@@ -1,26 +1,26 @@
 
-testme.png
+forkliftpack.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-test02 (non POT)
+57bf2fe698ab4156c2d31ce1
   rotate: false
   xy: 1, 1
-  size: 300, 300
-  orig: 300, 300
+  size: 700, 488
+  orig: 700, 488
   offset: 0, 0
   index: -1
-test01
+bodytexture
   rotate: false
-  xy: 303, 45
-  size: 256, 256
-  orig: 256, 256
+  xy: 703, 217
+  size: 319, 272
+  orig: 319, 272
   offset: 0, 0
   index: -1
-test03 (multi shapes)
+wheeltexture
   rotate: false
-  xy: 561, 45
-  size: 256, 256
-  orig: 256, 256
+  xy: 703, 146
+  size: 71, 69
+  orig: 71, 69
   offset: 0, 0
   index: -1

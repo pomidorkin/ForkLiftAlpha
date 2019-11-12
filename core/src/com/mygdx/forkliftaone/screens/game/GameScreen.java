@@ -12,17 +12,20 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.google.gson.Gson;
 import com.mygdx.forkliftaone.ForkLiftGame;
 import com.mygdx.forkliftaone.config.GameConfig;
 import com.mygdx.forkliftaone.entity.ForkliftActorBase;
 import com.mygdx.forkliftaone.ForkliftModel;
 import com.mygdx.forkliftaone.entity.RubbishBox;
 import com.mygdx.forkliftaone.maps.MapBase;
+import com.mygdx.forkliftaone.maps.TestMap;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
 import com.mygdx.forkliftaone.utils.RegionNames;
 
@@ -67,31 +70,32 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
         //test
         world = new World(new Vector2(0, -9.8f), false);
-        b2dr = new Box2DDebugRenderer();
 
-        model = new ForkliftModel(ForkliftModel.ModelName.SMALL);
+        // Creating texture atlas
+        TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
+        TextureRegion forkliftRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_BODY);
+        TextureRegion wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
+        TextureRegion backgoundRegion = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
+
+        map = new TestMap(world);
+        map.setRegion(backgoundRegion);
+        map.createMap();
+        stage.addActor(map);
+
+        model = new ForkliftModel(ForkliftModel.ModelName.MEDIUM, map);
         forklift = new ForkliftActorBase(world, model);
         forklift.createForklift(model);
+        forklift.setRegion(forkliftRegion, forkliftRegion, wheelRegion, forkliftRegion);
+        stage.addActor(forklift);
 
-        map = new MapBase(world);
-        map.createMap();
-
+        b2dr = new Box2DDebugRenderer();
         //Second parameter is responsible for scaling
         tmr = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/ GameConfig.SCALE);
 
         // Rubbish
-
         RubbishBox box = new RubbishBox();
         box.createRubbishBox(world);
         box.createRubbishBox(world);
-
-        // Разборки с текстурами
-        // Texture drawing
-        TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
-        TextureRegion forkliftRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT);
-
-        forklift.setRegion(forkliftRegion, forkliftRegion, forkliftRegion, forkliftRegion);
-        stage.addActor(forklift);
     }
 
     @Override
@@ -101,18 +105,17 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        tmr.render();
-        b2dr.render(world, camera.combined);
-
         // Разборки с текстурами
 //        viewport.apply();
         stage.draw();
-
+        tmr.render();
+        b2dr.render(world, camera.combined);
     }
 
     private void update(float delta) {
         world.step(1 / 60f, 6, 2);
         tmr.setView(camera);
+        cameraUpdate(delta);
 
         // Разборки с текстурами
 //        stage.setViewport(viewport);
@@ -215,6 +218,17 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
             return true;
         }
         return false;
+    }
+
+    private void cameraUpdate(float delta){
+        Vector3 position = camera.position;
+
+        position.x = forklift.getFrokPosition().x;
+        position.y = forklift.getFrokPosition().y +1.5f;
+
+        camera.position.set(position);
+
+        camera.update();
     }
 
     @Override

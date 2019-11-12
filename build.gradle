@@ -97,4 +97,8 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         
     }
+
+    dependencies {
+        implementation 'com.google.code.gson:gson:2.8.6'
+    }
 }

@@ -2,6 +2,7 @@ package com.mygdx.forkliftaone.entity;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -133,7 +134,7 @@ public class ForkliftActorBase extends Actor {
             pjd.bodyB = forkliftTubes[i];
             pjd.collideConnected = false;
             // model.getFrontWheelRadius() * 0.8f is required to make the position of the tubes lower
-            pjd.localAnchorA.set(model.getLocationOfTubes() + offsetTwo, model.getTubeSize()[1] - model.getFrontWheelRadius() * 0.8f);
+            pjd.localAnchorA.set(model.getLocationOfTubes() + offsetTwo, model.getTubeSize()[1] - model.getFrontWheelRadius() * 0.6f);
             pjd.localAxisA.set(0, 1.0f);
             prismaticJoints[i] = (PrismaticJoint) world.createJoint(pjd);
             offsetTwo += model.getTubeSize()[0] * 2;
@@ -227,16 +228,23 @@ public class ForkliftActorBase extends Actor {
                 batch.draw(bodyTexture, // Texture
                         forklift.getPosition().x, forklift.getPosition().y, // Texture position
                 getOriginX(), getOriginY(), // Rotation point (width / 2, height /2 = center)
-                2f, 2f, // Width and height of the texture
+                1.5f, 1.2f, // Width and height of the texture
                 getScaleX(), getScaleY(), //scaling
                         forklift.getAngle()*57.2957f); // Rotation (radiants to degrees)
 
         batch.draw(wheelTexture, // Texture
-                frontWheel.getPosition().x-0.18f, frontWheel.getPosition().y -0.18f, // Texture position
-                0.36f/2, 0.36f/2, // Rotation point (width / 2, height /2 = center)
-                0.36f, 0.36f, // Width and height of the texture
+                frontWheel.getPosition().x-0.22f, frontWheel.getPosition().y -0.22f, // Texture position
+                0.44f/2, 0.44f/2, // Rotation point (width / 2, height /2 = center)
+                0.44f, 0.44f, // Width and height of the texture
                 getScaleX(), getScaleY(), //scaling
                 frontWheel.getAngle()*57.2957f);
+
+        batch.draw(wheelTexture, // Texture
+                rearWheel.getPosition().x-0.2f, rearWheel.getPosition().y -0.2f, // Texture position
+                0.4f/2, 0.4f/2, // Rotation point (width / 2, height /2 = center)
+                0.4f, 0.4f, // Width and height of the texture
+                getScaleX(), getScaleY(), //scaling
+                rearWheel.getAngle()*57.2957f);
 
 
     }
@@ -314,5 +322,9 @@ public class ForkliftActorBase extends Actor {
         tubeTexture = tubeRegion;
         wheelTexture = wheelRegion;
         forkTexture = forkRegion;
+    }
+
+    public Vector2 getFrokPosition(){
+        return fork.getPosition();
     }
 }
