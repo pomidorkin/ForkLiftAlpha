@@ -64,8 +64,7 @@ public class LoadingScreen extends ScreenAdapter {
         renderer.end();
 
         if(changeScreen) {
-//            game.setScreen(new MenuScreen(game));
-            game.setScreen(new ChoosingScreen(game));
+            game.setScreen(new MenuScreen(game));
         }
     }
 

@@ -34,7 +34,6 @@ public class ForkLiftGame extends Game {
 		assetManager = new AssetManager();
 		assetManager.getLogger().setLevel(Logger.DEBUG);
 
-//		setScreen(new ChoosingScreen(this));
 		setScreen(new LoadingScreen(this));
 
 	}
