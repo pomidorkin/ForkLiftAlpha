@@ -18,6 +18,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Logger;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.mygdx.forkliftaone.screens.game.ChoosingScreen;
+import com.mygdx.forkliftaone.screens.loading.LoadingScreen;
 import com.mygdx.forkliftaone.screens.menu.MenuScreen;
 
 public class ForkLiftGame extends Game {
@@ -32,7 +34,9 @@ public class ForkLiftGame extends Game {
 		assetManager = new AssetManager();
 		assetManager.getLogger().setLevel(Logger.DEBUG);
 
-		setScreen(new MenuScreen(this));
+//		setScreen(new ChoosingScreen(this));
+		setScreen(new LoadingScreen(this));
+
 	}
 
 	

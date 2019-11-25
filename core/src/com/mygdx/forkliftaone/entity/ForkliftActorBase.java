@@ -120,6 +120,7 @@ public class ForkliftActorBase extends Actor {
         forkShape.dispose();
 
         // Creating Prismatic Joints
+//        Working
         prismaticJoints = new PrismaticJoint[model.getNumberOfTubes()];
         PrismaticJointDef pjd = new PrismaticJointDef();
         float offsetTwo = 0;

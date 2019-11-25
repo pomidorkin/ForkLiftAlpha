@@ -57,9 +57,6 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     @Override
     public void show() {
-        // Разборки с текстурами
-        assetManager.load(AssetDescriptors.TEST_ATLAS);
-        assetManager.finishLoading();
         // Разборки с текстурами end here
 
         camera = new OrthographicCamera();

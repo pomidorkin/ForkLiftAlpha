@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.forkliftaone.ForkLiftGame;
+import com.mygdx.forkliftaone.ForkliftModel;
 
 public abstract class MenuScreenBase extends ScreenAdapter {
     protected final ForkLiftGame game;
@@ -28,6 +29,7 @@ public abstract class MenuScreenBase extends ScreenAdapter {
         super.show();
 
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//        viewport = new FitViewport(8f, 4.8f);
         stage = new Stage(viewport, game.getBatch());
 
         Gdx.input.setInputProcessor(stage);
@@ -58,4 +60,5 @@ public abstract class MenuScreenBase extends ScreenAdapter {
     public void dispose() {
         stage.dispose();
     }
+
 }
