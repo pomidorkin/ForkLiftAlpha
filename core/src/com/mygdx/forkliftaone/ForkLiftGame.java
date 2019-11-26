@@ -21,10 +21,13 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.forkliftaone.screens.game.ChoosingScreen;
 import com.mygdx.forkliftaone.screens.loading.LoadingScreen;
 import com.mygdx.forkliftaone.screens.menu.MenuScreen;
+import com.mygdx.forkliftaone.utils.Inventory;
+import com.mygdx.forkliftaone.utils.ProcessInventory;
 
 public class ForkLiftGame extends Game {
 	private AssetManager assetManager;
 	private SpriteBatch batch;
+	private Inventory inv;
 
 
 
@@ -33,11 +36,11 @@ public class ForkLiftGame extends Game {
 		batch = new SpriteBatch();
 		assetManager = new AssetManager();
 		assetManager.getLogger().setLevel(Logger.DEBUG);
+		this.inv = loadInventory();
 
 		setScreen(new LoadingScreen(this));
 
 	}
-
 	
 	@Override
 	public void dispose () {
@@ -51,5 +54,15 @@ public class ForkLiftGame extends Game {
 
 	public AssetManager getAssetManager() {
 		return assetManager;
+	}
+
+	public Inventory getInv() {
+		return inv;
+	}
+
+	private Inventory loadInventory(){
+		ProcessInventory pi = new ProcessInventory();
+		Inventory inv = pi.read();
+		return inv;
 	}
 }

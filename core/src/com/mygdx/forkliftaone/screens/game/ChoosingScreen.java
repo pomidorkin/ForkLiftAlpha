@@ -101,19 +101,6 @@ public class ChoosingScreen extends ScreenAdapter {
         tmr = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/ GameConfig.SCALE);
 
         uiStage.addActor(createUi());
-
-        //Testing saving
-        ProcessInventory pi = new ProcessInventory();
-         ForkliftData[] fd;
-        fd = new ForkliftData[1];
-        fd[0] = new ForkliftData();
-        fd[0].setTubes(3);
-        fd[0].setName(ForkliftModel.ModelName.SMALL);
-        fd[0].setEngine(3);
-
-        Inventory inv = pi.read();
-        inv.setBalance(inv.getBalance()+10);
-        pi.write(inv);
     }
 
     @Override

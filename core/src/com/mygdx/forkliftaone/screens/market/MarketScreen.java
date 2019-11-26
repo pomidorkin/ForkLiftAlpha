@@ -40,11 +40,33 @@ public class MarketScreen extends MenuScreenBase {
         buyButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                // Inventory-file is taken from the game-class
                 ProcessInventory pi = new ProcessInventory();
-                Inventory inv = pi.read();
-                inv.setBalance(inv.getBalance()-3);
-                inv.getPurchasedModels()[0].setEngine(inv.getPurchasedModels()[0].getEngine() + 1);
-                pi.write(inv);
+                game.getInv().setBalance(game.getInv().getBalance()-3);
+                game.getInv().getPurchasedModels()[0].setEngine(game.getInv().getPurchasedModels()[0].getEngine() + 1);
+
+
+                // Retrieving models from the inventory-file (example)
+                for (ForkliftData model : game.getInv().getPurchasedModels()){
+                    System.out.println(model.getName());
+                }
+
+                // Rewriting ForkliftData category (example of adding a new forklift)
+                ForkliftData[] fd;
+                fd = new ForkliftData[2];
+                fd[0] = new ForkliftData();
+                fd[0].setTubes(3);
+                fd[0].setName(ForkliftModel.ModelName.SMALL);
+                fd[0].setEngine(3);
+
+                fd[1] = new ForkliftData();
+                fd[1].setTubes(3);
+                fd[1].setName(ForkliftModel.ModelName.MEDIUM);
+                fd[1].setEngine(3);
+
+                Inventory inv2 = new Inventory(game.getInv().getBalance(), fd);
+
+                pi.write(inv2);
             }
         });
 
