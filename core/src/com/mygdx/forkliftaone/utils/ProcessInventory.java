@@ -45,12 +45,29 @@ public class ProcessInventory {
                 e.printStackTrace();
             }
         } else {
+            // Creating new jSon inventory file, where only SMALL forklift is purchased
+
             ForkliftData[] fd;
-            fd = new ForkliftData[1];
+            fd = new ForkliftData[3];
             fd[0] = new ForkliftData();
             fd[0].setTubes(3);
             fd[0].setName(ForkliftModel.ModelName.SMALL);
             fd[0].setEngine(3);
+            fd[0].setPurchased(true);
+
+            fd[1] = new ForkliftData();
+            fd[1].setTubes(3);
+            fd[1].setName(ForkliftModel.ModelName.MEDIUM);
+            fd[1].setEngine(3);
+            fd[1].setPurchased(false);
+
+            fd[2] = new ForkliftData();
+            fd[2].setTubes(3);
+            fd[2].setName(ForkliftModel.ModelName.LARGE);
+            fd[2].setEngine(3);
+            fd[2].setPurchased(false);
+
+
 
             Inventory inv = new Inventory(0, fd);
             write(inv);

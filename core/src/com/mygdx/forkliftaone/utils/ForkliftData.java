@@ -6,9 +6,18 @@ public class ForkliftData {
     private ForkliftModel.ModelName name;
     private int engine;
     private int tubes;
+    private Boolean purchased;
 
     public ForkliftModel.ModelName getName() {
         return name;
+    }
+
+    public void setPurchased(Boolean status){
+        this.purchased = status;
+    }
+
+    public Boolean getPurchased(){
+        return purchased;
     }
 
     public void setName(ForkliftModel.ModelName name) {

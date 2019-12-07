@@ -1,1 +1,1 @@
-{"purchasedModels":[{"name":"SMALL","engine":3,"tubes":3},{"name":"MEDIUM","engine":3,"tubes":3}],"balance":-1}
+{"allModels":[{"name":"SMALL","engine":3,"tubes":3,"purchased":true},{"name":"MEDIUM","engine":3,"tubes":3,"purchased":false},{"name":"LARGE","engine":3,"tubes":3,"purchased":false}],"balance":0}
