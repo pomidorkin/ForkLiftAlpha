@@ -46,11 +46,13 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private World world;
     private ForkliftModel model;
     private ForkliftActorBase forklift;
+    private ForkliftModel.ModelName modelName;
 
     private MapBase map;
 
-    public GameScreen(ForkLiftGame game) {
+    public GameScreen(ForkLiftGame game, ForkliftModel.ModelName modelName) {
         this.game = game;
+        this.modelName = modelName;
         assetManager = game.getAssetManager();
         batch = game.getBatch();
     }
@@ -79,7 +81,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         map.createMap();
         stage.addActor(map);
 
-        model = new ForkliftModel(ForkliftModel.ModelName.MEDIUM, map);
+//        model = new ForkliftModel(ForkliftModel.ModelName.MEDIUM, map);
+        model = new ForkliftModel(modelName, map);
         forklift = new ForkliftActorBase(world, model);
         forklift.createForklift(model);
         forklift.setRegion(forkliftRegion, forkliftRegion, wheelRegion, forkliftRegion);

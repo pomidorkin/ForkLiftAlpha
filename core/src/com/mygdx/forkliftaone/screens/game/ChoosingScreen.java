@@ -3,15 +3,12 @@ package com.mygdx.forkliftaone.screens.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -21,7 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -31,10 +27,8 @@ import com.mygdx.forkliftaone.config.GameConfig;
 import com.mygdx.forkliftaone.entity.ForkliftActorBase;
 import com.mygdx.forkliftaone.maps.MapBase;
 import com.mygdx.forkliftaone.maps.TestMap;
-import com.mygdx.forkliftaone.screens.menu.MenuScreenBase;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
 import com.mygdx.forkliftaone.utils.ForkliftData;
-import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
 import com.mygdx.forkliftaone.utils.RegionNames;
 
@@ -48,6 +42,7 @@ public class ChoosingScreen extends ScreenAdapter {
     private OrthographicCamera camera, uiCamera;
     private Stage stage, uiStage;
     private World world;
+    ProcessInventory pi = new ProcessInventory();
 
     private Box2DDebugRenderer b2dr;
     private OrthogonalTiledMapRenderer tmr;
@@ -55,11 +50,19 @@ public class ChoosingScreen extends ScreenAdapter {
     private ForkliftModel model;
     private ForkliftActorBase forklift;
     private final AssetManager assetManager;
+    private ForkliftModel.ModelName modelName;
 
 
     public ChoosingScreen(ForkLiftGame game){
         this.game = game;
         assetManager = game.getAssetManager();
+        modelName = ForkliftModel.ModelName.SMALL;
+    }
+
+    public ChoosingScreen(ForkLiftGame game, ForkliftModel.ModelName chosenModel){
+        this.game = game;
+        assetManager = game.getAssetManager();
+        modelName = chosenModel;
     }
 
     @Override
@@ -84,13 +87,15 @@ public class ChoosingScreen extends ScreenAdapter {
         TextureRegion forkliftRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_BODY);
         TextureRegion wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
         TextureRegion backgoundRegion = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
+         forkliftRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_BODY);
+         wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
 
         map = new TestMap(world);
         map.setRegion(backgoundRegion);
         map.createMap();
         stage.addActor(map);
 
-        model = new ForkliftModel(ForkliftModel.ModelName.MEDIUM, map);
+        model = new ForkliftModel(modelName, map);
         forklift = new ForkliftActorBase(world, model);
         forklift.createForklift(model);
         forklift.setRegion(forkliftRegion, forkliftRegion, wheelRegion, forkliftRegion);
@@ -127,11 +132,32 @@ public class ChoosingScreen extends ScreenAdapter {
         table.align(Align.center | Align.top);
         table.setPosition(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight());
 
+        // Buttons for choosing forklift (test)
+        for(final ForkliftData fd : game.getInv().getAllModels()) {
+            if (fd.getPurchased()) {
+
+                TextButton tb = new TextButton("Choose " + fd.getName().name().toLowerCase(), skin);
+                tb.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        // Refreshing screen
+//                        game.setScreen(new GameScreen(game,  fd.getName()));
+                        game.setScreen(new ChoosingScreen(game,  fd.getName()));
+
+                    }
+                });
+
+                table.padTop(30f);
+                table.add(tb).padBottom(30);
+                table.row();
+            }
+        }
+
         startButton = new TextButton("Choose forklift", skin);
         startButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameScreen(game));
+//                game.setScreen(new GameScreen(game));
             }
         });
 
