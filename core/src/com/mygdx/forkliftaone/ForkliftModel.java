@@ -23,12 +23,13 @@ public class ForkliftModel {
     private Vector2 spawnPosition; // Should be taken from the map
     private Vector2 frontWheelPosition, rearWheelPosition;
 
-    public ForkliftModel(ModelName modelName, MapBase map){
+    public ForkliftModel(ModelName modelName, int numberOfTubes, MapBase map){
 
         spawnPosition = map.getSpawnCoordinates();
 
         switch (modelName){
             case SMALL:
+                this.numberOfTubes = numberOfTubes;
                 cabin = new Vector2[5];
                 cabin[0] = new Vector2(1.6f, 1.6f);
                 cabin[1] = new Vector2(1f, 1.6f);
@@ -48,7 +49,6 @@ public class ForkliftModel {
 
                 rearWheelRadius = 0.2f;
                 frontWheelRadius = 0.25f;
-                numberOfTubes = 3;
                 locationOfTubes = 1.65f;
                 frontWheelPosition = new Vector2(1.3f, 0);
                 rearWheelPosition = new Vector2(0.3f, 0);
@@ -56,6 +56,7 @@ public class ForkliftModel {
                 break;
 
             case MEDIUM:
+                this.numberOfTubes = numberOfTubes;
                 cabin = new Vector2[4];
                 cabin[0] = new Vector2(1.0f, 1.1f);
                 cabin[1] = new Vector2(0.4f, 1.2f);

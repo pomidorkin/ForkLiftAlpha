@@ -8,6 +8,8 @@ public class ForkliftData {
     private int tubes;
     private Boolean purchased;
 
+    // To be added: price, TextureRegion
+
     public ForkliftModel.ModelName getName() {
         return name;
     }

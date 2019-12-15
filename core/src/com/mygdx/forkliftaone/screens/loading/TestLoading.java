@@ -10,23 +10,17 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.forkliftaone.ForkLiftGame;
-import com.mygdx.forkliftaone.config.GameConfig;
-import com.mygdx.forkliftaone.screens.game.ChoosingScreen;
 import com.mygdx.forkliftaone.screens.menu.MenuScreen;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
 
-public class LoadingScreen extends ScreenAdapter {
-
-    private static final float PROGRESS_BAR_WIDTH = 6f; // world units
-    private static final float PROGRESS_BAR_HEIGHT = 0.3f; // world units
-
+public class TestLoading extends ScreenAdapter {
     // == attributes ==
-    private OrthographicCamera camera;
     private Viewport viewport;
-    private ShapeRenderer renderer;
 
     private float progress;
     private float waitTime = 0.75f;
@@ -35,23 +29,40 @@ public class LoadingScreen extends ScreenAdapter {
     private final ForkLiftGame game;
     private final AssetManager assetManager;
 
+    private Skin skin;
+    private Table table;
+    private ProgressBar pb;
+    private Stage stage;
+
     // == constructors ==
-    public LoadingScreen(ForkLiftGame game) {
+    public TestLoading(ForkLiftGame game) {
         this.game = game;
+        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        stage = new Stage(viewport, game.getBatch());
         assetManager = game.getAssetManager();
     }
 
-    // == public methods ==
     @Override
     public void show() {
-        camera = new OrthographicCamera();
-        viewport = new FitViewport(8f, 4.8f, camera);
-        renderer = new ShapeRenderer();
 
-        assetManager.load(AssetDescriptors.FONT);
-        assetManager.load(AssetDescriptors.TEST_ATLAS);
+//        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
+        skin = new Skin(Gdx.files.internal("freezing/freezing-ui.json"));
 
-        assetManager.finishLoading();//?
+        // How to access different fields within the json class
+        pb = new ProgressBar(0.0f, Gdx.graphics.getWidth()/2, 0.01f, false, skin.get("fancy", ProgressBar.ProgressBarStyle.class));
+
+//        pb.setAnimateDuration(0.25f);
+
+        table = new Table();
+        table.setWidth(Gdx.graphics.getWidth());
+        table.align(Align.center | Align.top);
+        table.setPosition(0, Gdx.graphics.getHeight()/2);
+
+        table.add(pb).width(Gdx.graphics.getWidth()/2).height(10f);
+//        table.add(pb);
+        stage.addActor(table);
+
+        this.loadAssets();
     }
 
     @Override
@@ -61,12 +72,9 @@ public class LoadingScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         viewport.apply();
-        renderer.setProjectionMatrix(camera.combined);
-        renderer.begin(ShapeRenderer.ShapeType.Filled);
 
-        draw();
-
-        renderer.end();
+        pb.setValue(assetManager.getProgress() * Gdx.graphics.getWidth()/2);
+        stage.draw();
 
         if(changeScreen) {
             game.setScreen(new MenuScreen(game));
@@ -86,8 +94,8 @@ public class LoadingScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        renderer.dispose();
-        renderer = null;
+        stage.dispose();
+        skin.dispose();
     }
 
     // == private methods ==
@@ -105,14 +113,6 @@ public class LoadingScreen extends ScreenAdapter {
         }
     }
 
-    private void draw() {
-        float progressBarX = (8f - PROGRESS_BAR_WIDTH) / 2f;
-        float progressBarY = (4.8f - PROGRESS_BAR_HEIGHT) / 2f;
-
-        renderer.rect(progressBarX, progressBarY,
-                progress * PROGRESS_BAR_WIDTH, PROGRESS_BAR_HEIGHT
-        );
-    }
 
     private static void waitMillis(long millis) {
         try {
@@ -122,4 +122,15 @@ public class LoadingScreen extends ScreenAdapter {
         }
     }
 
+    private void loadAssets(){
+        assetManager.load(AssetDescriptors.FONT);
+        assetManager.load(AssetDescriptors.TEST_ATLAS);
+        assetManager.finishLoading();//?
+
+        assetManager.load("testloading/2.jpg", Texture.class);
+        assetManager.load("testloading/3.jpg", Texture.class);
+        assetManager.load("testloading/4.jpg", Texture.class);
+        assetManager.load("testloading/5.jpg", Texture.class);
+
+    }
 }

@@ -80,4 +80,16 @@ public class MarketScreen extends MenuScreenBase {
 
         return table;
     }
+
+    @Override
+    public void hide() {
+        super.hide();
+        dispose();
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        skin.dispose();
+    }
 }

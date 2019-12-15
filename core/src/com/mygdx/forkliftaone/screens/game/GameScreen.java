@@ -27,6 +27,7 @@ import com.mygdx.forkliftaone.entity.RubbishBox;
 import com.mygdx.forkliftaone.maps.MapBase;
 import com.mygdx.forkliftaone.maps.TestMap;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
+import com.mygdx.forkliftaone.utils.ForkliftData;
 import com.mygdx.forkliftaone.utils.RegionNames;
 
 public class GameScreen extends ScreenAdapter implements InputProcessor {
@@ -46,13 +47,13 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private World world;
     private ForkliftModel model;
     private ForkliftActorBase forklift;
-    private ForkliftModel.ModelName modelName;
+    private ForkliftData fd;
 
     private MapBase map;
 
-    public GameScreen(ForkLiftGame game, ForkliftModel.ModelName modelName) {
+    public GameScreen(ForkLiftGame game, ForkliftData fd) {
         this.game = game;
-        this.modelName = modelName;
+        this.fd = fd;
         assetManager = game.getAssetManager();
         batch = game.getBatch();
     }
@@ -81,8 +82,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         map.createMap();
         stage.addActor(map);
 
+        // Class ForkliftModel should have a constructor taking arguments from inventory
 //        model = new ForkliftModel(ForkliftModel.ModelName.MEDIUM, map);
-        model = new ForkliftModel(modelName, map);
+        model = new ForkliftModel(fd.getName(), fd.getTubes(), map);
         forklift = new ForkliftActorBase(world, model);
         forklift.createForklift(model);
         forklift.setRegion(forkliftRegion, forkliftRegion, wheelRegion, forkliftRegion);
@@ -130,6 +132,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     @Override
     public void hide() {
         super.hide();
+        dispose();
     }
 
     @Override

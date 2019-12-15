@@ -24,7 +24,10 @@ public class MenuScreen extends MenuScreenBase {
 
     @Override
     protected Actor createUi() {
-        skin = new Skin(Gdx.files.internal("uiskin.json"));
+//        skin = new Skin(Gdx.files.internal("uiskin.json"));
+//        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
+        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
+//        skin = new Skin(Gdx.files.internal("freezing/freezing-ui.json"));
 
         table = new Table();
         table.setWidth(Gdx.graphics.getWidth());

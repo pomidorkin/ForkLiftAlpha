@@ -50,19 +50,19 @@ public class ChoosingScreen extends ScreenAdapter {
     private ForkliftModel model;
     private ForkliftActorBase forklift;
     private final AssetManager assetManager;
-    private ForkliftModel.ModelName modelName;
+    private ForkliftData forkliftData;
 
 
     public ChoosingScreen(ForkLiftGame game){
         this.game = game;
         assetManager = game.getAssetManager();
-        modelName = ForkliftModel.ModelName.SMALL;
+        forkliftData = game.getInv().getAllModels()[0];
     }
 
-    public ChoosingScreen(ForkLiftGame game, ForkliftModel.ModelName chosenModel){
+    public ChoosingScreen(ForkLiftGame game, ForkliftData chosenModel){
         this.game = game;
         assetManager = game.getAssetManager();
-        modelName = chosenModel;
+        forkliftData = chosenModel;
     }
 
     @Override
@@ -95,7 +95,7 @@ public class ChoosingScreen extends ScreenAdapter {
         map.createMap();
         stage.addActor(map);
 
-        model = new ForkliftModel(modelName, map);
+        model = new ForkliftModel(forkliftData.getName(), forkliftData.getTubes(), map);
         forklift = new ForkliftActorBase(world, model);
         forklift.createForklift(model);
         forklift.setRegion(forkliftRegion, forkliftRegion, wheelRegion, forkliftRegion);
@@ -125,7 +125,9 @@ public class ChoosingScreen extends ScreenAdapter {
     }
 
     private Actor createUi(){
-        skin = new Skin(Gdx.files.internal("uiskin.json"));
+//        skin = new Skin(Gdx.files.internal("uiskin.json"));
+        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
+
 
         table = new Table();
         table.setWidth(Gdx.graphics.getWidth());
@@ -141,8 +143,9 @@ public class ChoosingScreen extends ScreenAdapter {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
                         // Refreshing screen
-//                        game.setScreen(new GameScreen(game,  fd.getName()));
-                        game.setScreen(new ChoosingScreen(game,  fd.getName()));
+                        forkliftData = fd;
+                        game.setScreen(new GameScreen(game, fd));
+//                        game.setScreen(new ChoosingScreen(game, fd));
 
                     }
                 });
