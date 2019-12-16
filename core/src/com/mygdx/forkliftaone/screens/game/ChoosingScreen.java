@@ -32,6 +32,8 @@ import com.mygdx.forkliftaone.utils.ForkliftData;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
 import com.mygdx.forkliftaone.utils.RegionNames;
 
+import java.util.ArrayList;
+
 public class ChoosingScreen extends ScreenAdapter {
 
     private ForkLiftGame game;
@@ -52,17 +54,21 @@ public class ChoosingScreen extends ScreenAdapter {
     private final AssetManager assetManager;
     private ForkliftData forkliftData;
 
+    private int counter;
+
 
     public ChoosingScreen(ForkLiftGame game){
         this.game = game;
         assetManager = game.getAssetManager();
         forkliftData = game.getInv().getAllModels()[0];
+        counter = 0;
     }
 
-    public ChoosingScreen(ForkLiftGame game, ForkliftData chosenModel){
+    public ChoosingScreen(ForkLiftGame game, ForkliftData chosenModel, int counter){
         this.game = game;
         assetManager = game.getAssetManager();
         forkliftData = chosenModel;
+        this.counter = counter;
     }
 
     @Override
@@ -133,6 +139,55 @@ public class ChoosingScreen extends ScreenAdapter {
         table.setWidth(Gdx.graphics.getWidth());
         table.align(Align.center | Align.top);
         table.setPosition(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight());
+
+        // Test (selection via next/previous buttons is working)
+//        final ForkliftData[] fdArray;
+        final ArrayList<ForkliftData> fdArray = new ArrayList<>();
+        for (int i = 0; i < game.getInv().getAllModels().length; i++){
+            if (game.getInv().getAllModels()[i].getPurchased()){
+                fdArray.add(game.getInv().getAllModels()[i]);
+            }
+        }
+
+        TextButton nextTB = new TextButton("Next", skin);
+        nextTB.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                if (counter+1 == fdArray.size()){
+                    counter = 0;
+                } else {
+                    counter++;
+                }
+                forkliftData = fdArray.get(counter);
+                System.out.println(forkliftData.getName() + "" + fdArray.size() + "" + counter);
+                // Refreshing screen
+//                game.setScreen(new GameScreen(game, fd));
+                        game.setScreen(new ChoosingScreen(game, forkliftData, counter));
+
+            }
+        });
+        TextButton previousTB = new TextButton("Previous", skin);
+        previousTB.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (counter == 0){
+                    counter = fdArray.size()-1;
+                } else {
+                    counter--;
+                }
+                forkliftData = fdArray.get(counter);
+                System.out.println(forkliftData.getName() + "" + fdArray.size() + "" + counter);
+                // Refreshing screen
+//                game.setScreen(new GameScreen(game, fd));
+                game.setScreen(new ChoosingScreen(game, forkliftData, counter));
+
+            }
+        });
+        table.row();
+        table.add(nextTB);
+        table.row();
+        table.add(previousTB);
 
         // Buttons for choosing forklift (test)
         for(final ForkliftData fd : game.getInv().getAllModels()) {
