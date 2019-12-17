@@ -7,6 +7,8 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -35,10 +37,16 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private final ForkLiftGame game;
     private final AssetManager assetManager;
     private final SpriteBatch batch;
+    private final GlyphLayout layout = new GlyphLayout();
 
     private Viewport viewport;
     private OrthographicCamera camera;
     private Stage stage;
+
+    // UI
+    private OrthographicCamera uiCamera;
+    private Viewport uiViewport;
+    private BitmapFont font;
 
 
     //test
@@ -67,6 +75,11 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         stage = new Stage(viewport, batch);
         Gdx.input.setInputProcessor(this);
 
+        // Initializing UI
+        uiCamera = new OrthographicCamera();
+        uiViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), uiCamera);
+        font = assetManager.get(AssetDescriptors.FONT);
+
 
         //test
         world = new World(new Vector2(0, -9.8f), false);
@@ -84,7 +97,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
         // Class ForkliftModel should have a constructor taking arguments from inventory
 //        model = new ForkliftModel(ForkliftModel.ModelName.MEDIUM, map);
-        model = new ForkliftModel(fd.getName(), fd.getTubes(), map);
+        model = new ForkliftModel(fd, map);
         forklift = new ForkliftActorBase(world, model);
         forklift.createForklift(model);
         forklift.setRegion(forkliftRegion, forkliftRegion, wheelRegion, forkliftRegion);
@@ -108,10 +121,14 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Разборки с текстурами
-//        viewport.apply();
+        viewport.apply();
         stage.draw();
         tmr.render();
         b2dr.render(world, camera.combined);
+
+        // Testing UI
+        uiViewport.apply();
+        renderUi();
     }
 
     private void update(float delta) {
@@ -124,9 +141,31 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 //        batch.setProjectionMatrix(camera.combined);
     }
 
+    // Testing UI
+    private void renderUi() {
+        batch.setProjectionMatrix(uiCamera.combined);
+        batch.begin();
+
+        // draw lives
+        String livesText = "LIVES: " ;
+        layout.setText(font, livesText);
+        font.draw(batch, layout, 20f, Gdx.graphics.getHeight()- layout.height);
+
+        // draw score
+        String scoreText = "SCORE: ";
+        layout.setText(font, scoreText);
+        font.draw(batch, layout,
+                Gdx.graphics.getWidth() - layout.width - 20f,
+                Gdx.graphics.getHeight()- layout.height
+        );
+
+        batch.end();
+    }
+
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
+        uiViewport.update(width, height, true);
     }
 
     @Override
@@ -153,6 +192,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         tmr.dispose();
         b2dr.dispose();
         map.disposeTiledMap();
+        font.dispose();
     }
 
     @Override

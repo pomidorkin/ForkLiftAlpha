@@ -101,7 +101,7 @@ public class ChoosingScreen extends ScreenAdapter {
         map.createMap();
         stage.addActor(map);
 
-        model = new ForkliftModel(forkliftData.getName(), forkliftData.getTubes(), map);
+        model = new ForkliftModel(forkliftData, map);
         forklift = new ForkliftActorBase(world, model);
         forklift.createForklift(model);
         forklift.setRegion(forkliftRegion, forkliftRegion, wheelRegion, forkliftRegion);
@@ -160,6 +160,7 @@ public class ChoosingScreen extends ScreenAdapter {
                     counter++;
                 }
                 forkliftData = fdArray.get(counter);
+                // Delete SOUT
                 System.out.println(forkliftData.getName() + "" + fdArray.size() + "" + counter);
                 // Refreshing screen
 //                game.setScreen(new GameScreen(game, fd));
@@ -177,6 +178,7 @@ public class ChoosingScreen extends ScreenAdapter {
                     counter--;
                 }
                 forkliftData = fdArray.get(counter);
+                // Delete SOUT
                 System.out.println(forkliftData.getName() + "" + fdArray.size() + "" + counter);
                 // Refreshing screen
 //                game.setScreen(new GameScreen(game, fd));
@@ -184,38 +186,17 @@ public class ChoosingScreen extends ScreenAdapter {
 
             }
         });
+
+        // Work with alignment a little bit
+        table.add(nextTB).padLeft(-100);
+        table.add(previousTB).padLeft(-100);
         table.row();
-        table.add(nextTB);
-        table.row();
-        table.add(previousTB);
-
-        // Buttons for choosing forklift (test)
-        for(final ForkliftData fd : game.getInv().getAllModels()) {
-            if (fd.getPurchased()) {
-
-                TextButton tb = new TextButton("Choose " + fd.getName().name().toLowerCase(), skin);
-                tb.addListener(new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        // Refreshing screen
-                        forkliftData = fd;
-                        game.setScreen(new GameScreen(game, fd));
-//                        game.setScreen(new ChoosingScreen(game, fd));
-
-                    }
-                });
-
-                table.padTop(30f);
-                table.add(tb).padBottom(30);
-                table.row();
-            }
-        }
 
         startButton = new TextButton("Choose forklift", skin);
         startButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-//                game.setScreen(new GameScreen(game));
+                game.setScreen(new GameScreen(game, forkliftData));
             }
         });
 

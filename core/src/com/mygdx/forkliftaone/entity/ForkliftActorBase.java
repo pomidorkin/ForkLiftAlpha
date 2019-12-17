@@ -127,7 +127,8 @@ public class ForkliftActorBase extends Actor {
         for (int i = 0; i < model.getNumberOfTubes(); i++ ){
             pjd.enableMotor = true;
             pjd.maxMotorForce = 10f;
-            pjd.motorSpeed = 0;
+            // Need to assign the value because of the positioning bug (to be remade)
+            pjd.motorSpeed = -1;
             pjd.enableLimit = true;
             pjd.upperTranslation = (i+1) * (1.5f * model.getTubeSize()[1]); // Limit of movement based on length of the tube
 
@@ -146,7 +147,8 @@ public class ForkliftActorBase extends Actor {
 
         rjd.enableMotor = true;
         rjd.maxMotorTorque = 50f;
-        rjd.motorSpeed = 0;
+        // Need to assign the value because of the positioning bug (to be remade)
+        rjd.motorSpeed = -1;
 
         rjd.enableLimit = true;
         rjd.lowerAngle = 0;
