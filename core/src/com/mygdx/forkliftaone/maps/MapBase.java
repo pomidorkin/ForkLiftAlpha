@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.forkliftaone.config.GameConfig;
+import com.mygdx.forkliftaone.entity.Sensor;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
 import com.mygdx.forkliftaone.utils.AssetPaths;
 import com.mygdx.forkliftaone.utils.TiledObjectUtil;
@@ -23,11 +24,13 @@ public abstract class MapBase extends Actor{
     private Vector2 spawnCoordinates;
     private TextureRegion background;
     private String mapName;
+    private Sensor sensor;
 
     public MapBase(World world, String mapName, Vector2 spawnCoordinates){
         this.world = world;
         this.mapName = mapName;
         this.spawnCoordinates = spawnCoordinates;
+        sensor = new Sensor(world, 10f, 3f, 1f, 0.5f);
     }
 
     public void createMap(){

@@ -126,11 +126,5 @@ public class TestLoading extends ScreenAdapter {
         assetManager.load(AssetDescriptors.FONT);
         assetManager.load(AssetDescriptors.TEST_ATLAS);
         assetManager.finishLoading();//?
-
-        assetManager.load("testloading/2.jpg", Texture.class);
-        assetManager.load("testloading/3.jpg", Texture.class);
-        assetManager.load("testloading/4.jpg", Texture.class);
-        assetManager.load("testloading/5.jpg", Texture.class);
-
     }
 }

@@ -7,32 +7,35 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.forkliftaone.config.GameConfig;
 
-public class RubbishBox {
-    public void createRubbishBox(World world){
+public class Sensor {
+
+    public Sensor(World world, float x, float y, float width, float height){
         Body box;
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.fixedRotation = false;
-        bodyDef.position.set(5f, 5f); // Should be obtained from the map
+        bodyDef.position.set(x, y); // Should be obtained from the map
 
         box = world.createBody(bodyDef);
         PolygonShape ps = new PolygonShape();
-        ps.setAsBox(0.37f, 0.37f);
+        ps.setAsBox(width, height);
 
         FixtureDef fixDef = new FixtureDef();
         fixDef.shape = ps;
-        fixDef.density = 0.05f;
-        fixDef.friction = 1f;
-        fixDef.filter.categoryBits = GameConfig.BIT_OBSTACLE;
-        box.createFixture(fixDef);
-
-        ps.setAsBox(0.37f, 0.65f);
-        fixDef.shape = ps;
-        fixDef.density = 0.05f;
-        fixDef.friction = 1f;
-        fixDef.filter.categoryBits = GameConfig.BIT_FORKLIFT;
+        fixDef.isSensor = true;
         box.createFixture(fixDef).setUserData(this); // required for collision
 
         ps.dispose();
     }
+
+    // (To Do) Implement saving logic
+
+    public void trigger(){
+        System.out.println("Balance + 100$");
+    }
+
+    public void untrigger(){
+        System.out.println("Balance - 100$");
+    }
+
 }

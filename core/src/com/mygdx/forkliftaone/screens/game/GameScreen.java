@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -26,6 +28,7 @@ import com.mygdx.forkliftaone.config.GameConfig;
 import com.mygdx.forkliftaone.entity.ForkliftActorBase;
 import com.mygdx.forkliftaone.ForkliftModel;
 import com.mygdx.forkliftaone.entity.RubbishBox;
+import com.mygdx.forkliftaone.handlers.SensorContactListener;
 import com.mygdx.forkliftaone.maps.MapBase;
 import com.mygdx.forkliftaone.maps.TestMap;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
@@ -47,6 +50,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private OrthographicCamera uiCamera;
     private Viewport uiViewport;
     private BitmapFont font;
+    private ShapeRenderer shapeRenderer;
 
 
     //test
@@ -79,10 +83,12 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         uiCamera = new OrthographicCamera();
         uiViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), uiCamera);
         font = assetManager.get(AssetDescriptors.FONT);
+        shapeRenderer = new ShapeRenderer();
 
 
         //test
         world = new World(new Vector2(0, -9.8f), false);
+        world.setContactListener(new SensorContactListener());
 
         // Creating texture atlas
         TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
@@ -122,7 +128,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
         // Разборки с текстурами
         viewport.apply();
-        stage.draw();
+//        stage.draw();
         tmr.render();
         b2dr.render(world, camera.combined);
 
@@ -143,6 +149,13 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     // Testing UI
     private void renderUi() {
+        // Testing style. Should be replaced with a picture from Asset Manager
+        shapeRenderer.setColor(Color.CYAN);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.box(0, Gdx.graphics.getHeight()-(layout.height+40f), 0,
+                Gdx.graphics.getWidth(), layout.height+40f, 1);
+        shapeRenderer.end();
+
         batch.setProjectionMatrix(uiCamera.combined);
         batch.begin();
 
@@ -160,6 +173,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         );
 
         batch.end();
+
+
     }
 
     @Override
@@ -193,6 +208,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         b2dr.dispose();
         map.disposeTiledMap();
         font.dispose();
+        shapeRenderer.dispose();
     }
 
     @Override

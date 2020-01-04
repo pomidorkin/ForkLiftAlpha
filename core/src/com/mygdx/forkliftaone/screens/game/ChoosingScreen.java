@@ -29,6 +29,7 @@ import com.mygdx.forkliftaone.maps.MapBase;
 import com.mygdx.forkliftaone.maps.TestMap;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
 import com.mygdx.forkliftaone.utils.ForkliftData;
+import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
 import com.mygdx.forkliftaone.utils.RegionNames;
 
@@ -187,9 +188,22 @@ public class ChoosingScreen extends ScreenAdapter {
             }
         });
 
+        TextButton upgrateButton = new TextButton("Upgrate", skin);
+        upgrateButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                forkliftData.setTubes(forkliftData.getTubes()+1);
+                Inventory inv2 = new Inventory(game.getInv().getBalance(), game.getInv().getAllModels());
+                pi.write(inv2);
+
+            }
+        });
+
         // Work with alignment a little bit
         table.add(nextTB).padLeft(-100);
         table.add(previousTB).padLeft(-100);
+        table.row();
+        table.add(upgrateButton);
         table.row();
 
         startButton = new TextButton("Choose forklift", skin);
