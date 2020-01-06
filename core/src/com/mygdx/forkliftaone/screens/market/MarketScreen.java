@@ -22,9 +22,11 @@ public class MarketScreen extends MenuScreenBase {
     private Table table;
     private TextButton buyButton, backButton;
     ProcessInventory pi = new ProcessInventory();
+    private Inventory inv;
 
     public MarketScreen(ForkLiftGame game) {
         super(game);
+        inv = pi.read();
     }
 
     @Override
@@ -38,18 +40,18 @@ public class MarketScreen extends MenuScreenBase {
 
         // Testing cycle for showing models
         // Testing buying is working
-        for(final ForkliftData fd : game.getInv().getAllModels()) {
+        for(final ForkliftData fd : inv.getAllModels()) {
             if (!fd.getPurchased()) {
 
                TextButton tb = new TextButton("Buy " + fd.getName().name().toLowerCase(), skin);
                tb.addListener(new ClickListener() {
                    @Override
                    public void clicked(InputEvent event, float x, float y) {
-                       game.getInv().setBalance(game.getInv().getBalance() - 10);
+                       inv.setBalance(inv.getBalance() - 10);
                        fd.setPurchased(true);
 
                        // Saving
-                       Inventory inv2 = new Inventory(game.getInv().getBalance(), game.getInv().getAllModels());
+                       Inventory inv2 = new Inventory(inv.getBalance(), inv.getAllModels());
                        pi.write(inv2);
 
                        // Refreshing market screen

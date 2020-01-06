@@ -320,11 +320,15 @@ public class ForkliftActorBase extends Actor {
         revoluteJointFork.setMotorSpeed(0);
     }
 
-    public void setRegion(TextureRegion bodyRegion, TextureRegion tubeRegion, TextureRegion wheelRegion, TextureRegion forkRegion) {
-        bodyTexture = bodyRegion;
-        tubeTexture = tubeRegion;
-        wheelTexture = wheelRegion;
-        forkTexture = forkRegion;
+    public void setRegion() {
+//        bodyTexture = bodyRegion;
+//        tubeTexture = tubeRegion;
+//        wheelTexture = wheelRegion;
+//        forkTexture = forkRegion;
+        bodyTexture = model.getForkliftRegion();
+        tubeTexture = model.getTubeRegion();
+        wheelTexture = model.getWheelRegion();
+        forkTexture = model.getForkRegion();
     }
 
     public Vector2 getFrokPosition(){

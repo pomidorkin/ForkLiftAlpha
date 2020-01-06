@@ -26,11 +26,11 @@ public abstract class MapBase extends Actor{
     private String mapName;
     private Sensor sensor;
 
-    public MapBase(World world, String mapName, Vector2 spawnCoordinates){
+    public MapBase(World world, String mapName, Vector2 spawnCoordinates, float x, float y, float width, float height){
         this.world = world;
         this.mapName = mapName;
         this.spawnCoordinates = spawnCoordinates;
-        sensor = new Sensor(world, 10f, 3f, 1f, 0.5f);
+        sensor = new Sensor(world, x, y, width, height);
     }
 
     public void createMap(){
@@ -54,6 +54,10 @@ public abstract class MapBase extends Actor{
     @Override
     public void act(float delta) {
         super.act(delta);
+    }
+
+    public int getSalary(){
+        return sensor.getSalary();
     }
 
     public TiledMap getTiledMap() {

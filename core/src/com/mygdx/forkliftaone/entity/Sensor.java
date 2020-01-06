@@ -9,6 +9,8 @@ import com.mygdx.forkliftaone.config.GameConfig;
 
 public class Sensor {
 
+    private int salary;
+
     public Sensor(World world, float x, float y, float width, float height){
         Body box;
         BodyDef bodyDef = new BodyDef();
@@ -31,11 +33,16 @@ public class Sensor {
     // (To Do) Implement saving logic
 
     public void trigger(){
-        System.out.println("Balance + 100$");
+        salary += 100;
+        System.out.println("Balance: " + salary);
     }
 
     public void untrigger(){
-        System.out.println("Balance - 100$");
+        salary -= 100;
+        System.out.println("Balance: " + salary);
     }
 
+    public int getSalary() {
+        return salary;
+    }
 }

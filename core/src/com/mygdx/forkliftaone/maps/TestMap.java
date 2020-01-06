@@ -6,7 +6,7 @@ import com.mygdx.forkliftaone.utils.AssetPaths;
 
 public class TestMap extends MapBase {
     public TestMap(World world) {
-        super(world, AssetPaths.TEST_TILED_MAP, new Vector2(1.5f, 1.5f));
+        super(world, AssetPaths.TEST_TILED_MAP, new Vector2(1.5f, 1.5f), 10f, 1f, 1f, 0.5f);
     }
 
 

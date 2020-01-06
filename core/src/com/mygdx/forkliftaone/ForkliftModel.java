@@ -1,9 +1,14 @@
 package com.mygdx.forkliftaone;
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.forkliftaone.config.GameConfig;
 import com.mygdx.forkliftaone.maps.MapBase;
+import com.mygdx.forkliftaone.utils.AssetDescriptors;
 import com.mygdx.forkliftaone.utils.ForkliftData;
+import com.mygdx.forkliftaone.utils.RegionNames;
 
 public class ForkliftModel {
 
@@ -24,9 +29,15 @@ public class ForkliftModel {
     private Vector2 spawnPosition; // Should be taken from the map
     private Vector2 frontWheelPosition, rearWheelPosition;
     private ForkliftData fd;
+    private TextureRegion forkliftRegion, wheelRegion, tubeRegion, forkRegion;
+
+    private AssetManager assetManager;
 
 //    public ForkliftModel(ModelName modelName, int numberOfTubes, MapBase map){
-public ForkliftModel(ForkliftData fd, MapBase map){
+public ForkliftModel(ForkliftData fd, MapBase map, AssetManager assetManager){
+
+    this.assetManager = assetManager;
+    TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
 
         spawnPosition = map.getSpawnCoordinates();
 
@@ -56,6 +67,9 @@ public ForkliftModel(ForkliftData fd, MapBase map){
                 frontWheelPosition = new Vector2(1.3f, 0);
                 rearWheelPosition = new Vector2(0.3f, 0);
 
+                // Textures
+                forkliftRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
+                wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
                 break;
 
             case MEDIUM:
@@ -81,6 +95,10 @@ public ForkliftModel(ForkliftData fd, MapBase map){
                 locationOfTubes = 1.55f;
                 frontWheelPosition = new Vector2(1.27f, 0);
                 rearWheelPosition = new Vector2(0.2f, 0);
+
+                // Textures
+                forkliftRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_BODY);
+                wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
 
                 break;
         }
@@ -126,5 +144,19 @@ public ForkliftModel(ForkliftData fd, MapBase map){
         return rearWheelPosition;
     }
 
+    public TextureRegion getForkliftRegion() {
+        return forkliftRegion;
+    }
 
+    public TextureRegion getWheelRegion() {
+        return wheelRegion;
+    }
+
+    public TextureRegion getTubeRegion() {
+        return tubeRegion;
+    }
+
+    public TextureRegion getForkRegion() {
+        return forkRegion;
+    }
 }

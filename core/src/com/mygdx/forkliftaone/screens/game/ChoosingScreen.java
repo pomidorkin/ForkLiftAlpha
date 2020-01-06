@@ -54,6 +54,7 @@ public class ChoosingScreen extends ScreenAdapter {
     private ForkliftActorBase forklift;
     private final AssetManager assetManager;
     private ForkliftData forkliftData;
+    private Inventory inv;
 
     private int counter;
 
@@ -61,14 +62,24 @@ public class ChoosingScreen extends ScreenAdapter {
     public ChoosingScreen(ForkLiftGame game){
         this.game = game;
         assetManager = game.getAssetManager();
-        forkliftData = game.getInv().getAllModels()[0];
+        inv = pi.read();
+        forkliftData = inv.getAllModels()[0];
         counter = 0;
     }
 
-    public ChoosingScreen(ForkLiftGame game, ForkliftData chosenModel, int counter){
+//    public ChoosingScreen(ForkLiftGame game, ForkliftData chosenModel, int counter){
+//        this.game = game;
+//        assetManager = game.getAssetManager();
+//        inv = pi.read();
+//        forkliftData = chosenModel;
+//        this.counter = counter;
+//    }
+
+    private ChoosingScreen(ForkLiftGame game, int counter){
         this.game = game;
         assetManager = game.getAssetManager();
-        forkliftData = chosenModel;
+        inv = pi.read();
+        forkliftData = inv.getAllModels()[counter];
         this.counter = counter;
     }
 
@@ -102,10 +113,11 @@ public class ChoosingScreen extends ScreenAdapter {
         map.createMap();
         stage.addActor(map);
 
-        model = new ForkliftModel(forkliftData, map);
+        model = new ForkliftModel(forkliftData, map, assetManager);
         forklift = new ForkliftActorBase(world, model);
         forklift.createForklift(model);
-        forklift.setRegion(forkliftRegion, forkliftRegion, wheelRegion, forkliftRegion);
+        // Change the texture later so that they are different for each forklift
+        forklift.setRegion();
         stage.addActor(forklift);
 
         b2dr = new Box2DDebugRenderer();
@@ -132,7 +144,6 @@ public class ChoosingScreen extends ScreenAdapter {
     }
 
     private Actor createUi(){
-//        skin = new Skin(Gdx.files.internal("uiskin.json"));
         skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
 
 
@@ -144,9 +155,9 @@ public class ChoosingScreen extends ScreenAdapter {
         // Test (selection via next/previous buttons is working)
 //        final ForkliftData[] fdArray;
         final ArrayList<ForkliftData> fdArray = new ArrayList<>();
-        for (int i = 0; i < game.getInv().getAllModels().length; i++){
-            if (game.getInv().getAllModels()[i].getPurchased()){
-                fdArray.add(game.getInv().getAllModels()[i]);
+        for (int i = 0; i < inv.getAllModels().length; i++){
+            if (inv.getAllModels()[i].getPurchased()){
+                fdArray.add(inv.getAllModels()[i]);
             }
         }
 
@@ -165,7 +176,7 @@ public class ChoosingScreen extends ScreenAdapter {
                 System.out.println(forkliftData.getName() + "" + fdArray.size() + "" + counter);
                 // Refreshing screen
 //                game.setScreen(new GameScreen(game, fd));
-                        game.setScreen(new ChoosingScreen(game, forkliftData, counter));
+                game.setScreen(new ChoosingScreen(game, counter));
 
             }
         });
@@ -183,7 +194,7 @@ public class ChoosingScreen extends ScreenAdapter {
                 System.out.println(forkliftData.getName() + "" + fdArray.size() + "" + counter);
                 // Refreshing screen
 //                game.setScreen(new GameScreen(game, fd));
-                game.setScreen(new ChoosingScreen(game, forkliftData, counter));
+                game.setScreen(new ChoosingScreen(game, counter));
 
             }
         });
@@ -193,9 +204,9 @@ public class ChoosingScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 forkliftData.setTubes(forkliftData.getTubes()+1);
-                Inventory inv2 = new Inventory(game.getInv().getBalance(), game.getInv().getAllModels());
+                Inventory inv2 = new Inventory(inv.getBalance() - 10, inv.getAllModels());
                 pi.write(inv2);
-
+                game.setScreen(new ChoosingScreen(game, counter));
             }
         });
 
@@ -206,7 +217,7 @@ public class ChoosingScreen extends ScreenAdapter {
         table.add(upgrateButton);
         table.row();
 
-        startButton = new TextButton("Choose forklift", skin);
+        startButton = new TextButton("Play", skin);
         startButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {

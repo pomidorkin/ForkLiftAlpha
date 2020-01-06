@@ -2,6 +2,7 @@ package com.mygdx.forkliftaone.screens.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
@@ -19,20 +20,29 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.google.gson.Gson;
 import com.mygdx.forkliftaone.ForkLiftGame;
-import com.mygdx.forkliftaone.config.GameConfig;
-import com.mygdx.forkliftaone.entity.ForkliftActorBase;
 import com.mygdx.forkliftaone.ForkliftModel;
+import com.mygdx.forkliftaone.config.GameConfig;
+import com.mygdx.forkliftaone.dialogs.BackToMenuDialog;
+import com.mygdx.forkliftaone.entity.ForkliftActorBase;
 import com.mygdx.forkliftaone.entity.RubbishBox;
 import com.mygdx.forkliftaone.handlers.SensorContactListener;
 import com.mygdx.forkliftaone.maps.MapBase;
 import com.mygdx.forkliftaone.maps.TestMap;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
 import com.mygdx.forkliftaone.utils.ForkliftData;
+import com.mygdx.forkliftaone.utils.Inventory;
+import com.mygdx.forkliftaone.utils.ProcessInventory;
 import com.mygdx.forkliftaone.utils.RegionNames;
 
 public class GameScreen extends ScreenAdapter implements InputProcessor {
@@ -42,15 +52,15 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private final SpriteBatch batch;
     private final GlyphLayout layout = new GlyphLayout();
 
-    private Viewport viewport;
-    private OrthographicCamera camera;
-    private Stage stage;
+    private Viewport viewport, uiViewport;
+    private OrthographicCamera camera, uiCamera;
+    private Stage stage, uiStage;
 
     // UI
-    private OrthographicCamera uiCamera;
-    private Viewport uiViewport;
     private BitmapFont font;
     private ShapeRenderer shapeRenderer;
+    private Table table;
+    private Skin skin;
 
 
     //test
@@ -60,6 +70,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private ForkliftModel model;
     private ForkliftActorBase forklift;
     private ForkliftData fd;
+    private ProcessInventory pi = new ProcessInventory();
+    private Inventory inv;
 
     private MapBase map;
 
@@ -75,15 +87,24 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         // Разборки с текстурами end here
 
         camera = new OrthographicCamera();
-        viewport = new FitViewport(8f,4.8f, camera);
+        viewport = new FitViewport(8f, 4.8f, camera);
         stage = new Stage(viewport, batch);
-        Gdx.input.setInputProcessor(this);
+//        Gdx.input.setInputProcessor(this);
 
         // Initializing UI
         uiCamera = new OrthographicCamera();
         uiViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), uiCamera);
         font = assetManager.get(AssetDescriptors.FONT);
         shapeRenderer = new ShapeRenderer();
+        uiStage = new Stage(uiViewport, game.getBatch());
+//        Gdx.input.setInputProcessor(uiStage);
+
+        InputMultiplexer multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(this);
+        multiplexer.addProcessor(uiStage);
+        Gdx.input.setInputProcessor(multiplexer);
+
+        uiStage.addActor(createUi());
 
 
         //test
@@ -103,20 +124,23 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
         // Class ForkliftModel should have a constructor taking arguments from inventory
 //        model = new ForkliftModel(ForkliftModel.ModelName.MEDIUM, map);
-        model = new ForkliftModel(fd, map);
+        model = new ForkliftModel(fd, map, assetManager);
         forklift = new ForkliftActorBase(world, model);
         forklift.createForklift(model);
-        forklift.setRegion(forkliftRegion, forkliftRegion, wheelRegion, forkliftRegion);
+        forklift.setRegion();
         stage.addActor(forklift);
 
         b2dr = new Box2DDebugRenderer();
         //Second parameter is responsible for scaling
-        tmr = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/ GameConfig.SCALE);
+        tmr = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1 / GameConfig.SCALE);
 
         // Rubbish
         RubbishBox box = new RubbishBox();
         box.createRubbishBox(world);
         box.createRubbishBox(world);
+
+        // Load & Saving logic
+        inv = pi.read();
     }
 
     @Override
@@ -128,13 +152,15 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
         // Разборки с текстурами
         viewport.apply();
-//        stage.draw();
+        stage.draw();
         tmr.render();
         b2dr.render(world, camera.combined);
 
         // Testing UI
         uiViewport.apply();
         renderUi();
+        uiStage.draw();
+
     }
 
     private void update(float delta) {
@@ -152,24 +178,24 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         // Testing style. Should be replaced with a picture from Asset Manager
         shapeRenderer.setColor(Color.CYAN);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.box(0, Gdx.graphics.getHeight()-(layout.height+40f), 0,
-                Gdx.graphics.getWidth(), layout.height+40f, 1);
+        shapeRenderer.box(0, Gdx.graphics.getHeight() - (layout.height + 40f), 0,
+                Gdx.graphics.getWidth(), layout.height + 40f, 1);
         shapeRenderer.end();
 
         batch.setProjectionMatrix(uiCamera.combined);
         batch.begin();
 
         // draw lives
-        String livesText = "LIVES: " ;
+        String livesText = "Balance: " + inv.getBalance();
         layout.setText(font, livesText);
-        font.draw(batch, layout, 20f, Gdx.graphics.getHeight()- layout.height);
+        font.draw(batch, layout, 20f, Gdx.graphics.getHeight() - layout.height);
 
         // draw score
         String scoreText = "SCORE: ";
         layout.setText(font, scoreText);
         font.draw(batch, layout,
                 Gdx.graphics.getWidth() - layout.width - 20f,
-                Gdx.graphics.getHeight()- layout.height
+                Gdx.graphics.getHeight() - layout.height
         );
 
         batch.end();
@@ -185,6 +211,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     @Override
     public void hide() {
+        // Saving example
         super.hide();
         dispose();
     }
@@ -201,7 +228,6 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     @Override
     public void dispose() {
-        batch.dispose();
         stage.dispose();
         world.dispose();
         tmr.dispose();
@@ -209,36 +235,65 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         map.disposeTiledMap();
         font.dispose();
         shapeRenderer.dispose();
+        skin.dispose();
+//        batch.dispose();
+    }
+
+    private Actor createUi() {
+        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
+
+
+        table = new Table();
+        table.setWidth(Gdx.graphics.getWidth());
+        table.align(Align.center | Align.top);
+        table.setPosition(0, Gdx.graphics.getHeight());
+
+        TextButton menuButton = new TextButton("Menu", skin);
+        menuButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Inventory inv2 = new Inventory(inv.getBalance() + map.getSalary(), inv.getAllModels());
+                pi.write(inv2);
+//                game.setScreen(new MenuScreen(game));
+                BackToMenuDialog menuDialog = new BackToMenuDialog(game, "Return to menu?", skin);
+                menuDialog.show(uiStage);
+            }
+        });
+
+        table.add(menuButton).padLeft(Gdx.graphics.getWidth() - 100f);
+        table.row();
+
+        return table;
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.D){
+        if (keycode == Input.Keys.D) {
             forklift.moveForkliftRight();
             return true;
         }
 
-        if (keycode == Input.Keys.A){
+        if (keycode == Input.Keys.A) {
             forklift.moveForkliftLeft();
             return true;
         }
 
-        if (keycode == Input.Keys.W){
+        if (keycode == Input.Keys.W) {
             forklift.moveTubeUp();
             return true;
         }
 
-        if (keycode == Input.Keys.S){
+        if (keycode == Input.Keys.S) {
             forklift.moveTubeDown();
             return true;
         }
 
-        if (keycode == Input.Keys.E){
+        if (keycode == Input.Keys.E) {
             forklift.rotateForkUp();
             return true;
         }
 
-        if (keycode == Input.Keys.Q){
+        if (keycode == Input.Keys.Q) {
             forklift.rotateForkDown();
             return true;
         }
@@ -247,43 +302,43 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        if (keycode == Input.Keys.D){
+        if (keycode == Input.Keys.D) {
             forklift.stopMoveForkliftRight();
             return true;
         }
 
-        if (keycode == Input.Keys.A){
+        if (keycode == Input.Keys.A) {
             forklift.stopMoveForkliftLeft();
             return true;
         }
 
-        if (keycode == Input.Keys.W){
+        if (keycode == Input.Keys.W) {
             forklift.stopMoveTubeUp();
             return true;
         }
 
-        if (keycode == Input.Keys.S){
+        if (keycode == Input.Keys.S) {
             forklift.stopMoveTubeDown();
             return true;
         }
 
-        if (keycode == Input.Keys.E){
+        if (keycode == Input.Keys.E) {
             forklift.stopRotatingFork();
             return true;
         }
 
-        if (keycode == Input.Keys.Q){
+        if (keycode == Input.Keys.Q) {
             forklift.stopRotatingFork();
             return true;
         }
         return false;
     }
 
-    private void cameraUpdate(float delta){
+    private void cameraUpdate(float delta) {
         Vector3 position = camera.position;
 
         position.x = forklift.getFrokPosition().x;
-        position.y = forklift.getFrokPosition().y +1.5f;
+        position.y = forklift.getFrokPosition().y + 1.5f;
 
         camera.position.set(position);
 
