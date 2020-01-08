@@ -31,13 +31,8 @@ public class ForkliftModel {
     private ForkliftData fd;
     private TextureRegion forkliftRegion, wheelRegion, tubeRegion, forkRegion;
 
-    private AssetManager assetManager;
-
 //    public ForkliftModel(ModelName modelName, int numberOfTubes, MapBase map){
-public ForkliftModel(ForkliftData fd, MapBase map, AssetManager assetManager){
-
-    this.assetManager = assetManager;
-    TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
+public ForkliftModel(ForkliftData fd, MapBase map, TextureAtlas atlas){
 
         spawnPosition = map.getSpawnCoordinates();
 
@@ -68,8 +63,8 @@ public ForkliftModel(ForkliftData fd, MapBase map, AssetManager assetManager){
                 rearWheelPosition = new Vector2(0.3f, 0);
 
                 // Textures
-                forkliftRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
-                wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
+                forkliftRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
+                wheelRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
                 break;
 
             case MEDIUM:
@@ -97,8 +92,8 @@ public ForkliftModel(ForkliftData fd, MapBase map, AssetManager assetManager){
                 rearWheelPosition = new Vector2(0.2f, 0);
 
                 // Textures
-                forkliftRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_BODY);
-                wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
+                forkliftRegion = atlas.findRegion(RegionNames.FORKLIFT_BODY);
+                wheelRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
 
                 break;
         }

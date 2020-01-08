@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.mygdx.forkliftaone.entity.RubbishBox;
+import com.mygdx.forkliftaone.entity.BoxBase;
 import com.mygdx.forkliftaone.entity.Sensor;
 
 public class SensorContactListener implements ContactListener {
@@ -21,13 +21,13 @@ public class SensorContactListener implements ContactListener {
 
         if (isSensorContact(fa, fb)){
             Sensor sensor;
-            RubbishBox rubbishBox;
+            BoxBase rubbishBox;
             if (fa.getUserData() instanceof Sensor){
                 sensor = (Sensor) fa.getUserData();
-                rubbishBox = (RubbishBox) fb.getUserData();
+                rubbishBox = (BoxBase) fb.getUserData();
             } else {
                 sensor = (Sensor) fb.getUserData();
-                rubbishBox = (RubbishBox) fa.getUserData();
+                rubbishBox = (BoxBase) fa.getUserData();
             }
 
             sensor.trigger();
@@ -49,13 +49,13 @@ public class SensorContactListener implements ContactListener {
 
         if (isSensorContact(fa, fb)){
             Sensor sensor;
-            RubbishBox rubbishBox;
+            BoxBase rubbishBox;
             if (fa.getUserData() instanceof Sensor){
                 sensor = (Sensor) fa.getUserData();
-                rubbishBox = (RubbishBox) fb.getUserData();
+                rubbishBox = (BoxBase) fb.getUserData();
             } else {
                 sensor = (Sensor) fb.getUserData();
-                rubbishBox = (RubbishBox) fa.getUserData();
+                rubbishBox = (BoxBase) fa.getUserData();
             }
 
             sensor.untrigger();
@@ -75,7 +75,7 @@ public class SensorContactListener implements ContactListener {
     }
 
     private boolean isSensorContact(Fixture a, Fixture b){
-        if (a.getUserData() instanceof RubbishBox || b.getUserData() instanceof RubbishBox){
+        if (a.getUserData() instanceof BoxBase || b.getUserData() instanceof BoxBase){
             if (a.getUserData() instanceof Sensor || b.getUserData() instanceof Sensor){
                 return true;
             }

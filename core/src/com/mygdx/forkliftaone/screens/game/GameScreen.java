@@ -35,7 +35,8 @@ import com.mygdx.forkliftaone.ForkliftModel;
 import com.mygdx.forkliftaone.config.GameConfig;
 import com.mygdx.forkliftaone.dialogs.BackToMenuDialog;
 import com.mygdx.forkliftaone.entity.ForkliftActorBase;
-import com.mygdx.forkliftaone.entity.RubbishBox;
+import com.mygdx.forkliftaone.entity.BoxBase;
+import com.mygdx.forkliftaone.entity.TestBox;
 import com.mygdx.forkliftaone.handlers.SensorContactListener;
 import com.mygdx.forkliftaone.maps.MapBase;
 import com.mygdx.forkliftaone.maps.TestMap;
@@ -124,7 +125,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
         // Class ForkliftModel should have a constructor taking arguments from inventory
 //        model = new ForkliftModel(ForkliftModel.ModelName.MEDIUM, map);
-        model = new ForkliftModel(fd, map, assetManager);
+        model = new ForkliftModel(fd, map, gamePlayAtlas);
         forklift = new ForkliftActorBase(world, model);
         forklift.createForklift(model);
         forklift.setRegion();
@@ -135,7 +136,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         tmr = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1 / GameConfig.SCALE);
 
         // Rubbish
-        RubbishBox box = new RubbishBox(world, camera);
+        BoxBase box = new TestBox(world, camera, gamePlayAtlas);
         stage.addActor(box);
 
         // Load & Saving logic

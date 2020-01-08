@@ -113,7 +113,7 @@ public class ChoosingScreen extends ScreenAdapter {
         map.createMap();
         stage.addActor(map);
 
-        model = new ForkliftModel(forkliftData, map, assetManager);
+        model = new ForkliftModel(forkliftData, map, gamePlayAtlas);
         forklift = new ForkliftActorBase(world, model);
         forklift.createForklift(model);
         // Change the texture later so that they are different for each forklift
