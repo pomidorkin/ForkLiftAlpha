@@ -236,16 +236,16 @@ public class ForkliftActorBase extends Actor {
                         forklift.getAngle()*57.2957f); // Rotation (radiants to degrees)
 
         batch.draw(wheelTexture, // Texture
-                frontWheel.getPosition().x-0.22f, frontWheel.getPosition().y -0.22f, // Texture position
-                0.44f/2, 0.44f/2, // Rotation point (width / 2, height /2 = center)
-                0.44f, 0.44f, // Width and height of the texture
+                frontWheel.getPosition().x-model.getFrontWheelRadius(), frontWheel.getPosition().y -model.getFrontWheelRadius(), // Texture position
+                model.getFrontWheelRadius(), model.getFrontWheelRadius(), // Rotation point (width / 2, height /2 = center)
+                model.getFrontWheelRadius() * 2, model.getFrontWheelRadius() * 2, // Width and height of the texture
                 getScaleX(), getScaleY(), //scaling
                 frontWheel.getAngle()*57.2957f);
 
         batch.draw(wheelTexture, // Texture
-                rearWheel.getPosition().x-0.2f, rearWheel.getPosition().y -0.2f, // Texture position
-                0.4f/2, 0.4f/2, // Rotation point (width / 2, height /2 = center)
-                0.4f, 0.4f, // Width and height of the texture
+                rearWheel.getPosition().x-model.getRearWheelRadius(), rearWheel.getPosition().y -model.getRearWheelRadius(), // Texture position
+                model.getRearWheelRadius(), model.getRearWheelRadius(), // Rotation point (width / 2, height /2 = center)
+                model.getRearWheelRadius() * 2, model.getRearWheelRadius() * 2, // Width and height of the texture
                 getScaleX(), getScaleY(), //scaling
                 rearWheel.getAngle()*57.2957f);
 

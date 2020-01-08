@@ -135,9 +135,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         tmr = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1 / GameConfig.SCALE);
 
         // Rubbish
-        RubbishBox box = new RubbishBox();
-        box.createRubbishBox(world);
-        box.createRubbishBox(world);
+        RubbishBox box = new RubbishBox(world, camera);
+        stage.addActor(box);
 
         // Load & Saving logic
         inv = pi.read();
@@ -160,6 +159,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         uiViewport.apply();
         renderUi();
         uiStage.draw();
+
+        // Stage acting
+        stage.act();
 
     }
 

@@ -1,14 +1,32 @@
 package com.mygdx.forkliftaone.entity;
 
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.forkliftaone.config.GameConfig;
 
-public class RubbishBox {
-    public void createRubbishBox(World world){
+public class RubbishBox extends Actor {
+    private Camera camera;
+    private World world;
+    private Body body;
+    private static int counter = 0;
+
+    public RubbishBox(World world, Camera camera){
+        this.camera = camera;
+        this.world = world;
+        this.body = createRubbishBox();
+        counter += 1;
+    }
+
+    public Body createRubbishBox(){
+
+
         Body box;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -34,5 +52,28 @@ public class RubbishBox {
         box.createFixture(fixDef).setUserData(this); // required for collision
 
         ps.dispose();
+
+        return box;
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        if (isBoxInCamera()){
+            // draw box
+        }
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        isBoxInCamera();
+    }
+
+    private boolean isBoxInCamera(){
+        if (camera.frustum.pointInFrustum(new Vector3(body.getPosition().x, body.getPosition().y, 0))){
+            return true;
+        }
+        return  false;
     }
 }

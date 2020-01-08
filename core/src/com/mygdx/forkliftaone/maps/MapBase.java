@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.forkliftaone.config.GameConfig;
 import com.mygdx.forkliftaone.entity.Sensor;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
@@ -46,7 +47,7 @@ public abstract class MapBase extends Actor{
 //        batch.draw(background, getX(), getY(), 8f, 4.8f); //viewport width
         batch.draw(background, getStage().getCamera().position.x - getStage().getViewport().getWorldWidth()/2f,
                 getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f,
-                8f, 4.8f);
+                getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
 
 
     }
