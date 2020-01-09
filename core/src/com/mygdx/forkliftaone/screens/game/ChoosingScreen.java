@@ -108,7 +108,7 @@ public class ChoosingScreen extends ScreenAdapter {
          forkliftRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_BODY);
          wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
 
-        map = new TestMap(world);
+        map = new TestMap(world, camera, stage, gamePlayAtlas);
         map.setRegion(backgoundRegion);
         map.createMap();
         stage.addActor(map);

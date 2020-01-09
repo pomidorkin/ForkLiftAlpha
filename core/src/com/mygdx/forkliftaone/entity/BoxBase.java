@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -23,12 +24,15 @@ public abstract class BoxBase extends Actor {
     private float density;
     private float boxSize = 0.37f; // Should by multiplied by 2
     private TextureRegion goodTexture;
+    private Vector2 position;
 
-    public BoxBase(World world, Camera camera, TextureAtlas atlas, float boxDensity, String goodTexture){
+    public BoxBase(World world, Camera camera, TextureAtlas atlas, float boxDensity, String goodTexture, Vector2 coords){
         this.camera = camera;
         this.world = world;
+        this.position = coords;
         this.body = createRubbishBox();
         this.density = boxDensity;
+
 
 //        TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
 
@@ -42,7 +46,7 @@ public abstract class BoxBase extends Actor {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.fixedRotation = false;
-        bodyDef.position.set(5f, 5f); // Should be obtained from the map
+        bodyDef.position.set(position); // Should be obtained from the map
 
         box = world.createBody(bodyDef);
         PolygonShape ps = new PolygonShape();

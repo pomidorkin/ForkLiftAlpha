@@ -41,6 +41,7 @@ import com.mygdx.forkliftaone.handlers.SensorContactListener;
 import com.mygdx.forkliftaone.maps.MapBase;
 import com.mygdx.forkliftaone.maps.TestMap;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
+import com.mygdx.forkliftaone.utils.BoxFactory;
 import com.mygdx.forkliftaone.utils.ForkliftData;
 import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
@@ -118,10 +119,11 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         TextureRegion wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
         TextureRegion backgoundRegion = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
 
-        map = new TestMap(world);
+        map = new TestMap(world, camera, stage, gamePlayAtlas);
         map.setRegion(backgoundRegion);
         map.createMap();
         stage.addActor(map);
+        ((TestMap)map).spawnBoxes();
 
         // Class ForkliftModel should have a constructor taking arguments from inventory
 //        model = new ForkliftModel(ForkliftModel.ModelName.MEDIUM, map);
@@ -136,8 +138,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         tmr = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1 / GameConfig.SCALE);
 
         // Rubbish
-        BoxBase box = new TestBox(world, camera, gamePlayAtlas);
-        stage.addActor(box);
+//        BoxBase box = new TestBox(world, camera, gamePlayAtlas);
+//        BoxFactory factory = new BoxFactory();
+//        stage.addActor(factory.getBox(world, camera, gamePlayAtlas, new Vector2(5f, 5f)));
 
         // Load & Saving logic
         inv = pi.read();
