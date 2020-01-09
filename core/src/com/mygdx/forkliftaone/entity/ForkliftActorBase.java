@@ -31,6 +31,7 @@ public class ForkliftActorBase extends Actor {
     private RevoluteJoint revoluteJointFork;
     private TextureRegion bodyTexture, tubeTexture, wheelTexture, forkTexture;
     private ForkliftModel model; //Not used...
+    private float fuelTank;
 
     public ForkliftActorBase(World world, ForkliftModel model){
         this.world = world;
@@ -38,6 +39,8 @@ public class ForkliftActorBase extends Actor {
     }
 
     public void createForklift(ForkliftModel model){
+        // Initializing fuel tank
+        fuelTank = 100.0f;
         // Creating body
         BodyDef forkLiftBodyDef = new BodyDef();
         forkLiftBodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -250,6 +253,20 @@ public class ForkliftActorBase extends Actor {
                 rearWheel.getAngle()*57.2957f);
 
 
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (fuelTank > 0){
+            fuelTank -= 5f * delta;
+            System.out.println(fuelTank);
+        }
+
+    }
+
+    public boolean isFuelTankEmpty(){
+        return (fuelTank <= 0);
     }
 
     public void moveForkliftRight(){

@@ -40,6 +40,7 @@ import com.mygdx.forkliftaone.entity.TestBox;
 import com.mygdx.forkliftaone.handlers.SensorContactListener;
 import com.mygdx.forkliftaone.maps.MapBase;
 import com.mygdx.forkliftaone.maps.TestMap;
+import com.mygdx.forkliftaone.screens.menu.MenuScreen;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
 import com.mygdx.forkliftaone.utils.BoxFactory;
 import com.mygdx.forkliftaone.utils.ForkliftData;
@@ -166,6 +167,12 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
         // Stage acting
         stage.act();
+
+        // Fuel system
+        // Should be implemented through dialog window with saving
+        if (forklift.isFuelTankEmpty()){
+            game.setScreen(new MenuScreen(game));
+        }
 
     }
 
