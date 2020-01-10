@@ -57,14 +57,14 @@ public abstract class BoxBase extends Actor {
         fixDef.density = 0.05f;
         fixDef.friction = 1f;
         fixDef.filter.categoryBits = GameConfig.BIT_OBSTACLE;
-        box.createFixture(fixDef);
+        box.createFixture(fixDef).setUserData(this); // required for collision
 
         ps.setAsBox(0.37f, 0.65f);
         fixDef.shape = ps;
         fixDef.density = density;
         fixDef.friction = 1f;
         fixDef.filter.categoryBits = GameConfig.BIT_FORKLIFT;
-        box.createFixture(fixDef).setUserData(this); // required for collision
+        box.createFixture(fixDef);
 
         ps.dispose();
 

@@ -117,7 +117,7 @@ public class ForkliftActorBase extends Actor {
         fixDef.friction = 1f;
         fixDef.filter.categoryBits = GameConfig.BIT_FORKLIFT;
         fixDef.filter.maskBits = (GameConfig.BIT_MAP | GameConfig.BIT_OBSTACLE);
-        fork.createFixture(fixDef);
+        fork.createFixture(fixDef).setUserData(this); // required for collision;
 //        fork.createFixture(forkShape, 0.25f);
 
         forkShape.dispose();
@@ -259,8 +259,8 @@ public class ForkliftActorBase extends Actor {
     public void act(float delta) {
         super.act(delta);
         if (fuelTank > 0){
-            fuelTank -= 5f * delta;
-            System.out.println(fuelTank);
+            fuelTank -= 0.1f * delta;
+//            System.out.println(fuelTank);
         }
 
     }
@@ -352,7 +352,15 @@ public class ForkliftActorBase extends Actor {
         return fork.getPosition();
     }
 
+//    public Body getFork() {
+//        return fork;
+//    }
+
     public float getFuelTank() {
         return fuelTank;
+    }
+
+    public void fillTank(){
+        System.out.println("Forklift and fuel are colliding");
     }
 }

@@ -33,7 +33,8 @@ public class TestMap extends MapBase {
 
     public void spawnBoxes() {
         for (Vector2 coord : boxCoords) {
-            stage.addActor(factory.getBox(world, camera, atlas, coord));
+//            stage.addActor(factory.getBox(world, camera, atlas, coord));
+            stage.addActor(factory.getFuelCan(world, camera, atlas, coord));
         }
     }
 }

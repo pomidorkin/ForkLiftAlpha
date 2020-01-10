@@ -6,6 +6,8 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.forkliftaone.entity.BoxBase;
+import com.mygdx.forkliftaone.entity.ForkliftActorBase;
+import com.mygdx.forkliftaone.entity.FuelCan;
 import com.mygdx.forkliftaone.entity.Sensor;
 
 public class SensorContactListener implements ContactListener {
@@ -31,6 +33,22 @@ public class SensorContactListener implements ContactListener {
             }
 
             sensor.trigger();
+
+        }
+
+        if (isForkFuelCollide(fa, fb)){
+            ForkliftActorBase forklift;
+            FuelCan fuel;
+            if (fa.getUserData() instanceof ForkliftActorBase){
+                forklift = (ForkliftActorBase) fa.getUserData();
+                fuel = (FuelCan) fb.getUserData();
+            } else {
+                forklift = (ForkliftActorBase) fb.getUserData();
+                fuel = (FuelCan) fa.getUserData();
+            }
+
+            forklift.fillTank();
+//            fuel.delete();
 
         }
 
@@ -62,6 +80,22 @@ public class SensorContactListener implements ContactListener {
 
         }
 
+        if (isForkFuelCollide(fa, fb)){
+            ForkliftActorBase forklift;
+            FuelCan fuel;
+            if (fa.getUserData() instanceof ForkliftActorBase){
+                forklift = (ForkliftActorBase) fa.getUserData();
+                fuel = (FuelCan) fb.getUserData();
+            } else {
+                forklift = (ForkliftActorBase) fb.getUserData();
+                fuel = (FuelCan) fa.getUserData();
+            }
+
+//            forklift.fillTank();
+//            fuel.delete();
+
+        }
+
     }
 
     @Override
@@ -77,6 +111,16 @@ public class SensorContactListener implements ContactListener {
     private boolean isSensorContact(Fixture a, Fixture b){
         if (a.getUserData() instanceof BoxBase || b.getUserData() instanceof BoxBase){
             if (a.getUserData() instanceof Sensor || b.getUserData() instanceof Sensor){
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    private boolean isForkFuelCollide(Fixture a, Fixture b){
+        if (a.getUserData() instanceof FuelCan || b.getUserData() instanceof FuelCan){
+            if (a.getUserData() instanceof ForkliftActorBase || b.getUserData() instanceof ForkliftActorBase){
                 return true;
             }
         }

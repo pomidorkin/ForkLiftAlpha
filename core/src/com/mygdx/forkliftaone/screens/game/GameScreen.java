@@ -115,6 +115,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
         //test
         world = new World(new Vector2(0, -9.8f), false);
+        // Adding contact listeners
         world.setContactListener(new SensorContactListener());
 
         // Creating texture atlas
