@@ -18,11 +18,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -37,6 +39,7 @@ import com.mygdx.forkliftaone.config.GameConfig;
 import com.mygdx.forkliftaone.dialogs.BackToMenuDialog;
 import com.mygdx.forkliftaone.entity.ForkliftActorBase;
 import com.mygdx.forkliftaone.entity.BoxBase;
+import com.mygdx.forkliftaone.entity.FuelCan;
 import com.mygdx.forkliftaone.entity.TestBox;
 import com.mygdx.forkliftaone.handlers.SensorContactListener;
 import com.mygdx.forkliftaone.maps.MapBase;
@@ -58,13 +61,14 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     private Viewport viewport, uiViewport;
     private OrthographicCamera camera, uiCamera;
-    private Stage stage, uiStage;
+    private Stage stage, uiStage, fuelStage;
 
     // UI
     private BitmapFont font;
     private ShapeRenderer shapeRenderer;
     private Table table;
     private Skin skin;
+    private TextButton fuelButton;
 
 
     //test
@@ -103,14 +107,19 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         font = assetManager.get(AssetDescriptors.FONT);
         shapeRenderer = new ShapeRenderer();
         uiStage = new Stage(uiViewport, game.getBatch());
+
+        // May be refactor later, because there are too many stages
+        fuelStage = new Stage(uiViewport, game.getBatch());
 //        Gdx.input.setInputProcessor(uiStage);
 
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(this);
         multiplexer.addProcessor(uiStage);
+        multiplexer.addProcessor(fuelStage);
         Gdx.input.setInputProcessor(multiplexer);
 
         uiStage.addActor(createUi());
+        fuelStage.addActor(createFuelButton());
 
 
         //test
@@ -176,6 +185,15 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         // Should be implemented through dialog window with saving
         if (forklift.isFuelTankEmpty()){
             game.setScreen(new MenuScreen(game));
+        }
+
+        if (forklift.isHasFuel()){
+            if (fuelButton.getTouchable().equals(Touchable.disabled)){
+                fuelButton.setTouchable(Touchable.enabled);
+            }
+            fuelStage.draw();
+        } else if (fuelButton.getTouchable().equals(Touchable.enabled)){
+            fuelButton.setTouchable(Touchable.disabled);
         }
 
     }
@@ -292,6 +310,37 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 //        table.add(pb);
 
         return table;
+    }
+
+    private Actor createFuelButton(){
+        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
+
+
+        table = new Table();
+        table.setWidth(Gdx.graphics.getWidth());
+        table.align(Align.center | Align.top);
+        table.setPosition(0, Gdx.graphics.getHeight());
+
+        // Fuel button test rough
+        fuelButton = new TextButton("Fill", skin);
+        fuelButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                forklift.setFuelTank(100f);
+                for (Actor can : stage.getActors()){
+                    if (can instanceof FuelCan && ((FuelCan) can).isActive()){
+                        ((FuelCan) can).detroyBox();
+                    }
+                }
+
+            }
+        });
+
+        table.add(fuelButton);
+        table.row();
+
+        return table;
+
     }
 
     @Override

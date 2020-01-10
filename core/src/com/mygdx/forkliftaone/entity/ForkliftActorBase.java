@@ -32,6 +32,7 @@ public class ForkliftActorBase extends Actor {
     private TextureRegion bodyTexture, tubeTexture, wheelTexture, forkTexture;
     private ForkliftModel model; //Not used...
     private float fuelTank;
+    private boolean hasFuel;
 
     public ForkliftActorBase(World world, ForkliftModel model){
         this.world = world;
@@ -259,7 +260,7 @@ public class ForkliftActorBase extends Actor {
     public void act(float delta) {
         super.act(delta);
         if (fuelTank > 0){
-            fuelTank -= 0.1f * delta;
+            fuelTank -= 5.0f * delta;
 //            System.out.println(fuelTank);
         }
 
@@ -358,6 +359,18 @@ public class ForkliftActorBase extends Actor {
 
     public float getFuelTank() {
         return fuelTank;
+    }
+
+    public void setFuelTank(float fuelTank) {
+        this.fuelTank = fuelTank;
+    }
+
+    public boolean isHasFuel() {
+        return hasFuel;
+    }
+
+    public void setHasFuel(boolean hasFuel) {
+        this.hasFuel = hasFuel;
     }
 
     public void fillTank(){

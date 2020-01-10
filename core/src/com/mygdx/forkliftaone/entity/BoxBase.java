@@ -102,4 +102,9 @@ public abstract class BoxBase extends Actor {
         }else
         return  false;
     }
+
+    public void detroyBox(){
+        world.destroyBody(body);
+        this.remove();
+    }
 }

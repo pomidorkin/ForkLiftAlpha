@@ -47,8 +47,8 @@ public class SensorContactListener implements ContactListener {
                 fuel = (FuelCan) fa.getUserData();
             }
 
-            forklift.fillTank();
-//            fuel.delete();
+            forklift.setHasFuel(true);
+            fuel.setActive(true);
 
         }
 
@@ -91,8 +91,8 @@ public class SensorContactListener implements ContactListener {
                 fuel = (FuelCan) fa.getUserData();
             }
 
-//            forklift.fillTank();
-//            fuel.delete();
+            forklift.setHasFuel(false);
+            fuel.setActive(false);
 
         }
 
