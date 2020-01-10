@@ -23,6 +23,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -75,6 +76,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private ForkliftData fd;
     private ProcessInventory pi = new ProcessInventory();
     private Inventory inv;
+
+    private ProgressBar bar;
 
     private MapBase map;
 
@@ -211,6 +214,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
                 Gdx.graphics.getHeight() - layout.height
         );
 
+        // Draw fuel icon
+        bar.setValue(forklift.getFuelTank());
+
         batch.end();
 
 
@@ -275,6 +281,14 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
         table.add(menuButton).padLeft(Gdx.graphics.getWidth() - 100f);
         table.row();
+
+        // Testing Fuel icon
+//        bar = new ProgressBar(0.0f, Gdx.graphics.getWidth()/2, 0.01f, false, skin.get("default", ProgressBar.ProgressBarStyle.class));
+        bar = new ProgressBar(0, 100, 0.01f, false, skin);
+
+        // The size of the fuel icon can be changed here
+        table.add(bar).width(Gdx.graphics.getWidth()/4).height(10f);
+//        table.add(pb);
 
         return table;
     }

@@ -351,4 +351,8 @@ public class ForkliftActorBase extends Actor {
     public Vector2 getFrokPosition(){
         return fork.getPosition();
     }
+
+    public float getFuelTank() {
+        return fuelTank;
+    }
 }
