@@ -29,12 +29,14 @@ public class TestMap extends MapBase {
         boxCoords = new Vector2[2];
         boxCoords[0] = new Vector2(5f, 5f);
         boxCoords[1] = new Vector2(5.5f, 5f);
+
     }
 
     public void spawnBoxes() {
         for (Vector2 coord : boxCoords) {
-//            stage.addActor(factory.getBox(world, camera, atlas, coord));
             stage.addActor(factory.getFuelCan(world, camera, atlas, coord));
+//            stage.addActor(factory.getBox(world, camera, atlas, coord));
+
         }
     }
 }

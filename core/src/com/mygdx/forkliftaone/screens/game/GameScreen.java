@@ -42,6 +42,7 @@ import com.mygdx.forkliftaone.entity.BoxBase;
 import com.mygdx.forkliftaone.entity.FuelCan;
 import com.mygdx.forkliftaone.entity.TestBox;
 import com.mygdx.forkliftaone.handlers.SensorContactListener;
+import com.mygdx.forkliftaone.maps.CustomTestMap;
 import com.mygdx.forkliftaone.maps.MapBase;
 import com.mygdx.forkliftaone.maps.TestMap;
 import com.mygdx.forkliftaone.screens.menu.MenuScreen;
@@ -133,11 +134,13 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         TextureRegion wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
         TextureRegion backgoundRegion = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
 
-        map = new TestMap(world, camera, stage, gamePlayAtlas);
+//        map = new TestMap(world, camera, stage, gamePlayAtlas);
+        map = new CustomTestMap(world, camera, stage, gamePlayAtlas);
         map.setRegion(backgoundRegion);
         map.createMap();
         stage.addActor(map);
-        ((TestMap)map).spawnBoxes();
+//        ((TestMap)map).spawnBoxes();
+        ((CustomTestMap)map).spawnBoxes();
 
         // Class ForkliftModel should have a constructor taking arguments from inventory
 //        model = new ForkliftModel(ForkliftModel.ModelName.MEDIUM, map);
@@ -327,6 +330,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 forklift.setFuelTank(100f);
+
+                // Logic for deleting fuel can after pressing the button
                 for (Actor can : stage.getActors()){
                     if (can instanceof FuelCan && ((FuelCan) can).isActive()){
                         ((FuelCan) can).detroyBox();

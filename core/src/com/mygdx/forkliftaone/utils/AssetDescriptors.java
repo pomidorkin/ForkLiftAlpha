@@ -18,4 +18,7 @@ public class AssetDescriptors {
     public static final AssetDescriptor<TiledMap> TEST_MAP =
             new AssetDescriptor<TiledMap>(AssetPaths.TEST_TILED_MAP, TiledMap.class);
 
+    public static final AssetDescriptor<TiledMap> CUSTOM_MAP =
+            new AssetDescriptor<TiledMap>(AssetPaths.CUSTOM_TILED_MAP, TiledMap.class);
+
 }
