@@ -65,6 +65,7 @@ public ForkliftModel(ForkliftData fd, MapBase map, TextureAtlas atlas){
                 // Textures
                 forkliftRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
                 wheelRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
+                forkRegion = atlas.findRegion(RegionNames.FORK_TEXTURE);
                 break;
 
             case MEDIUM:
@@ -94,6 +95,7 @@ public ForkliftModel(ForkliftData fd, MapBase map, TextureAtlas atlas){
                 // Textures
                 forkliftRegion = atlas.findRegion(RegionNames.FORKLIFT_BODY);
                 wheelRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
+                forkRegion = atlas.findRegion(RegionNames.FORK_TEXTURE);
 
                 break;
         }

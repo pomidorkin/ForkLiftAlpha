@@ -12,8 +12,11 @@ public class AssetDescriptors {
     public static final AssetDescriptor<BitmapFont> FONT =
             new AssetDescriptor<BitmapFont>(AssetPaths.UI_FONT, BitmapFont.class);
 
+//    public static final AssetDescriptor<TextureAtlas> TEST_ATLAS =
+//            new AssetDescriptor<TextureAtlas>(AssetPaths.FORKLIFT_PACK, TextureAtlas.class);
+
     public static final AssetDescriptor<TextureAtlas> TEST_ATLAS =
-            new AssetDescriptor<TextureAtlas>(AssetPaths.FORKLIFT_PACK, TextureAtlas.class);
+            new AssetDescriptor<TextureAtlas>(AssetPaths.CUSTOM_PACK, TextureAtlas.class);
 
     public static final AssetDescriptor<TiledMap> TEST_MAP =
             new AssetDescriptor<TiledMap>(AssetPaths.TEST_TILED_MAP, TiledMap.class);

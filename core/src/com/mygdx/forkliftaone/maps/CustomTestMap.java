@@ -42,7 +42,7 @@ public class CustomTestMap extends MapBase {
         boxCoords[0][0] = new Vector2(5f, 5f);
 //        boxCoords[0][1] = new Vector2(5.5f, 5f);
 
-        boxCoords[1][0] = new Vector2(5f, 5f);
+        boxCoords[1][0] = new Vector2(3f, 5f);
         boxCoords[1][1] = new Vector2(5.5f, 5f);
 
         boxCoords[2][0] = new Vector2(5f, 5f);

@@ -11,7 +11,7 @@ import com.mygdx.forkliftaone.utils.RegionNames;
 
 public class TestBox extends BoxBase {
     public TestBox(World world, Camera camera, TextureAtlas atlas, Vector2 coords) {
-        super(world, camera,  atlas,0.1f, RegionNames.FORKLIFT_WHEEL, coords);
+        super(world, camera,  atlas,0.1f, RegionNames.BOX_TEXTURE, coords);
 
     }
 }

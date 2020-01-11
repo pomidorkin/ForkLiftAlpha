@@ -253,15 +253,26 @@ public class ForkliftActorBase extends Actor {
                 getScaleX(), getScaleY(), //scaling
                 rearWheel.getAngle()*57.2957f);
 
+        // drawing tubes texture (Text)
+        for (Body forkliftTube : forkliftTubes){
+            batch.draw(forkTexture, // Texture
+                    forkliftTube.getPosition().x - model.getTubeSize()[0], forkliftTube.getPosition().y - model.getTubeSize()[1], // Texture position
+                    model.getTubeSize()[0], model.getTubeSize()[1], // Rotation point (width / 2, height /2 = center)
+                    model.getTubeSize()[0] * 2, model.getTubeSize()[1] * 2, // Width and height of the texture
+                    getScaleX(), getScaleY(), //scaling
+                    forkliftTube.getAngle()*57.2957f);
+        }
+
 
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
+
+        //Fuel burning speed
         if (fuelTank > 0){
-            fuelTank -= 5.0f * delta;
-//            System.out.println(fuelTank);
+            fuelTank -= 0.5f * delta;
         }
 
     }
@@ -346,6 +357,7 @@ public class ForkliftActorBase extends Actor {
         bodyTexture = model.getForkliftRegion();
         tubeTexture = model.getTubeRegion();
         wheelTexture = model.getWheelRegion();
+//        forkTexture = model.getForkRegion();
         forkTexture = model.getForkRegion();
     }
 

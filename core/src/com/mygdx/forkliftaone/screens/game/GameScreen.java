@@ -174,7 +174,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         viewport.apply();
         stage.draw();
         tmr.render();
-        b2dr.render(world, camera.combined);
+//        b2dr.render(world, camera.combined);
 
         // Testing UI
         uiViewport.apply();

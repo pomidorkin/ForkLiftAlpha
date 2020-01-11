@@ -5,5 +5,7 @@ public class RegionNames {
 
     public static final String FORKLIFT_BODY = "bodytexture";
     public static final String FORKLIFT_WHEEL = "wheeltexture";
+    public static final String FORK_TEXTURE = "tubeytexture";
     public static final String TEST_BACKGROUND = "57bf2fe698ab4156c2d31ce1";
+    public static final String BOX_TEXTURE = "box";
 }
