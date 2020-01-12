@@ -140,6 +140,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         map.createMap();
         stage.addActor(map);
 //        ((TestMap)map).spawnBoxes();
+        
+        // Find a way to solve the ugly casting (Bugs will appear if not change)
         ((CustomTestMap)map).spawnBoxes();
 
         // Class ForkliftModel should have a constructor taking arguments from inventory

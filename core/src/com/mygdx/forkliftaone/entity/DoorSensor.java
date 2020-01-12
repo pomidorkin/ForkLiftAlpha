@@ -5,10 +5,15 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.forkliftaone.maps.MapBase;
 
 public class DoorSensor {
 
-    public DoorSensor(World world, float x, float y, float width, float height){
+    private MapBase map;
+
+    public DoorSensor(World world, MapBase map, float x, float y, float width, float height){
+        this.map = map;
+
         Body box;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
@@ -27,4 +32,7 @@ public class DoorSensor {
         ps.dispose();
     }
 
+    public MapBase getMap() {
+        return map;
+    }
 }

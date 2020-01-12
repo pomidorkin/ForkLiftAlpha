@@ -10,6 +10,7 @@ import com.mygdx.forkliftaone.entity.DoorSensor;
 import com.mygdx.forkliftaone.entity.ForkliftActorBase;
 import com.mygdx.forkliftaone.entity.FuelCan;
 import com.mygdx.forkliftaone.entity.Sensor;
+import com.mygdx.forkliftaone.maps.CustomTestMap;
 
 public class SensorContactListener implements ContactListener {
     @Override
@@ -64,7 +65,8 @@ public class SensorContactListener implements ContactListener {
                 doorSensor = (DoorSensor) fa.getUserData();
             }
 
-            System.out.println("Box in a sensor. Open door");
+            // Find a way to solve the ugly casting (Bugs will appear if not change)
+            ((CustomTestMap)doorSensor.getMap()).openDoor();
 
         }
 

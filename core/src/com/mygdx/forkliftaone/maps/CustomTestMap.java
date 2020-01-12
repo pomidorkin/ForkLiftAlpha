@@ -62,7 +62,7 @@ public class CustomTestMap extends MapBase {
 //        boxCoords[3][1] = new Vector2(5.5f, 5f);
 
         createObstacles();
-        DoorSensor doorSensor = new DoorSensor(world, 1f, 1f, 1f, 1f);
+        DoorSensor doorSensor = new DoorSensor(world, this, 1.5f, 1f, 1f, 1f);
     }
 
     public void spawnBoxes() {
@@ -132,7 +132,7 @@ public class CustomTestMap extends MapBase {
         pjd.enableMotor = true;
         pjd.maxMotorForce = 3f;
         // Need to assign the value because of the positioning bug (to be remade)
-        pjd.motorSpeed = 1;
+        pjd.motorSpeed = 0;
         pjd.enableLimit = true;
         pjd.upperTranslation = 10f;
 
@@ -143,5 +143,9 @@ public class CustomTestMap extends MapBase {
         pjd.localAnchorA.set(0f, 00f);
         pjd.localAxisA.set(0, 1.0f);
         prismaticJoint = (PrismaticJoint) world.createJoint(pjd);
+    }
+
+    public void openDoor(){
+        prismaticJoint.setMotorSpeed(1);
     }
 }
