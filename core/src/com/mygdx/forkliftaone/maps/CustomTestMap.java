@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.joints.PrismaticJoint;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.forkliftaone.config.GameConfig;
+import com.mygdx.forkliftaone.entity.DoorSensor;
 import com.mygdx.forkliftaone.utils.AssetPaths;
 import com.mygdx.forkliftaone.utils.BoxFactory;
 
@@ -61,6 +62,7 @@ public class CustomTestMap extends MapBase {
 //        boxCoords[3][1] = new Vector2(5.5f, 5f);
 
         createObstacles();
+        DoorSensor doorSensor = new DoorSensor(world, 1f, 1f, 1f, 1f);
     }
 
     public void spawnBoxes() {

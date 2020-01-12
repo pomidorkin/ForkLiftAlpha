@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.forkliftaone.entity.BoxBase;
+import com.mygdx.forkliftaone.entity.DoorSensor;
 import com.mygdx.forkliftaone.entity.ForkliftActorBase;
 import com.mygdx.forkliftaone.entity.FuelCan;
 import com.mygdx.forkliftaone.entity.Sensor;
@@ -49,6 +50,21 @@ public class SensorContactListener implements ContactListener {
 
             forklift.setHasFuel(true);
             fuel.setActive(true);
+
+        }
+
+        if (isDoorOpen(fa, fb)){
+            BoxBase boxBase;
+            DoorSensor doorSensor;
+            if (fa.getUserData() instanceof BoxBase){
+                boxBase = (BoxBase) fa.getUserData();
+                doorSensor = (DoorSensor) fb.getUserData();
+            } else {
+                boxBase = (BoxBase) fb.getUserData();
+                doorSensor = (DoorSensor) fa.getUserData();
+            }
+
+            System.out.println("Box in a sensor. Open door");
 
         }
 
@@ -121,6 +137,16 @@ public class SensorContactListener implements ContactListener {
     private boolean isForkFuelCollide(Fixture a, Fixture b){
         if (a.getUserData() instanceof FuelCan || b.getUserData() instanceof FuelCan){
             if (a.getUserData() instanceof ForkliftActorBase || b.getUserData() instanceof ForkliftActorBase){
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    private boolean isDoorOpen(Fixture a, Fixture b){
+        if (a.getUserData() instanceof BoxBase || b.getUserData() instanceof BoxBase){
+            if (a.getUserData() instanceof DoorSensor || b.getUserData() instanceof DoorSensor){
                 return true;
             }
         }
