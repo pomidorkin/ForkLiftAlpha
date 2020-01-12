@@ -39,4 +39,9 @@ public class TestMap extends MapBase {
 
         }
     }
+
+    @Override
+    public void openDoor() {
+        // Some code here
+    }
 }

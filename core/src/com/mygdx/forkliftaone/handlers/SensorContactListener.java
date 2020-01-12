@@ -65,8 +65,7 @@ public class SensorContactListener implements ContactListener {
                 doorSensor = (DoorSensor) fa.getUserData();
             }
 
-            // Find a way to solve the ugly casting (Bugs will appear if not change)
-            ((CustomTestMap)doorSensor.getMap()).openDoor();
+            doorSensor.getMap().openDoor();
 
         }
 

@@ -76,4 +76,8 @@ public abstract class MapBase extends Actor{
     public void setRegion(TextureRegion backgroundTexture) {
         background = backgroundTexture;
     }
+
+    public abstract void openDoor();
+
+    public abstract void spawnBoxes();
 }
