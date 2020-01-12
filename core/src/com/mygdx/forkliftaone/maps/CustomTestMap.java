@@ -25,7 +25,7 @@ public class CustomTestMap extends MapBase {
     private Camera camera;
     private Stage stage;
 
-    private PrismaticJoint prismaticJoint;
+    private PrismaticJoint prismaticJoint, elevatorJoint;
 
     public CustomTestMap(World world, Camera camera, Stage stage, TextureAtlas atlas) {
         super(world, AssetPaths.CUSTOM_TILED_MAP, new Vector2(1.5f, 1.5f), 10f, 1f, 1f, 0.5f);
@@ -201,7 +201,7 @@ public class CustomTestMap extends MapBase {
         // model.getFrontWheelRadius() * 0.8f is required to make the position of the tubes lower
         pjdElevator.localAnchorA.set(0f, 0f);
         pjdElevator.localAxisA.set(0, 1f);
-        world.createJoint(pjdElevator);
+        elevatorJoint = (PrismaticJoint) world.createJoint(pjdElevator);
 
         shape.dispose();
     }
@@ -219,5 +219,14 @@ public class CustomTestMap extends MapBase {
     @Override
     public void act(float delta) {
         super.act(delta);
+
+        // Check for the lower and upper limits
+        if (elevatorJoint.getJointTranslation() <= -1){
+            elevatorJoint.setMotorSpeed(1);
+        } else if (elevatorJoint.getJointTranslation() >= 0){
+            elevatorJoint.setMotorSpeed(-1);
+        }
+
+
     }
 }
