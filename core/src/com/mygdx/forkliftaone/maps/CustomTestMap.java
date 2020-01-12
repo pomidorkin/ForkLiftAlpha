@@ -26,6 +26,7 @@ public class CustomTestMap extends MapBase {
     private Stage stage;
 
     private PrismaticJoint prismaticJoint, elevatorJoint;
+    private float elevatorTimer;
 
     public CustomTestMap(World world, Camera camera, Stage stage, TextureAtlas atlas) {
         super(world, AssetPaths.CUSTOM_TILED_MAP, new Vector2(1.5f, 1.5f), 10f, 1f, 1f, 0.5f);
@@ -221,12 +222,21 @@ public class CustomTestMap extends MapBase {
         super.act(delta);
 
         // Check for the lower and upper limits
+        // elevatorTimer (here it is 3) marks the pause which the elevator makes (how long it waits
         if (elevatorJoint.getJointTranslation() <= -1){
-            elevatorJoint.setMotorSpeed(1);
-        } else if (elevatorJoint.getJointTranslation() >= 0){
-            elevatorJoint.setMotorSpeed(-1);
-        }
+            elevatorTimer += 1 * delta;
+            if (elevatorTimer >= 3f){
+                elevatorJoint.setMotorSpeed(1);
+                elevatorTimer = 0;
+            }
 
+        } else if (elevatorJoint.getJointTranslation() >= 0){
+            elevatorTimer += 1 * delta;
+            if (elevatorTimer >= 3f){
+                elevatorJoint.setMotorSpeed(-1);
+                elevatorTimer = 0;
+            }
+        }
 
     }
 }
