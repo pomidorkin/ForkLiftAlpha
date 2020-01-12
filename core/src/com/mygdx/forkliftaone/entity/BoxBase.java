@@ -22,7 +22,7 @@ public abstract class BoxBase extends Actor {
     private World world;
     private Body body;
     private float density;
-    private float boxSize = 0.37f; // Should by multiplied by 2
+    private float boxSize = 0.30f; // Should by multiplied by 2
     private TextureRegion goodTexture;
     private Vector2 position;
 
@@ -59,7 +59,8 @@ public abstract class BoxBase extends Actor {
         fixDef.filter.categoryBits = GameConfig.BIT_OBSTACLE;
         box.createFixture(fixDef).setUserData(this); // required for collision
 
-        ps.setAsBox(0.37f, 0.65f);
+//        ps.setAsBox(0.37f, 0.65f);
+        ps.setAsBox(0.30f, 0.10f, new Vector2(0, -(0.30f + 0.10f)), 0);
         fixDef.shape = ps;
         fixDef.density = density;
         fixDef.friction = 1f;

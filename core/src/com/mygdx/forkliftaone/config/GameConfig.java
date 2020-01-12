@@ -23,5 +23,6 @@ public class GameConfig {
     public static final short BIT_MAP = 1; // 1 2 4 8 16
     public static final short BIT_FORKLIFT = 2;
     public static final short BIT_OBSTACLE = 4;
+    public static final short BIT_WALLS = 6;
 
 }

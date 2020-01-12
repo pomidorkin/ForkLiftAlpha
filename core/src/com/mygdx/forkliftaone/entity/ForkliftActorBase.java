@@ -42,6 +42,7 @@ public class ForkliftActorBase extends Actor {
     public void createForklift(ForkliftModel model){
         // Initializing fuel tank
         fuelTank = 100.0f;
+
         // Creating body
         BodyDef forkLiftBodyDef = new BodyDef();
         forkLiftBodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -57,6 +58,7 @@ public class ForkliftActorBase extends Actor {
         FixtureDef fixDef = new FixtureDef();
         fixDef.shape = shape;
         fixDef.density = 0.3f;
+        // Collision works in the following way: you specify category of your fixture and then each category with which it collides
         fixDef.filter.categoryBits = GameConfig.BIT_FORKLIFT;
         fixDef.filter.maskBits = (GameConfig.BIT_MAP | GameConfig.BIT_OBSTACLE);
         forklift.createFixture(fixDef);
