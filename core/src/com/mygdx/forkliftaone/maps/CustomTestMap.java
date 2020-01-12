@@ -1,6 +1,7 @@
 package com.mygdx.forkliftaone.maps;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -61,7 +62,9 @@ public class CustomTestMap extends MapBase {
         boxCoords[3][0] = new Vector2(6.5f, 5f);
 //        boxCoords[3][1] = new Vector2(5.5f, 5f);
 
-        createObstacles();
+        createObstacles(8f, 4f, 0.1f, 1f,
+                8f, 4f, 0.1f, 1f,
+                6f, 6f, 1f, 0.05f);
         DoorSensor doorSensor = new DoorSensor(world, this, 1.5f, 1f, 1f, 1f);
     }
 
@@ -88,17 +91,19 @@ public class CustomTestMap extends MapBase {
         }
     }
 
-    private void createObstacles(){
+    private void createObstacles(float wallX, float wallY, float wallWidth, float wallHeight,
+                                 float doorX, float doorY, float doorWidth, float doorHeight,
+                                 float elevatorX, float elevatorY, float elevatorWidth, float elevatorHeight){
         // Creating wall
         BodyDef wallsDef = new BodyDef();
         wallsDef.type = BodyDef.BodyType.StaticBody;
         wallsDef.fixedRotation = true;
-        wallsDef.position.set(0.2f, 2f);
+        wallsDef.position.set(wallX, wallY);
 
         Body wall = world.createBody(wallsDef);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(0.1f, 1f);
+        shape.setAsBox(wallWidth, wallHeight);
 
         FixtureDef fixDef = new FixtureDef();
         fixDef.shape = shape;
@@ -111,12 +116,12 @@ public class CustomTestMap extends MapBase {
         BodyDef doorDef = new BodyDef();
         doorDef.type = BodyDef.BodyType.DynamicBody;
         doorDef.fixedRotation = true;
-        doorDef.position.set(0.2f, 2f);
+        doorDef.position.set(doorX, doorY);
 
         Body door = world.createBody(doorDef);
 
         shape = new PolygonShape();
-        shape.setAsBox(0.1f, 1f);
+        shape.setAsBox(doorWidth, doorHeight);
 
         fixDef = new FixtureDef();
         fixDef.shape = shape;
@@ -125,27 +130,94 @@ public class CustomTestMap extends MapBase {
         fixDef.filter.maskBits = (GameConfig.BIT_FORKLIFT | GameConfig.BIT_OBSTACLE | GameConfig.BIT_MAP);
         door.createFixture(fixDef);
 
-        shape.dispose();
-
         // Creating prismatic joint
         PrismaticJointDef pjd = new PrismaticJointDef();
         pjd.enableMotor = true;
         pjd.maxMotorForce = 3f;
         // Need to assign the value because of the positioning bug (to be remade)
-        pjd.motorSpeed = 0;
+        pjd.motorSpeed = -1;
         pjd.enableLimit = true;
-        pjd.upperTranslation = 10f;
+        pjd.upperTranslation = 0f;
+        pjd.lowerTranslation = -2f;
 
         pjd.bodyA = wall;
         pjd.bodyB = door;
         pjd.collideConnected = false;
         // model.getFrontWheelRadius() * 0.8f is required to make the position of the tubes lower
-        pjd.localAnchorA.set(0f, 00f);
+        pjd.localAnchorA.set(0f, 0);
         pjd.localAxisA.set(0, 1.0f);
         prismaticJoint = (PrismaticJoint) world.createJoint(pjd);
+
+        // Creating elevator
+        // Elevator platform
+        BodyDef elevatorDef = new BodyDef();
+        elevatorDef.type = BodyDef.BodyType.StaticBody;
+        elevatorDef.fixedRotation = true;
+        elevatorDef.position.set(elevatorX, elevatorY);
+
+        Body elevator = world.createBody(elevatorDef);
+
+        shape = new PolygonShape();
+        shape.setAsBox(elevatorWidth, elevatorHeight);
+
+        fixDef = new FixtureDef();
+        fixDef.shape = shape;
+        fixDef.density = 0.3f;
+//        fixDef.filter.categoryBits = GameConfig.BIT_WALLS;
+//        fixDef.filter.maskBits = (GameConfig.BIT_FORKLIFT | GameConfig.BIT_OBSTACLE | GameConfig.BIT_MAP);
+        elevator.createFixture(fixDef);
+
+        // Elevator moving part
+        BodyDef elevatorMainDef = new BodyDef();
+        elevatorMainDef.type = BodyDef.BodyType.DynamicBody;
+        elevatorMainDef.fixedRotation = true;
+        elevatorMainDef.position.set(elevatorX, elevatorY);
+
+        Body elevatorMain = world.createBody(elevatorMainDef);
+
+        shape = new PolygonShape();
+        shape.setAsBox(elevatorWidth, elevatorHeight);
+
+        fixDef = new FixtureDef();
+        fixDef.shape = shape;
+        fixDef.density = 0.3f;
+        fixDef.filter.categoryBits = GameConfig.BIT_WALLS;
+        fixDef.filter.maskBits = (GameConfig.BIT_FORKLIFT | GameConfig.BIT_OBSTACLE | GameConfig.BIT_MAP);
+        elevatorMain.createFixture(fixDef);
+
+        // Elevator joint (motor)
+        PrismaticJointDef pjdElevator = new PrismaticJointDef();
+        pjdElevator.enableMotor = true;
+        pjdElevator.maxMotorForce = 3f;
+        // Need to assign the value because of the positioning bug (to be remade)
+        pjdElevator.motorSpeed = -1;
+        pjdElevator.enableLimit = true;
+        pjdElevator.upperTranslation = 0f;
+        pjdElevator.lowerTranslation = -1f;
+
+        pjdElevator.bodyA = elevator;
+        pjdElevator.bodyB = elevatorMain;
+        pjdElevator.collideConnected = false;
+        // model.getFrontWheelRadius() * 0.8f is required to make the position of the tubes lower
+        pjdElevator.localAnchorA.set(0f, 0f);
+        pjdElevator.localAxisA.set(0, 1f);
+        world.createJoint(pjdElevator);
+
+        shape.dispose();
     }
 
     public void openDoor(){
         prismaticJoint.setMotorSpeed(1);
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        // Drawing wall n` doors here
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
     }
 }
