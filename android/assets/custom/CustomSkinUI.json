@@ -89,6 +89,44 @@ com.ray3k.tenpatch.TenPatchDrawable: {
 		regions: []
 		playMode: 2
 	}
+	squereBackgroundPatched: {
+		region: squereBackground
+		horizontalStretchAreas: [ 9, 441 ]
+		verticalStretchAreas: [ 11, 64 ]
+		tiling: false
+		minWidth: 0
+		minHeight: 70
+		rightWidth: 7
+		leftWidth: 7
+		bottomHeight: 12
+		topHeight: 5
+		offsetX: 0
+		offsetY: 0
+		offsetXspeed: 0
+		offsetYspeed: 0
+		frameDuration: 0.03
+		regions: []
+		playMode: 2
+	}
+	squereBarPatched: {
+		region: squereBar
+		horizontalStretchAreas: [ 0, 429 ]
+		verticalStretchAreas: [ 14, 62 ]
+		tiling: false
+		minWidth: 0
+		minHeight: 70
+		rightWidth: 0
+		leftWidth: 0
+		bottomHeight: 0
+		topHeight: 0
+		offsetX: 0
+		offsetY: 0
+		offsetXspeed: 0
+		offsetYspeed: 0
+		frameDuration: 0.03
+		regions: []
+		playMode: 2
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	leftButton: {
@@ -104,11 +142,27 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 		imageDown: pausePushed
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: myfont
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
+	default-horizontal: {
+		background: squereBackgroundPatched
+		knobBefore: squereBarPatched
+	}
+}
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		font: myfont
 		up: textButtonPatched
 		down: textButtonPushedPatched
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {

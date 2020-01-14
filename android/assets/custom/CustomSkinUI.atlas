@@ -6,7 +6,7 @@ filter: Linear,Linear
 repeat: none
 myfont
   rotate: false
-  xy: 1, 422
+  xy: 1, 494
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
@@ -58,6 +58,20 @@ rightsButtonPushed
   xy: 329, 242
   size: 61, 78
   orig: 61, 78
+  offset: 0, 0
+  index: -1
+squereBackground
+  rotate: false
+  xy: 1, 422
+  size: 449, 70
+  orig: 449, 70
+  offset: 0, 0
+  index: -1
+squereBar
+  rotate: false
+  xy: 515, 936
+  size: 430, 70
+  orig: 430, 70
   offset: 0, 0
   index: -1
 textButton

@@ -68,7 +68,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     // UI
     private BitmapFont font;
-    private ShapeRenderer shapeRenderer;
+//    private ShapeRenderer shapeRenderer;
     private Table table;
     private Skin skin;
     private TextButton fuelButton;
@@ -109,7 +109,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         uiCamera = new OrthographicCamera();
         uiViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), uiCamera);
         font = assetManager.get(AssetDescriptors.FONT);
-        shapeRenderer = new ShapeRenderer();
+//        shapeRenderer = new ShapeRenderer();
         uiStage = new Stage(uiViewport, game.getBatch());
 
         // May be refactor later, because there are too many stages
@@ -218,19 +218,19 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private void renderUi() {
         // Testing style. Should be replaced with a picture from Asset Manager
         // Position should be absolute. It should not depend on screen/viewport width and height
-        shapeRenderer.setColor(Color.CYAN);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.box(0, 480f - (layout.height + 40f), 0,
-                800f, layout.height + 40f, 1);
-        shapeRenderer.end();
+//        shapeRenderer.setColor(Color.CYAN);
+//        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+//        shapeRenderer.box(0, 480f - (layout.height + 40f), 0,
+//                800f, layout.height + 40f, 1);
+//        shapeRenderer.end();
 
         batch.setProjectionMatrix(uiCamera.combined);
         batch.begin();
 
         // draw lives
-        String livesText = "Balance: " + inv.getBalance();
+        String livesText = "" + inv.getBalance();
         layout.setText(font, livesText);
-        font.draw(batch, layout, 20f, Gdx.graphics.getHeight() - layout.height);
+        font.draw(batch, layout, coinTexture.getRegionWidth() + 10f, 480f - coinTexture.getRegionHeight()/2);
 
         // draw score
         String scoreText = "SCORE: ";
@@ -245,13 +245,12 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
         // Drawing coin image
         batch.draw(coinTexture, // Texture
-                0, 400f, // Texture position
-                0, 0, // Rotation point (width / 2, height /2 = center)
+                10f, 480f - coinTexture.getRegionHeight(), // Texture position
+                coinTexture.getRegionWidth()/2, coinTexture.getRegionHeight()/2, // Rotation point (width / 2, height /2 = center)
                 uiViewport.getScreenHeight() / 10f, uiViewport.getScreenHeight() / 10f, // Width and height of the texture
                 1f, 1f, //scaling
                 0); // Rotation (radiants to degrees)
 
-        System.out.println(uiViewport.getScreenWidth());
 
 
         batch.end();
@@ -290,14 +289,14 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         b2dr.dispose();
         map.disposeTiledMap();
         font.dispose();
-        shapeRenderer.dispose();
+//        shapeRenderer.dispose();
         skin.dispose();
 //        batch.dispose();
     }
 
     private Actor createUi() {
-        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
-//        skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
+//        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
+        skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
 
 
         table = new Table();
@@ -305,8 +304,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         table.align(Align.center | Align.top);
         table.setPosition(0, Gdx.graphics.getHeight());
 
-        TextButton menuButton = new TextButton("Menu", skin);
-//        ImageButton menuButton = new ImageButton(skin.get("pauseButton", ImageButton.ImageButtonStyle.class));
+//        TextButton menuButton = new TextButton("Menu", skin);
+        ImageButton menuButton = new ImageButton(skin.get("pauseButton", ImageButton.ImageButtonStyle.class));
         menuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -326,14 +325,14 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         bar = new ProgressBar(0, 100, 0.01f, false, skin);
 
         // The size of the fuel icon can be changed here
-        table.add(bar).width(Gdx.graphics.getWidth() / 4).height(10f);
+        table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f).padRight((Gdx.graphics.getWidth()/2) + 290f).padTop(20f);
 //        table.add(pb);
 
         return table;
     }
 
     private Actor createFuelButton() {
-        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
+//        skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
 
 
         table = new Table();
@@ -358,7 +357,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
             }
         });
 
-        table.add(fuelButton);
+        table.add(fuelButton).padRight((Gdx.graphics.getWidth()/2) + 70f).padTop(80f);
         table.row();
 
         return table;
