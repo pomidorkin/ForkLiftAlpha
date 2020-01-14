@@ -99,17 +99,20 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 		imageUp: rightsButton
 		imageDown: rightsButtonPushed
 	}
+	pauseButton: {
+		imageUp: pause
+		imageDown: pausePushed
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
-		font: myfont,
+		font: myfont
 		up: textButtonPatched
 		down: textButtonPushedPatched
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
-		background: dialog
 		titleFont: myfont
 		stageBackground: dialog
 	}

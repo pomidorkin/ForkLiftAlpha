@@ -1,5 +1,5 @@
 
-custmPackedSet.png
+customPack.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
@@ -36,5 +36,12 @@ wheeltexture
   xy: 703, 660
   size: 71, 69
   orig: 71, 69
+  offset: 0, 0
+  index: -1
+coin
+  rotate: false
+  xy: 560, 444
+  size: 64, 69
+  orig: 64, 69
   offset: 0, 0
   index: -1

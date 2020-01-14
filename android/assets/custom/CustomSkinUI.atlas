@@ -20,28 +20,42 @@ dialog
   index: -1
 leftButton
   rotate: false
-  xy: 329, 342
+  xy: 623, 856
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 leftButtonPushed
   rotate: false
-  xy: 515, 756
+  xy: 1, 1
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
+pause
+  rotate: false
+  xy: 329, 322
+  size: 106, 98
+  orig: 106, 98
+  offset: 0, 0
+  index: -1
+pausePushed
+  rotate: false
+  xy: 515, 736
+  size: 106, 98
+  orig: 106, 98
+  offset: 0, 0
+  index: -1
 rightsButton
   rotate: false
-  xy: 623, 856
+  xy: 109, 101
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 rightsButtonPushed
   rotate: false
-  xy: 1, 1
+  xy: 329, 242
   size: 61, 78
   orig: 61, 78
   offset: 0, 0

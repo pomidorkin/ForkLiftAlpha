@@ -9,6 +9,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -70,6 +72,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private Table table;
     private Skin skin;
     private TextButton fuelButton;
+    private TextureRegion coinTexture;
 
 
     //test
@@ -133,6 +136,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         TextureRegion forkliftRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_BODY);
         TextureRegion wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
         TextureRegion backgoundRegion = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
+        this.coinTexture = gamePlayAtlas.findRegion(RegionNames.COIN_TEXTURE);
 
 //        map = new TestMap(world, camera, stage, gamePlayAtlas);
         map = new CustomTestMap(world, camera, stage, gamePlayAtlas);
@@ -185,16 +189,16 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
         // Fuel system
         // Should be implemented through dialog window with saving
-        if (forklift.isFuelTankEmpty()){
+        if (forklift.isFuelTankEmpty()) {
             game.setScreen(new MenuScreen(game));
         }
 
-        if (forklift.isHasFuel()){
-            if (fuelButton.getTouchable().equals(Touchable.disabled)){
+        if (forklift.isHasFuel()) {
+            if (fuelButton.getTouchable().equals(Touchable.disabled)) {
                 fuelButton.setTouchable(Touchable.enabled);
             }
             fuelStage.draw();
-        } else if (fuelButton.getTouchable().equals(Touchable.enabled)){
+        } else if (fuelButton.getTouchable().equals(Touchable.enabled)) {
             fuelButton.setTouchable(Touchable.disabled);
         }
 
@@ -213,10 +217,11 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     // Testing UI
     private void renderUi() {
         // Testing style. Should be replaced with a picture from Asset Manager
+        // Position should be absolute. It should not depend on screen/viewport width and height
         shapeRenderer.setColor(Color.CYAN);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.box(0, Gdx.graphics.getHeight() - (layout.height + 40f), 0,
-                Gdx.graphics.getWidth(), layout.height + 40f, 1);
+        shapeRenderer.box(0, 480f - (layout.height + 40f), 0,
+                800f, layout.height + 40f, 1);
         shapeRenderer.end();
 
         batch.setProjectionMatrix(uiCamera.combined);
@@ -237,6 +242,17 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
         // Draw fuel icon
         bar.setValue(forklift.getFuelTank());
+
+        // Drawing coin image
+        batch.draw(coinTexture, // Texture
+                0, 400f, // Texture position
+                0, 0, // Rotation point (width / 2, height /2 = center)
+                uiViewport.getScreenHeight() / 10f, uiViewport.getScreenHeight() / 10f, // Width and height of the texture
+                1f, 1f, //scaling
+                0); // Rotation (radiants to degrees)
+
+        System.out.println(uiViewport.getScreenWidth());
+
 
         batch.end();
 
@@ -281,6 +297,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     private Actor createUi() {
         skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
+//        skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
 
 
         table = new Table();
@@ -289,6 +306,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         table.setPosition(0, Gdx.graphics.getHeight());
 
         TextButton menuButton = new TextButton("Menu", skin);
+//        ImageButton menuButton = new ImageButton(skin.get("pauseButton", ImageButton.ImageButtonStyle.class));
         menuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -304,17 +322,17 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         table.row();
 
         // Testing Fuel icon
-//        bar = new ProgressBar(0.0f, Gdx.graphics.getWidth()/2, 0.01f, false, skin.get("default", ProgressBar.ProgressBarStyle.class));
+
         bar = new ProgressBar(0, 100, 0.01f, false, skin);
 
         // The size of the fuel icon can be changed here
-        table.add(bar).width(Gdx.graphics.getWidth()/4).height(10f);
+        table.add(bar).width(Gdx.graphics.getWidth() / 4).height(10f);
 //        table.add(pb);
 
         return table;
     }
 
-    private Actor createFuelButton(){
+    private Actor createFuelButton() {
         skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
 
 
@@ -331,8 +349,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
                 forklift.setFuelTank(100f);
 
                 // Logic for deleting fuel can after pressing the button
-                for (Actor can : stage.getActors()){
-                    if (can instanceof FuelCan && ((FuelCan) can).isActive()){
+                for (Actor can : stage.getActors()) {
+                    if (can instanceof FuelCan && ((FuelCan) can).isActive()) {
                         ((FuelCan) can).detroyBox();
                     }
                 }
