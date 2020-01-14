@@ -1,0 +1,117 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	myfont: {
+		file: myfont.fnt
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	RGBA_255_0_0_255: {
+		r: 1
+		g: 0
+		b: 0
+		a: 1
+	}
+}
+com.ray3k.tenpatch.TenPatchDrawable: {
+	textButtonPatched: {
+		region: textButton
+		horizontalStretchAreas: [ 48, 67 ]
+		verticalStretchAreas: [ 42, 69 ]
+		tiling: false
+		minWidth: 106
+		minHeight: 98
+		rightWidth: 38
+		leftWidth: 48
+		bottomHeight: 42
+		topHeight: 28
+		offsetX: 0
+		offsetY: 0
+		offsetXspeed: 0
+		offsetYspeed: 0
+		frameDuration: 0.03
+		regions: []
+		playMode: 2
+	}
+	dialogPached: {
+		region: dialog
+		horizontalStretchAreas: [ 37, 280 ]
+		verticalStretchAreas: [ 48, 198 ]
+		tiling: false
+		minWidth: 1
+		minHeight: 1
+		rightWidth: 46
+		leftWidth: 44
+		bottomHeight: 44
+		topHeight: 52
+		offsetX: 0
+		offsetY: 0
+		offsetXspeed: 0
+		offsetYspeed: 0
+		frameDuration: 0.03
+		regions: []
+		playMode: 2
+	}
+	leftButtonPatched: {
+		region: leftButton
+		horizontalStretchAreas: [ 0, 60 ]
+		verticalStretchAreas: [ 0, 77 ]
+		tiling: false
+		minWidth: 61
+		minHeight: 78
+		rightWidth: 0
+		leftWidth: 0
+		bottomHeight: 0
+		topHeight: 0
+		offsetX: 0
+		offsetY: 0
+		offsetXspeed: 0
+		offsetYspeed: 0
+		frameDuration: 0.03
+		regions: []
+		playMode: 2
+	}
+	textButtonPushedPatched: {
+		region: textButtonPushed
+		horizontalStretchAreas: [ 48, 67 ]
+		verticalStretchAreas: [ 42, 69 ]
+		tiling: false
+		minWidth: 106
+		minHeight: 98
+		rightWidth: 39
+		leftWidth: 47
+		bottomHeight: 43
+		topHeight: 27
+		offsetX: 0
+		offsetY: 0
+		offsetXspeed: 0
+		offsetYspeed: 0
+		frameDuration: 0.03
+		regions: []
+		playMode: 2
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	leftButton: {
+		imageUp: leftButtonPatched
+		imageDown: leftButtonPushed
+	}
+	rightButton: {
+		imageUp: rightsButton
+		imageDown: rightsButtonPushed
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: myfont,
+		up: textButtonPatched
+		down: textButtonPushedPatched
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: {
+		background: dialog
+		titleFont: myfont
+		stageBackground: dialog
+	}
+}
+}

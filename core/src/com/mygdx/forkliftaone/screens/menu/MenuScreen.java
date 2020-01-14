@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -26,15 +27,17 @@ public class MenuScreen extends MenuScreenBase {
     protected Actor createUi() {
 //        skin = new Skin(Gdx.files.internal("uiskin.json"));
 //        skin = new Skin(Gdx.files.internal("ui/uiskin.json"));
-        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
+//        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
 //        skin = new Skin(Gdx.files.internal("freezing/freezing-ui.json"));
+        // При использовании Скин Композера ОБЯЗАТЕЛЬНО указывать зависимости на тен патч
+        skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
 
         table = new Table();
         table.setWidth(Gdx.graphics.getWidth());
         table.align(Align.center | Align.top);
         table.setPosition(0, Gdx.graphics.getHeight());
 
-        startButton = new TextButton("Start Game!", skin);
+        startButton = new TextButton("Start Game", skin);
         startButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
