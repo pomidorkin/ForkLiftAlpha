@@ -14,6 +14,8 @@ import com.mygdx.forkliftaone.screens.menu.MenuScreen;
 import com.mygdx.forkliftaone.screens.menu.MenuScreenBase;
 import com.mygdx.forkliftaone.utils.ForkliftData;
 import com.mygdx.forkliftaone.utils.Inventory;
+import com.mygdx.forkliftaone.utils.MapData;
+import com.mygdx.forkliftaone.utils.MapModel;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
 
 public class MarketScreen extends MenuScreenBase {
@@ -51,7 +53,7 @@ public class MarketScreen extends MenuScreenBase {
                        fd.setPurchased(true);
 
                        // Saving
-                       Inventory inv2 = new Inventory(inv.getBalance(), inv.getAllModels());
+                       Inventory inv2 = new Inventory(inv.getBalance(), inv.getAllModels(), inv.getAllMaps());
                        pi.write(inv2);
 
                        // Refreshing market screen

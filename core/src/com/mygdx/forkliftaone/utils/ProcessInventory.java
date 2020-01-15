@@ -67,9 +67,15 @@ public class ProcessInventory {
             fd[2].setEngine(3);
             fd[2].setPurchased(false);
 
+            // Map saving
+            MapData[] md;
+            md = new MapData[1];
+            md[0] = new MapData();
+            md[0].setName(MapModel.MapName.CUSTOM);
+            md[0].setPurchased(true);
 
 
-            Inventory inv = new Inventory(0, fd);
+            Inventory inv = new Inventory(0, fd, md);
             write(inv);
             return inv;
         }

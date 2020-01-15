@@ -5,6 +5,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -30,6 +31,8 @@ import com.mygdx.forkliftaone.maps.TestMap;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
 import com.mygdx.forkliftaone.utils.ForkliftData;
 import com.mygdx.forkliftaone.utils.Inventory;
+import com.mygdx.forkliftaone.utils.MapData;
+import com.mygdx.forkliftaone.utils.MapModel;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
 import com.mygdx.forkliftaone.utils.RegionNames;
 
@@ -56,6 +59,9 @@ public class ChoosingScreen extends ScreenAdapter {
     private ForkliftData forkliftData;
     private Inventory inv;
 
+    private SpriteBatch batch;
+    TextureRegion backgoundRegion;
+
     private int counter;
 
 
@@ -65,6 +71,7 @@ public class ChoosingScreen extends ScreenAdapter {
         inv = pi.read();
         forkliftData = inv.getAllModels()[0];
         counter = 0;
+        batch = game.getBatch();
     }
 
 //    public ChoosingScreen(ForkLiftGame game, ForkliftData chosenModel, int counter){
@@ -81,6 +88,7 @@ public class ChoosingScreen extends ScreenAdapter {
         inv = pi.read();
         forkliftData = inv.getAllModels()[counter];
         this.counter = counter;
+        batch = game.getBatch();
     }
 
     @Override
@@ -104,25 +112,34 @@ public class ChoosingScreen extends ScreenAdapter {
         TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
         TextureRegion forkliftRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_BODY);
         TextureRegion wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
-        TextureRegion backgoundRegion = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
+//        TextureRegion backgoundRegion = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
+        backgoundRegion = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
          forkliftRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_BODY);
          wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
 
-        map = new TestMap(world, camera, stage, gamePlayAtlas);
+//        map = new TestMap(world, camera, stage, gamePlayAtlas);
+//        map.setRegion(backgoundRegion);
+//        map.createMap();
+
+        MapData mapData = new MapData();
+        mapData.setName(MapModel.MapName.CUSTOM);
+        MapModel md = new MapModel(mapData.getName(), world, camera, stage, gamePlayAtlas );
+        map = md.getMap();
         map.setRegion(backgoundRegion);
         map.createMap();
+
         stage.addActor(map);
 
         model = new ForkliftModel(forkliftData, map, gamePlayAtlas);
-        forklift = new ForkliftActorBase(world, model);
-        forklift.createForklift(model);
-        // Change the texture later so that they are different for each forklift
-        forklift.setRegion();
-        stage.addActor(forklift);
+//        forklift = new ForkliftActorBase(world, model);
+//        forklift.createForklift(model);
+//        // Change the texture later so that they are different for each forklift
+//        forklift.setRegion();
+//        stage.addActor(forklift);
 
         b2dr = new Box2DDebugRenderer();
         //Second parameter is responsible for scaling
-        tmr = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/ GameConfig.SCALE);
+//        tmr = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/ GameConfig.SCALE);
 
         uiStage.addActor(createUi());
     }
@@ -136,10 +153,12 @@ public class ChoosingScreen extends ScreenAdapter {
 
 
         viewport.apply();
-        tmr.render();
-        b2dr.render(world, camera.combined);
-        stage.draw();
+//        tmr.render();
+//        b2dr.render(world, camera.combined);
+//        stage.draw();
         hudViewport.apply();
+
+        drawMain();
         uiStage.draw();
     }
 
@@ -204,7 +223,9 @@ public class ChoosingScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 forkliftData.setTubes(forkliftData.getTubes()+1);
-                Inventory inv2 = new Inventory(inv.getBalance() - 10, inv.getAllModels());
+
+//                Inventory inv2 = new Inventory(inv.getBalance() - 10, inv.getAllModels(), mapData);
+                Inventory inv2 = new Inventory(inv.getBalance() - 10, inv.getAllModels(), inv.getAllMaps());
                 pi.write(inv2);
                 game.setScreen(new ChoosingScreen(game, counter));
             }
@@ -241,9 +262,49 @@ public class ChoosingScreen extends ScreenAdapter {
         return table;
     }
 
+    private void drawMain(){
+        batch.setProjectionMatrix(uiCamera.combined);
+        batch.begin();
+
+        batch.draw(backgoundRegion, uiStage.getCamera().position.x - uiStage.getViewport().getWorldWidth()/2f,
+                uiStage.getCamera().position.y - uiStage.getViewport().getWorldHeight()/2f,
+                uiStage.getCamera().viewportWidth, uiStage.getCamera().viewportHeight);
+
+        batch.draw(model.getForkliftRegion(), // Texture
+                2f,2f, // Texture position
+                model.getForkliftRegion().getRegionWidth()/2, model.getForkliftRegion().getRegionHeight()/2, // Rotation point (width / 2, height /2 = center)
+                hudViewport.getScreenHeight() / 10f, hudViewport.getScreenHeight() / 10f, // Width and height of the texture
+                1f, 1f, //scaling
+                0); // Rotation (radiants to degrees)
+
+        batch.draw(model.getWheelRegion(), // Texture
+                model.getFrontWheelPosition().x-model.getFrontWheelRadius(), model.getFrontWheelPosition().y-model.getFrontWheelRadius(), // Texture position
+                model.getFrontWheelRadius(), model.getFrontWheelRadius(), // Rotation point (width / 2, height /2 = center)
+                model.getFrontWheelRadius() * 200f, model.getFrontWheelRadius() * 200f, // Width and height of the texture
+                1f,1f, //scaling
+                0);
+
+        batch.draw(model.getWheelRegion(), // Texture
+                model.getRearWheelPosition().x-model.getRearWheelRadius(), model.getRearWheelPosition().y-model.getRearWheelRadius(), // Texture position
+                model.getRearWheelRadius(), model.getRearWheelRadius(), // Rotation point (width / 2, height /2 = center)
+                model.getRearWheelRadius() * 200f, model.getRearWheelRadius() * 200f, // Width and height of the texture
+                1f, 1f, //scaling
+                0);
+
+
+
+
+
+
+
+        batch.end();
+    }
+
+
+
     private void update(float delta) {
         world.step(1 / 60f, 6, 2);
-        tmr.setView(camera);
+//        tmr.setView(camera);
 
         // Разборки с текстурами
 //        stage.setViewport(viewport);
@@ -266,7 +327,7 @@ public class ChoosingScreen extends ScreenAdapter {
         stage.dispose();
         uiStage.dispose();
         world.dispose();
-        tmr.dispose();
+//        tmr.dispose();
         b2dr.dispose();
         map.disposeTiledMap();
         skin.dispose();
