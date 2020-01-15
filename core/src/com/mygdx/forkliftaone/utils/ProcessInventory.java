@@ -69,10 +69,14 @@ public class ProcessInventory {
 
             // Map saving
             MapData[] md;
-            md = new MapData[1];
+            md = new MapData[2];
             md[0] = new MapData();
             md[0].setName(MapModel.MapName.CUSTOM);
             md[0].setPurchased(true);
+
+            md[1] = new MapData();
+            md[1].setName(MapModel.MapName.TEST);
+            md[1].setPurchased(true);
 
 
             Inventory inv = new Inventory(0, fd, md);

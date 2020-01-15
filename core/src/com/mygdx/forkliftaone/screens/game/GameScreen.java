@@ -82,8 +82,10 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private OrthogonalTiledMapRenderer tmr;
     private World world;
     private ForkliftModel model;
+    private MapModel mapModel;
     private ForkliftActorBase forklift;
     private ForkliftData fd;
+    private MapData md;
     private ProcessInventory pi = new ProcessInventory();
     private Inventory inv;
 
@@ -91,9 +93,10 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     private MapBase map;
 
-    public GameScreen(ForkLiftGame game, ForkliftData fd) {
+    public GameScreen(ForkLiftGame game, ForkliftData fd, MapData md) {
         this.game = game;
         this.fd = fd;
+        this.md = md;
         assetManager = game.getAssetManager();
         batch = game.getBatch();
     }
@@ -141,11 +144,19 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         this.coinTexture = gamePlayAtlas.findRegion(RegionNames.COIN_TEXTURE);
 
 //        map = new TestMap(world, camera, stage, gamePlayAtlas);
-        map = new CustomTestMap(world, camera, stage, gamePlayAtlas);
+//        map = new CustomTestMap(world, camera, stage, gamePlayAtlas);
+//        map.setRegion(backgoundRegion);
+//        map.createMap();
+//        stage.addActor(map);
+//        map.spawnBoxes();
+
+        mapModel = new MapModel(md.getName(),world, camera, stage, gamePlayAtlas);
+        map = mapModel.getMap();
         map.setRegion(backgoundRegion);
         map.createMap();
         stage.addActor(map);
         map.spawnBoxes();
+
 
         // Class ForkliftModel should have a constructor taking arguments from inventory
 //        model = new ForkliftModel(ForkliftModel.ModelName.MEDIUM, map);

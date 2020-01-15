@@ -57,12 +57,14 @@ public class ChoosingScreen extends ScreenAdapter {
     private ForkliftActorBase forklift;
     private final AssetManager assetManager;
     private ForkliftData forkliftData;
+    private MapData mapData;
     private Inventory inv;
 
     private SpriteBatch batch;
     TextureRegion backgoundRegion;
 
     private int counter;
+    private int mapCounter;
 
 
     public ChoosingScreen(ForkLiftGame game){
@@ -70,7 +72,9 @@ public class ChoosingScreen extends ScreenAdapter {
         assetManager = game.getAssetManager();
         inv = pi.read();
         forkliftData = inv.getAllModels()[0];
+        mapData = inv.getAllMaps()[0];
         counter = 0;
+        mapCounter = 0;
         batch = game.getBatch();
     }
 
@@ -82,12 +86,14 @@ public class ChoosingScreen extends ScreenAdapter {
 //        this.counter = counter;
 //    }
 
-    private ChoosingScreen(ForkLiftGame game, int counter){
+    private ChoosingScreen(ForkLiftGame game, int counter, int mapCounter){
         this.game = game;
         assetManager = game.getAssetManager();
         inv = pi.read();
         forkliftData = inv.getAllModels()[counter];
+        mapData = inv.getAllMaps()[mapCounter];
         this.counter = counter;
+        this.mapCounter = mapCounter;
         batch = game.getBatch();
     }
 
@@ -180,6 +186,14 @@ public class ChoosingScreen extends ScreenAdapter {
             }
         }
 
+        // Map selection
+        final ArrayList<MapData> mdArray = new ArrayList<>();
+        for (int i = 0; i < inv.getAllMaps().length; i++){
+            if (inv.getAllMaps()[i].getPurchased()){
+                mdArray.add(inv.getAllMaps()[i]);
+            }
+        }
+
         TextButton nextTB = new TextButton("Next", skin);
         nextTB.addListener(new ClickListener() {
             @Override
@@ -195,7 +209,7 @@ public class ChoosingScreen extends ScreenAdapter {
                 System.out.println(forkliftData.getName() + "" + fdArray.size() + "" + counter);
                 // Refreshing screen
 //                game.setScreen(new GameScreen(game, fd));
-                game.setScreen(new ChoosingScreen(game, counter));
+                game.setScreen(new ChoosingScreen(game, counter, mapCounter));
 
             }
         });
@@ -213,7 +227,45 @@ public class ChoosingScreen extends ScreenAdapter {
                 System.out.println(forkliftData.getName() + "" + fdArray.size() + "" + counter);
                 // Refreshing screen
 //                game.setScreen(new GameScreen(game, fd));
-                game.setScreen(new ChoosingScreen(game, counter));
+                game.setScreen(new ChoosingScreen(game, counter, mapCounter));
+
+            }
+        });
+
+        TextButton nextMap = new TextButton("Next Map", skin);
+        nextMap.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                if (mapCounter+1 == mdArray.size()){
+                    mapCounter = 0;
+                } else {
+                    mapCounter++;
+                }
+                mapData = mdArray.get(mapCounter);
+                // Delete SOUT
+                System.out.println(mapData.getName() + "" + mdArray.size() + "" + mapCounter);
+                // Refreshing screen
+//                game.setScreen(new GameScreen(game, fd));
+                game.setScreen(new ChoosingScreen(game, counter, mapCounter));
+
+            }
+        });
+        TextButton previousMap = new TextButton("Previous Map", skin);
+        previousMap.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (mapCounter == 0){
+                    mapCounter = mdArray.size()-1;
+                } else {
+                    mapCounter--;
+                }
+                mapData = mdArray.get(mapCounter);
+                // Delete SOUT
+                System.out.println(mapData.getName() + "" + mdArray.size() + "" + mapCounter);
+                // Refreshing screen
+//                game.setScreen(new GameScreen(game, fd));
+                game.setScreen(new ChoosingScreen(game, counter, mapCounter));
 
             }
         });
@@ -227,13 +279,16 @@ public class ChoosingScreen extends ScreenAdapter {
 //                Inventory inv2 = new Inventory(inv.getBalance() - 10, inv.getAllModels(), mapData);
                 Inventory inv2 = new Inventory(inv.getBalance() - 10, inv.getAllModels(), inv.getAllMaps());
                 pi.write(inv2);
-                game.setScreen(new ChoosingScreen(game, counter));
+                game.setScreen(new ChoosingScreen(game, counter, mapCounter));
             }
         });
 
         // Work with alignment a little bit
         table.add(nextTB).padLeft(-100);
         table.add(previousTB).padLeft(-100);
+        table.row();
+        table.add(nextMap).padLeft(-100);
+        table.add(previousMap).padLeft(-100);
         table.row();
         table.add(upgrateButton);
         table.row();
@@ -242,7 +297,7 @@ public class ChoosingScreen extends ScreenAdapter {
         startButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameScreen(game, forkliftData));
+                game.setScreen(new GameScreen(game, forkliftData, mapData));
             }
         });
 
