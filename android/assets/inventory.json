@@ -1,1 +1,1 @@
-{"allModels":[{"name":"SMALL","engine":3,"tubes":3,"purchased":true},{"name":"MEDIUM","engine":3,"tubes":3,"purchased":false},{"name":"LARGE","engine":3,"tubes":3,"purchased":false}],"allMaps":[{"name":"CUSTOM","purchased":true},{"name":"TEST","purchased":true}],"balance":0}
+{"allModels":[{"name":"SMALL","engine":3,"tubes":3,"purchased":true},{"name":"LARGE","engine":3,"tubes":3,"purchased":true},{"name":"MEDIUM","engine":3,"tubes":3,"purchased":true}],"allMaps":[{"name":"CUSTOM","purchased":true},{"name":"TEST","purchased":true}],"balance":-20}

@@ -71,7 +71,7 @@ public class ChoosingScreen extends ScreenAdapter {
         this.game = game;
         assetManager = game.getAssetManager();
         inv = pi.read();
-        forkliftData = inv.getAllModels()[0];
+        forkliftData = inv.getAllModels().get(0);
         mapData = inv.getAllMaps()[0];
         counter = 0;
         mapCounter = 0;
@@ -90,7 +90,7 @@ public class ChoosingScreen extends ScreenAdapter {
         this.game = game;
         assetManager = game.getAssetManager();
         inv = pi.read();
-        forkliftData = inv.getAllModels()[counter];
+        forkliftData = inv.getAllModels().get(counter);
         mapData = inv.getAllMaps()[mapCounter];
         this.counter = counter;
         this.mapCounter = mapCounter;
@@ -169,8 +169,7 @@ public class ChoosingScreen extends ScreenAdapter {
     }
 
     private Actor createUi(){
-        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
-
+        skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
 
         table = new Table();
         table.setWidth(Gdx.graphics.getWidth());
@@ -180,9 +179,9 @@ public class ChoosingScreen extends ScreenAdapter {
         // Test (selection via next/previous buttons is working)
 //        final ForkliftData[] fdArray;
         final ArrayList<ForkliftData> fdArray = new ArrayList<>();
-        for (int i = 0; i < inv.getAllModels().length; i++){
-            if (inv.getAllModels()[i].getPurchased()){
-                fdArray.add(inv.getAllModels()[i]);
+        for (int i = 0; i < inv.getAllModels().size(); i++){
+            if (inv.getAllModels().get(i).getPurchased()){
+                fdArray.add(inv.getAllModels().get(i));
             }
         }
 

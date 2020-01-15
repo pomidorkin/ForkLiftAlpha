@@ -10,11 +10,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProcessInventory {
 
     private Gson gson = new Gson();
     private File myFile = new File("inventory.json");
+    private File generalData = new File("generalData.json");
 
 
     public boolean write(Inventory inv){
@@ -23,6 +26,24 @@ public class ProcessInventory {
         {
             BufferedWriter bw = new BufferedWriter(new FileWriter(myFile));
             bw.write(gson.toJson(inv));
+            bw.flush();
+            bw.close();
+
+            return true;
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean write(GeneralData gd){
+
+        try
+        {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(generalData));
+            bw.write(gson.toJson(gd));
             bw.flush();
             bw.close();
 
@@ -45,6 +66,48 @@ public class ProcessInventory {
                 e.printStackTrace();
             }
         } else {
+            // Creating new jSon inventory file, where only SMALL forklift is purchased
+
+            List<ForkliftData> fd = new ArrayList<>();
+            fd.add(new ForkliftData());
+            fd.get(0).setTubes(3);
+            fd.get(0).setName(ForkliftModel.ModelName.SMALL);
+            fd.get(0).setEngine(3);
+            fd.get(0).setPurchased(true);
+
+            // Map saving
+            MapData[] md;
+            md = new MapData[2];
+            md[0] = new MapData();
+            md[0].setName(MapModel.MapName.CUSTOM);
+            md[0].setPurchased(true);
+
+            md[1] = new MapData();
+            md[1].setName(MapModel.MapName.TEST);
+            md[1].setPurchased(true);
+
+
+            Inventory inv = new Inventory(0, fd, md);
+            write(inv);
+            return inv;
+        }
+
+        Gson gson = new Gson();
+        Inventory inv = gson.fromJson(bufferedReader, Inventory.class);
+
+        return inv;
+    }
+
+    public GeneralData readGeneralData(){
+        BufferedReader bufferedReader = null;
+        // General data (created for updates)
+        if (generalData.exists()){
+            try {
+                bufferedReader = new BufferedReader(new FileReader(generalData));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }else {
             // Creating new jSon inventory file, where only SMALL forklift is purchased
 
             ForkliftData[] fd;
@@ -79,14 +142,13 @@ public class ProcessInventory {
             md[1].setPurchased(true);
 
 
-            Inventory inv = new Inventory(0, fd, md);
-            write(inv);
-            return inv;
+            GeneralData gd = new GeneralData(fd, md);
+            write(gd);
+            return gd;
         }
-
         Gson gson = new Gson();
-        Inventory inv = gson.fromJson(bufferedReader, Inventory.class);
+        GeneralData gd = gson.fromJson(bufferedReader, GeneralData.class);
 
-        return inv;
+        return gd;
     }
 }

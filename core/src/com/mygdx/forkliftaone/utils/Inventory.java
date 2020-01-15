@@ -1,20 +1,23 @@
 package com.mygdx.forkliftaone.utils;
 
+import java.util.List;
+
 public class Inventory {
 
 
 
-    private ForkliftData[] allModels;
+//    private ForkliftData[] allModels;
+    private List<ForkliftData> allModels;
     private MapData[] allMaps;
     private int balance;
 
-    public Inventory(int balance, ForkliftData[] fd, MapData[] md){
+    public Inventory(int balance, List<ForkliftData> fd, MapData[] md){
         this.balance = balance;
         this.allMaps = md;
         allModels = fd;
     };
 
-    public ForkliftData[] getAllModels() {
+    public List<ForkliftData> getAllModels() {
         return allModels;
     }
 

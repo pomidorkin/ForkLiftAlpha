@@ -13,6 +13,7 @@ import com.mygdx.forkliftaone.ForkliftModel;
 import com.mygdx.forkliftaone.screens.menu.MenuScreen;
 import com.mygdx.forkliftaone.screens.menu.MenuScreenBase;
 import com.mygdx.forkliftaone.utils.ForkliftData;
+import com.mygdx.forkliftaone.utils.GeneralData;
 import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.MapData;
 import com.mygdx.forkliftaone.utils.MapModel;
@@ -25,15 +26,17 @@ public class MarketScreen extends MenuScreenBase {
     private TextButton buyButton, backButton;
     ProcessInventory pi = new ProcessInventory();
     private Inventory inv;
+    private GeneralData gd;
 
     public MarketScreen(ForkLiftGame game) {
         super(game);
         inv = pi.read();
+        gd = pi.readGeneralData();
     }
 
     @Override
     protected Actor createUi() {
-        skin = new Skin(Gdx.files.internal("uiskin.json"));
+        skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
 
         table = new Table();
         table.setWidth(Gdx.graphics.getWidth());
@@ -42,24 +45,71 @@ public class MarketScreen extends MenuScreenBase {
 
         // Testing cycle for showing models
         // Testing buying is working
-        for(final ForkliftData fd : inv.getAllModels()) {
-            if (!fd.getPurchased()) {
 
-               TextButton tb = new TextButton("Buy " + fd.getName().name().toLowerCase(), skin);
-               tb.addListener(new ClickListener() {
-                   @Override
-                   public void clicked(InputEvent event, float x, float y) {
-                       inv.setBalance(inv.getBalance() - 10);
-                       fd.setPurchased(true);
+        // Looping through the general data
+        for (final ForkliftData fd : gd.getAllModels()) {
+            boolean purchased = false;
 
-                       // Saving
-                       Inventory inv2 = new Inventory(inv.getBalance(), inv.getAllModels(), inv.getAllMaps());
-                       pi.write(inv2);
+            // Checking if a forklift from general data exists in inventory
+            for (ForkliftData fdd : inv.getAllModels()){
+                if (fdd.getName() == fd.getName()){
+                    purchased = true;
+                }
+            } if (!purchased) {
 
-                       // Refreshing market screen
-                       game.setScreen(new MarketScreen(game));
-                   }
-               });
+                TextButton tb = new TextButton("Buy " + fd.getName().name().toLowerCase(), skin);
+                tb.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+
+
+                        inv.setBalance(inv.getBalance() - 10);
+                        fd.setPurchased(true);
+
+                        // Saving models
+                        inv.getAllModels().add(fd);
+
+                        // Saving
+                        Inventory inv2 = new Inventory(inv.getBalance(), inv.getAllModels(), inv.getAllMaps());
+                        pi.write(inv2);
+
+                        GeneralData gd2 = new GeneralData(gd.getAllModels(), gd.getAllMaps());
+                        pi.write(gd2);
+
+                        // Refreshing market screen
+                        game.setScreen(new MarketScreen(game));
+
+
+                    }
+                });
+
+                table.padTop(30f);
+                table.add(tb).padBottom(30);
+                table.row();
+
+            }
+
+        }
+
+        // Buying map
+        for (final MapData md : inv.getAllMaps()) {
+            if (!md.getPurchased()) {
+
+                TextButton tb = new TextButton("Buy " + md.getName().name().toLowerCase(), skin);
+                tb.addListener(new ClickListener() {
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        inv.setBalance(inv.getBalance() - 10);
+                        md.setPurchased(true);
+
+                        // Saving
+                        Inventory inv2 = new Inventory(inv.getBalance(), inv.getAllModels(), inv.getAllMaps());
+                        pi.write(inv2);
+
+                        // Refreshing market screen
+                        game.setScreen(new MarketScreen(game));
+                    }
+                });
 
                 table.padTop(30f);
                 table.add(tb).padBottom(30);
@@ -70,11 +120,11 @@ public class MarketScreen extends MenuScreenBase {
         // Other buttons
 
         backButton = new TextButton("Back", skin);
-        backButton.addListener(new ClickListener(){
+        backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
-                    game.setScreen(new MenuScreen(game));
+                game.setScreen(new MenuScreen(game));
             }
         });
 
