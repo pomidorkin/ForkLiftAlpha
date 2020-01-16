@@ -195,7 +195,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         // Testing UI
         uiViewport.apply();
         renderUi();
-        uiStage.draw();
+
 
         // Stage acting
         stage.act();
@@ -214,6 +214,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         } else if (fuelButton.getTouchable().equals(Touchable.enabled)) {
             fuelButton.setTouchable(Touchable.disabled);
         }
+
+        uiStage.draw();
 
     }
 
@@ -449,8 +451,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private void cameraUpdate(float delta) {
         Vector3 position = camera.position;
 
-        position.x = forklift.getFrokPosition().x;
-        position.y = forklift.getFrokPosition().y + 1.5f;
+        // Interpolation implemented
+        position.x = camera.position.x + (forklift.getFrokPosition().x - camera.position.x) * 0.1f;
+        position.y = camera.position.y + ((forklift.getFrokPosition().y + 1.5f) - camera.position.y) * 0.1f;
 
         camera.position.set(position);
 
