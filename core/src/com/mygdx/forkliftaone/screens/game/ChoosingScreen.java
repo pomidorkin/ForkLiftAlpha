@@ -72,7 +72,7 @@ public class ChoosingScreen extends ScreenAdapter {
         assetManager = game.getAssetManager();
         inv = pi.read();
         forkliftData = inv.getAllModels().get(0);
-        mapData = inv.getAllMaps()[0];
+        mapData = inv.getAllMaps().get(0);
         counter = 0;
         mapCounter = 0;
         batch = game.getBatch();
@@ -91,7 +91,7 @@ public class ChoosingScreen extends ScreenAdapter {
         assetManager = game.getAssetManager();
         inv = pi.read();
         forkliftData = inv.getAllModels().get(counter);
-        mapData = inv.getAllMaps()[mapCounter];
+        mapData = inv.getAllMaps().get(mapCounter);
         this.counter = counter;
         this.mapCounter = mapCounter;
         batch = game.getBatch();
@@ -187,9 +187,9 @@ public class ChoosingScreen extends ScreenAdapter {
 
         // Map selection
         final ArrayList<MapData> mdArray = new ArrayList<>();
-        for (int i = 0; i < inv.getAllMaps().length; i++){
-            if (inv.getAllMaps()[i].getPurchased()){
-                mdArray.add(inv.getAllMaps()[i]);
+        for (int i = 0; i < inv.getAllMaps().size(); i++){
+            if (inv.getAllMaps().get(i).getPurchased()){
+                mdArray.add(inv.getAllMaps().get(i));
             }
         }
 

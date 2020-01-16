@@ -32,8 +32,10 @@ public class MarketScreen extends MenuScreenBase {
     private Inventory inv;
     private GeneralData gd;
     private ForkliftData forkliftData;
+    private MapData mapData;
 
     private List<ForkliftData> unpurchasedForklifts;
+    private List<MapData> unpurchasedMaps;
 
     private int counter;
     private int mapCounter;
@@ -46,6 +48,7 @@ public class MarketScreen extends MenuScreenBase {
         gd = pi.readGeneralData();
         this.forkliftData = gd.getAllModels()[0];
         unpurchasedForklifts = new ArrayList<>();
+        unpurchasedMaps = new ArrayList<>();
     }
 
     public MarketScreen(ForkLiftGame game, int counter, int mapCounter) {
@@ -56,6 +59,7 @@ public class MarketScreen extends MenuScreenBase {
         gd = pi.readGeneralData();
         this.forkliftData = gd.getAllModels()[counter];
         unpurchasedForklifts = new ArrayList<>();
+        unpurchasedMaps = new ArrayList<>();
     }
 
     @Override
@@ -69,77 +73,6 @@ public class MarketScreen extends MenuScreenBase {
 
         // Testing cycle for showing models
         // Testing buying is working
-
-        // Looping through the general data
-        for (final ForkliftData fd : gd.getAllModels()) {
-            boolean purchased = false;
-
-            // Checking if a forklift from general data exists in inventory
-            for (ForkliftData fdd : inv.getAllModels()) {
-                if (fdd.getName() == fd.getName()) {
-                    purchased = true;
-                }
-            }
-            if (!purchased) {
-
-                TextButton tb = new TextButton("Buy " + fd.getName().name().toLowerCase(), skin);
-                tb.addListener(new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-
-                        inv.setBalance(inv.getBalance() - 10);
-                        fd.setPurchased(true);
-
-                        // Saving models
-                        inv.getAllModels().add(fd);
-
-                        // Saving
-                        Inventory inv2 = new Inventory(inv.getBalance(), inv.getAllModels(), inv.getAllMaps());
-                        pi.write(inv2);
-
-                        GeneralData gd2 = new GeneralData(gd.getAllModels(), gd.getAllMaps());
-                        pi.write(gd2);
-
-                        // Refreshing market screen
-                        game.setScreen(new MarketScreen(game));
-
-                    }
-                });
-
-                table.padTop(30f);
-                table.add(tb).padBottom(30);
-                table.row();
-
-            }
-
-        }
-
-        // Buying map
-        for (final MapData md : inv.getAllMaps()) {
-            if (!md.getPurchased()) {
-
-                TextButton tb = new TextButton("Buy " + md.getName().name().toLowerCase(), skin);
-                tb.addListener(new ClickListener() {
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        inv.setBalance(inv.getBalance() - 10);
-                        md.setPurchased(true);
-
-                        // Saving
-                        Inventory inv2 = new Inventory(inv.getBalance(), inv.getAllModels(), inv.getAllMaps());
-                        pi.write(inv2);
-
-                        // Refreshing market screen
-                        game.setScreen(new MarketScreen(game));
-                    }
-                });
-
-                table.padTop(30f);
-                table.add(tb).padBottom(30);
-                table.row();
-            }
-        }
-
         // Scrolling market
 
         for (final ForkliftData fd : gd.getAllModels()) {
@@ -152,14 +85,26 @@ public class MarketScreen extends MenuScreenBase {
                 }
             }
             if (!purchased) {
-
                 unpurchasedForklifts.add(fd);
-
             }
-
-
         }
 
+        for (final MapData md : gd.getAllMaps()) {
+            boolean mapPurchased = false;
+
+            // Checking if a forklift from general data exists in inventory
+            for (MapData mdd : inv.getAllMaps()) {
+                if (mdd.getName() == md.getName()) {
+                    mapPurchased = true;
+                }
+            }
+            if (!mapPurchased) {
+                unpurchasedMaps.add(md);
+            }
+        }
+
+
+        // Forklift scrolling buttons logic
         if (unpurchasedForklifts.size() > 0) {
             TextButton nextTB = new TextButton("Next", skin);
             nextTB.addListener(new ClickListener() {
@@ -180,7 +125,7 @@ public class MarketScreen extends MenuScreenBase {
                     forkliftData = unpurchasedForklifts.get(counter);
 
                     // Refreshing market screen
-                    game.setScreen(new MarketScreen(game, counter, 0));
+                    game.setScreen(new MarketScreen(game, counter, mapCounter));
 
 //                forkliftData = fdArray.get(counter);
                     System.out.println("Size of unpurchasedForklifts " + unpurchasedForklifts.size());
@@ -188,14 +133,34 @@ public class MarketScreen extends MenuScreenBase {
                 }
             });
 
-            table.row();
-            table.add(nextTB);
-        } else {
-            System.out.println("Nothing to buy");
-            // Code telling that everything is purchased here
-        }
+            // "Previous button"
+            TextButton previousTB = new TextButton("Previous", skin);
+            previousTB.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
 
-        if (unpurchasedForklifts.size() > 0) {
+                    if (unpurchasedForklifts.size() != 0) {
+                        if (counter == 0) {
+                            counter = unpurchasedForklifts.size() - 1;
+                        } else {
+                            counter--;
+                        }
+                    }
+
+                    System.out.println("counter = " + counter);
+
+
+                    forkliftData = unpurchasedForklifts.get(counter);
+
+                    // Refreshing market screen
+                    game.setScreen(new MarketScreen(game, counter, mapCounter));
+
+//                forkliftData = fdArray.get(counter);
+                    System.out.println("Size of unpurchasedForklifts " + unpurchasedForklifts.size());
+
+                }
+            });
+
             TextButton buyButton = new TextButton("Buy", skin);
             buyButton.addListener(new ClickListener() {
                 @Override
@@ -224,7 +189,106 @@ public class MarketScreen extends MenuScreenBase {
 
             table.row();
             table.add(buyButton);
+            table.row();
+            table.add(nextTB);
+            table.add(previousTB);
+        } else {
+            System.out.println("No forklifts to buy");
+            // Code telling that everything is purchased here
         }
+
+        // Maps buying scrolling logic
+        if (unpurchasedMaps.size() > 0) {
+            TextButton nextMapTB = new TextButton("Next map", skin);
+            nextMapTB.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+
+                    if (unpurchasedMaps.size() != 0) {
+                        if (mapCounter + 1 == unpurchasedMaps.size()) {
+                            mapCounter = 0;
+                        } else {
+                            mapCounter++;
+                        }
+                    }
+
+                    System.out.println("Map counter = " + mapCounter);
+
+
+                    mapData = unpurchasedMaps.get(mapCounter);
+
+                    // Refreshing market screen
+                    game.setScreen(new MarketScreen(game, counter, mapCounter));
+
+//                forkliftData = fdArray.get(counter);
+                    System.out.println("Size of unpurchased maps " + unpurchasedMaps.size());
+
+                }
+            });
+
+            TextButton previousMapTB = new TextButton("Previous map", skin);
+            previousMapTB.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+
+                    if (unpurchasedMaps.size() != 0) {
+                        if (mapCounter == 0) {
+                            mapCounter = unpurchasedMaps.size() - 1;
+                        } else {
+                            mapCounter--;
+                        }
+                    }
+
+                    System.out.println("Map counter = " + mapCounter);
+
+
+                    mapData = unpurchasedMaps.get(mapCounter);
+
+                    // Refreshing market screen
+                    game.setScreen(new MarketScreen(game, counter, mapCounter));
+
+//                forkliftData = fdArray.get(counter);
+                    System.out.println("Size of unpurchased maps " + unpurchasedMaps.size());
+
+                }
+            });
+
+            TextButton buyMapButton = new TextButton("Buy Map", skin);
+            buyMapButton.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+
+                    inv.setBalance(inv.getBalance() - 10);
+//                    forkliftData.setPurchased(true);
+                    mapData = unpurchasedMaps.get(mapCounter);
+                    mapData.setPurchased(true);
+
+                    // Saving models
+                    inv.getAllMaps().add(mapData);
+
+                    // Saving
+                    Inventory inv2 = new Inventory(inv.getBalance(), inv.getAllModels(), inv.getAllMaps());
+                    pi.write(inv2);
+
+                    GeneralData gd2 = new GeneralData(gd.getAllModels(), gd.getAllMaps());
+                    pi.write(gd2);
+
+                    // Refreshing market screen
+                    game.setScreen(new MarketScreen(game));
+
+                }
+            });
+
+            table.row();
+            table.add(buyMapButton);
+            table.row();
+            table.add(nextMapTB);
+            table.add(previousMapTB);
+        } else {
+            System.out.println("No maps to buy");
+            // Code telling that everything is purchased here
+        }
+
 
 
 
