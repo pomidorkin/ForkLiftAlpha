@@ -34,7 +34,7 @@ public class SensorContactListener implements ContactListener {
                 rubbishBox = (BoxBase) fa.getUserData();
             }
 
-            sensor.trigger();
+            sensor.trigger(rubbishBox.getPrice());
 
         }
 
@@ -93,7 +93,7 @@ public class SensorContactListener implements ContactListener {
                 rubbishBox = (BoxBase) fa.getUserData();
             }
 
-            sensor.untrigger();
+            sensor.untrigger(rubbishBox.getPrice());
 
         }
 

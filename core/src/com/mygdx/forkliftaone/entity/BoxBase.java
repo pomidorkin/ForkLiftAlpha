@@ -25,6 +25,7 @@ public abstract class BoxBase extends Actor {
     private float boxSize = 0.30f; // Should by multiplied by 2
     private TextureRegion goodTexture;
     private Vector2 position;
+    private int price;
 
     public BoxBase(World world, Camera camera, TextureAtlas atlas, float boxDensity, String goodTexture, Vector2 coords){
         this.camera = camera;
@@ -107,5 +108,13 @@ public abstract class BoxBase extends Actor {
     public void detroyBox(){
         world.destroyBody(body);
         this.remove();
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price){
+        this.price = price;
     }
 }

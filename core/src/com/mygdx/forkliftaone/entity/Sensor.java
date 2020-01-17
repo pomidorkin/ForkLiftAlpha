@@ -32,13 +32,13 @@ public class Sensor {
 
     // (To Do) Implement saving logic
 
-    public void trigger(){
-        salary += 100;
+    public void trigger(int boxPrice){
+        salary += boxPrice;
         System.out.println("Balance: " + salary);
     }
 
-    public void untrigger(){
-        salary -= 100;
+    public void untrigger(int boxPrice){
+        salary -= boxPrice;
         System.out.println("Balance: " + salary);
     }
 
