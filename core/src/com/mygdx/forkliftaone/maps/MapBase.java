@@ -45,9 +45,9 @@ public abstract class MapBase extends Actor{
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
 //        batch.draw(background, getX(), getY(), 8f, 4.8f); //viewport width
-        batch.draw(background, getStage().getCamera().position.x - getStage().getViewport().getWorldWidth()/2f,
-                getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f,
-                getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
+//        batch.draw(background, getStage().getCamera().position.x - getStage().getViewport().getWorldWidth()/2f,
+//                getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f,
+//                getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
 
 
     }

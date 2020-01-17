@@ -387,6 +387,10 @@ public class ForkliftActorBase extends Actor {
         this.hasFuel = hasFuel;
     }
 
+    public Body getForklift() {
+        return forklift;
+    }
+
     public void fillTank(){
         System.out.println("Forklift and fuel are colliding");
     }

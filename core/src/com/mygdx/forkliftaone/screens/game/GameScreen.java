@@ -39,6 +39,7 @@ import com.mygdx.forkliftaone.ForkLiftGame;
 import com.mygdx.forkliftaone.ForkliftModel;
 import com.mygdx.forkliftaone.config.GameConfig;
 import com.mygdx.forkliftaone.dialogs.BackToMenuDialog;
+import com.mygdx.forkliftaone.entity.BackgroundBase;
 import com.mygdx.forkliftaone.entity.ForkliftActorBase;
 import com.mygdx.forkliftaone.entity.BoxBase;
 import com.mygdx.forkliftaone.entity.FuelCan;
@@ -92,6 +93,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private ProgressBar bar;
 
     private MapBase map;
+
+    // Test Parallax background
+    private TextureRegion parallax;
 
     public GameScreen(ForkLiftGame game, ForkliftData fd, MapData md) {
         this.game = game;
@@ -154,8 +158,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         map = mapModel.getMap();
         map.setRegion(backgoundRegion);
         map.createMap();
-        stage.addActor(map);
-        map.spawnBoxes();
+
 
 
         // Class ForkliftModel should have a constructor taking arguments from inventory
@@ -164,11 +167,21 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         forklift = new ForkliftActorBase(world, model);
         forklift.createForklift(model);
         forklift.setRegion();
-        stage.addActor(forklift);
+
 
         b2dr = new Box2DDebugRenderer();
         //Second parameter is responsible for scaling
         tmr = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1 / GameConfig.SCALE);
+
+        // Parallax
+        this.parallax = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
+        BackgroundBase backBase = new BackgroundBase(parallax, viewport, forklift, camera);
+
+        // The order determines the drawing consequence
+        stage.addActor(backBase);
+        stage.addActor(forklift);
+        stage.addActor(map);
+        map.spawnBoxes();
 
         // Rubbish
 //        BoxBase box = new TestBox(world, camera, gamePlayAtlas);
