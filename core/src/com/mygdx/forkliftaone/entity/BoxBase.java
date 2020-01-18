@@ -22,17 +22,21 @@ public abstract class BoxBase extends Actor {
     private World world;
     private Body body;
     private float density;
-    private float boxSize = 0.30f; // Should by multiplied by 2
+    private float boxWidth, boxHeight;// Should by multiplied by 2
     private TextureRegion goodTexture;
     private Vector2 position;
     private int price;
 
-    public BoxBase(World world, Camera camera, TextureAtlas atlas, float boxDensity, String goodTexture, Vector2 coords){
+    public BoxBase(World world, Camera camera, TextureAtlas atlas, float boxDensity,
+                   float boxWidth, float boxHeight, String goodTexture, Vector2 coords){
         this.camera = camera;
         this.world = world;
         this.position = coords;
-        this.body = createRubbishBox();
         this.density = boxDensity;
+        this.boxWidth = boxWidth;
+        this.boxHeight = boxHeight;
+
+        this.body = createRubbishBox();
 
 
 //        TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
@@ -51,7 +55,7 @@ public abstract class BoxBase extends Actor {
 
         box = world.createBody(bodyDef);
         PolygonShape ps = new PolygonShape();
-        ps.setAsBox(boxSize, boxSize);
+        ps.setAsBox(boxWidth, boxHeight);
 
         FixtureDef fixDef = new FixtureDef();
         fixDef.shape = ps;
@@ -61,7 +65,7 @@ public abstract class BoxBase extends Actor {
         box.createFixture(fixDef).setUserData(this); // required for collision
 
 //        ps.setAsBox(0.37f, 0.65f);
-        ps.setAsBox(0.30f, 0.10f, new Vector2(0, -(0.30f + 0.10f)), 0);
+        ps.setAsBox(boxWidth, 0.10f, new Vector2(0, -(boxHeight + 0.10f)), 0);
         fixDef.shape = ps;
         fixDef.density = density;
         fixDef.friction = 1f;
@@ -82,9 +86,9 @@ public abstract class BoxBase extends Actor {
         } else {
             if (isBoxInCamera()) {
                 batch.draw(goodTexture, // Texture
-                        body.getPosition().x - boxSize, body.getPosition().y  - boxSize, // Texture position
-                        boxSize, boxSize, // Rotation point (width / 2, height /2 = center)
-                        boxSize * 2, boxSize  * 2, // Width and height of the texture
+                        body.getPosition().x - boxWidth, body.getPosition().y  - boxHeight, // Texture position
+                        boxWidth, boxHeight, // Rotation point (width / 2, height /2 = center)
+                        boxWidth * 2, boxHeight  * 2, // Width and height of the texture
                         getScaleX(), getScaleY(), //scaling
                         body.getAngle() * 57.2957f); // Rotation (radiants to degrees)
             }
@@ -99,7 +103,7 @@ public abstract class BoxBase extends Actor {
 
     private boolean isBoxInCamera(){
         if (camera.frustum.boundsInFrustum(new Vector3(body.getPosition().x, body.getPosition().y, 0),
-                new Vector3(boxSize * 2, boxSize * 2, 0))){
+                new Vector3(boxWidth * 2, boxHeight * 2, 0))){
             return true;
         }else
         return  false;

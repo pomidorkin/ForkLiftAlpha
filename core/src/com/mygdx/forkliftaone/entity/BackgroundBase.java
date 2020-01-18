@@ -58,6 +58,7 @@ public class BackgroundBase extends Actor {
 
         backTexturePosition.x -= forklift.getForklift().getLinearVelocity().x * 0.01;
 
+        // Checking if texture is inside the viewport and positioning if not.
         if (viewport.getCamera().position.x - backTexturePosition.x > viewport.getWorldWidth() * 1.5f){
             System.out.println("Texture is out of screen");
             backTexturePosition.x += viewport.getWorldWidth();

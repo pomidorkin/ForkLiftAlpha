@@ -11,7 +11,7 @@ import java.util.Random;
 public class FuelCan extends BoxBase {
     private boolean active;
     public FuelCan(World world, Camera camera, TextureAtlas atlas, Vector2 coords) {
-        super(world, camera, atlas, 0.1f, RegionNames.FORKLIFT_WHEEL, coords);
+        super(world, camera, atlas, 0.1f, 0.3f, 0.21f, RegionNames.FORKLIFT_WHEEL, coords);
 
         setPrice(0);
     }

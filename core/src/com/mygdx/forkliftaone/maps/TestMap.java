@@ -19,7 +19,7 @@ public class TestMap extends MapBase {
     private Stage stage;
 
     public TestMap(World world, Camera camera, Stage stage, TextureAtlas atlas) {
-        super(world, AssetPaths.TEST_TILED_MAP, new Vector2(1.5f, 1.5f), 10f, 1f, 1f, 0.5f);
+        super(world, AssetPaths.TEST_TILED_MAP, new Vector2(0.5f, 1.5f), 10f, 1f, 1f, 0.5f);
 
         this.world = world;
         this.atlas = atlas;
@@ -28,8 +28,8 @@ public class TestMap extends MapBase {
         factory = new BoxFactory();
 
         boxCoords = new Vector2[2];
-        boxCoords[0] = new Vector2(5f, 5f);
-        boxCoords[1] = new Vector2(5.5f, 5f);
+        boxCoords[0] = new Vector2(4f, 5f);
+        boxCoords[1] = new Vector2(4.5f, 5f);
 
     }
 

@@ -13,7 +13,7 @@ import java.util.Random;
 
 public class TestBox extends BoxBase {
     public TestBox(World world, Camera camera, TextureAtlas atlas, Vector2 coords) {
-        super(world, camera,  atlas,0.1f, RegionNames.BOX_TEXTURE, coords);
+        super(world, camera,  atlas,0.1f, 0.3f, 0.3f, RegionNames.BOX_TEXTURE, coords);
 
         setPrice(new Random().nextInt(5) + 1);
 
