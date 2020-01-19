@@ -23,7 +23,6 @@ public abstract class MapBase extends Actor{
     private World world;
     private TiledMap tiledMap;
     private Vector2 spawnCoordinates;
-    private TextureRegion background;
     private String mapName;
     private Sensor sensor;
 
@@ -71,10 +70,6 @@ public abstract class MapBase extends Actor{
 
     public Vector2 getSpawnCoordinates() {
         return spawnCoordinates;
-    }
-
-    public void setRegion(TextureRegion backgroundTexture) {
-        background = backgroundTexture;
     }
 
     public abstract void openDoor();

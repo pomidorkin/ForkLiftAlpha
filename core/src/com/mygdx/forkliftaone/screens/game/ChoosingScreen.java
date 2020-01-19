@@ -131,7 +131,6 @@ public class ChoosingScreen extends ScreenAdapter {
         mapData.setName(MapModel.MapName.CUSTOM);
         MapModel md = new MapModel(mapData.getName(), world, camera, stage, gamePlayAtlas );
         map = md.getMap();
-        map.setRegion(backgoundRegion);
         map.createMap();
 
         stage.addActor(map);

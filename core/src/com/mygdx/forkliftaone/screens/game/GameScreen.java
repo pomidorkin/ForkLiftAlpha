@@ -31,7 +31,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -71,7 +74,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     // UI
     private BitmapFont font;
-//    private ShapeRenderer shapeRenderer;
+    //    private ShapeRenderer shapeRenderer;
     private Table table;
     private Skin skin;
     private TextButton fuelButton;
@@ -142,9 +145,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
         // Creating texture atlas
         TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
-        TextureRegion forkliftRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_BODY);
-        TextureRegion wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
-        TextureRegion backgoundRegion = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
+//        TextureRegion forkliftRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_BODY);
+//        TextureRegion wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
+//        TextureRegion backgoundRegion = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
         this.coinTexture = gamePlayAtlas.findRegion(RegionNames.COIN_TEXTURE);
 
 //        map = new TestMap(world, camera, stage, gamePlayAtlas);
@@ -154,11 +157,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 //        stage.addActor(map);
 //        map.spawnBoxes();
 
-        mapModel = new MapModel(md.getName(),world, camera, stage, gamePlayAtlas);
+        mapModel = new MapModel(md.getName(), world, camera, stage, gamePlayAtlas);
         map = mapModel.getMap();
-        map.setRegion(backgoundRegion);
         map.createMap();
-
 
 
         // Class ForkliftModel should have a constructor taking arguments from inventory
@@ -258,7 +259,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         // draw lives
         String livesText = "" + inv.getBalance();
         layout.setText(font, livesText);
-        font.draw(batch, layout, coinTexture.getRegionWidth() + 10f, 480f - coinTexture.getRegionHeight()/2);
+        font.draw(batch, layout, coinTexture.getRegionWidth() + 10f, 480f - coinTexture.getRegionHeight() / 2);
 
         // draw score
         String scoreText = "SCORE: ";
@@ -274,11 +275,10 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         // Drawing coin image
         batch.draw(coinTexture, // Texture
                 10f, 480f - coinTexture.getRegionHeight(), // Texture position
-                coinTexture.getRegionWidth()/2, coinTexture.getRegionHeight()/2, // Rotation point (width / 2, height /2 = center)
+                coinTexture.getRegionWidth() / 2, coinTexture.getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
                 uiViewport.getScreenHeight() / 10f, uiViewport.getScreenHeight() / 10f, // Width and height of the texture
                 1f, 1f, //scaling
                 0); // Rotation (radiants to degrees)
-
 
 
         batch.end();
@@ -349,12 +349,33 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         table.add(menuButton).padLeft(Gdx.graphics.getWidth() - 100f);
         table.row();
 
+        // Touchpad test
+        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
+        final Touchpad touchpad = new Touchpad(1f, skin);
+
+        touchpad.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (touchpad.getKnobX() < touchpad.getPrefWidth()/2){
+                    forklift.moveForkliftLeft();
+                } else if (touchpad.getKnobX() > touchpad.getPrefWidth()/2){
+                    forklift.moveForkliftRight();
+                } else {
+                    forklift.stopMoveForkliftLeft();
+                }
+//                System.out.println(touchpad.getPrefWidth());
+            }
+        });
+
+        table.add(touchpad);
+        table.row();
+
         // Testing Fuel icon
 
         bar = new ProgressBar(0, 100, 0.01f, false, skin);
 
         // The size of the fuel icon can be changed here
-        table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f).padRight((Gdx.graphics.getWidth()/2) + 290f).padTop(20f);
+        table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f).padRight((Gdx.graphics.getWidth() / 2) + 290f).padTop(20f);
 //        table.add(pb);
 
         return table;
@@ -386,7 +407,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
             }
         });
 
-        table.add(fuelButton).padRight((Gdx.graphics.getWidth()/2) + 70f).padTop(80f);
+        table.add(fuelButton).padRight((Gdx.graphics.getWidth() / 2) + 70f).padTop(80f);
         table.row();
 
         return table;
