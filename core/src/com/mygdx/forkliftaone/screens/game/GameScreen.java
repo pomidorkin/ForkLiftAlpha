@@ -71,6 +71,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private Viewport viewport, uiViewport;
     private OrthographicCamera camera, uiCamera;
     private Stage stage, uiStage, fuelStage;
+    private float accumulator = 0;
 
     // UI
     private BitmapFont font;
@@ -234,7 +235,15 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     }
 
     private void update(float delta) {
-        world.step(1 / 60f, 6, 2);
+        // fixed time step
+        // max frame time to avoid spiral of death (on slow devices)
+        float frameTime = Math.min(delta, 0.25f);
+        accumulator += frameTime;
+        while (accumulator >= 1/60f) {
+            world.step(1/60f, 6, 2);
+            accumulator -= 1/60f;
+        }
+
         tmr.setView(camera);
         cameraUpdate(delta);
 

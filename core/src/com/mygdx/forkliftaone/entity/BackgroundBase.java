@@ -26,6 +26,9 @@ public class BackgroundBase extends Actor {
 //                getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f);
         backTexturePosition = new Vector2(camera.position.x - viewport.getWorldWidth()/2f,
                 camera.position.y - viewport.getWorldHeight()/2f);
+
+        middleTexturePosition = new Vector2(camera.position.x - viewport.getWorldWidth()/2f,
+                camera.position.y - viewport.getWorldHeight()/2f);
     }
 
     @Override
@@ -35,20 +38,22 @@ public class BackgroundBase extends Actor {
             System.out.println("Region not set on Actor " + getClass().getName());
             return;
         } else {
-//            if (isBoxInCamera()) {
-//                batch.draw(backgroundTexture, texturePosition.x, texturePosition.y,
-//                        getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
-//            }
-
-            if (true) {
-                batch.draw(backgroundTexture, backTexturePosition.x,
+            batch.draw(backgroundTexture, backTexturePosition.x,
                         backTexturePosition.y = getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f,
                         getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
 
                 batch.draw(backgroundTexture, backTexturePosition.x + viewport.getWorldWidth(),
                         backTexturePosition.y = getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f,
                         getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
-            }
+
+            batch.draw(backgroundTexture, middleTexturePosition.x,
+                    middleTexturePosition.y = getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f - 3f,
+                    getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
+
+            batch.draw(backgroundTexture, middleTexturePosition.x + viewport.getWorldWidth(),
+                    middleTexturePosition.y = getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f - 3f,
+                    getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
+
         }
     }
 
@@ -57,6 +62,7 @@ public class BackgroundBase extends Actor {
         super.act(delta);
 
         backTexturePosition.x -= forklift.getForklift().getLinearVelocity().x * 0.01;
+        middleTexturePosition.x -= forklift.getForklift().getLinearVelocity().x * 0.02;
 
         // Checking if texture is inside the viewport and positioning if not.
         if (viewport.getCamera().position.x - backTexturePosition.x > viewport.getWorldWidth() * 1.5f){
@@ -64,6 +70,14 @@ public class BackgroundBase extends Actor {
             backTexturePosition.x += viewport.getWorldWidth();
         } else if (backTexturePosition.x - viewport.getCamera().position.x > 0 - viewport.getWorldWidth() / 2f){
             backTexturePosition.x -= viewport.getWorldWidth();
+            System.out.println("Triggered");
+        }
+
+        if (viewport.getCamera().position.x - middleTexturePosition.x > viewport.getWorldWidth() * 1.5f){
+            System.out.println("Texture is out of screen");
+            middleTexturePosition.x += viewport.getWorldWidth();
+        } else if (middleTexturePosition.x - viewport.getCamera().position.x > 0 - viewport.getWorldWidth() / 2f){
+            middleTexturePosition.x -= viewport.getWorldWidth();
             System.out.println("Triggered");
         }
 
