@@ -101,6 +101,37 @@ public ForkliftModel(ForkliftData fd, MapBase map, TextureAtlas atlas){
         }
     }
 
+    public ForkliftModel(ForkliftData fd, TextureAtlas atlas){
+
+        spawnPosition = new Vector2(0,0);
+
+        switch (fd.getName()){
+            case SMALL:
+                // Textures
+                forkliftRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
+                wheelRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
+                forkRegion = atlas.findRegion(RegionNames.FORK_TEXTURE);
+                break;
+
+            case MEDIUM:
+                // Textures
+                forkliftRegion = atlas.findRegion(RegionNames.FORKLIFT_BODY);
+                wheelRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
+                forkRegion = atlas.findRegion(RegionNames.FORK_TEXTURE);
+
+                break;
+
+            case LARGE:
+                // Textures
+                forkliftRegion = atlas.findRegion(RegionNames.BOX_TEXTURE);
+                wheelRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
+                forkRegion = atlas.findRegion(RegionNames.FORK_TEXTURE);
+
+                break;
+        }
+
+    }
+
     public Vector2[] getCabin() {
         return cabin;
     }

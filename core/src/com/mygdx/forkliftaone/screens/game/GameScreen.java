@@ -6,6 +6,8 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -81,6 +83,12 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private TextButton fuelButton;
     private TextureRegion coinTexture;
 
+    //Music
+    private Music music;
+    private Sound engineSound;
+    private long soundID;
+    private boolean paused = false;
+
 
     //test
     private Box2DDebugRenderer b2dr;
@@ -124,6 +132,17 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         font = assetManager.get(AssetDescriptors.FONT);
 //        shapeRenderer = new ShapeRenderer();
         uiStage = new Stage(uiViewport, game.getBatch());
+
+        // Initializing music
+        music = assetManager.get(AssetDescriptors.TEST_MUSIC);
+        engineSound = assetManager.get(AssetDescriptors.TEST_ENGINE);
+        soundID = engineSound.loop();
+        engineSound.pause(soundID);
+        paused = true;
+        music.play();
+        // Volume should be obtained from the savings
+        music.setVolume(0f);
+        music.setLooping(true);
 
         // May be refactor later, because there are too many stages
         fuelStage = new Stage(uiViewport, game.getBatch());
@@ -239,9 +258,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         // max frame time to avoid spiral of death (on slow devices)
         float frameTime = Math.min(delta, 0.25f);
         accumulator += frameTime;
-        while (accumulator >= 1/60f) {
-            world.step(1/60f, 6, 2);
-            accumulator -= 1/60f;
+        while (accumulator >= 1 / 60f) {
+            world.step(1 / 60f, 6, 2);
+            accumulator -= 1 / 60f;
         }
 
         tmr.setView(camera);
@@ -305,6 +324,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     public void hide() {
         // Saving example
         super.hide();
+        music.stop();
         dispose();
     }
 
@@ -362,21 +382,36 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
         final Touchpad touchpad = new Touchpad(1f, skin);
 
+
+        // Logic for mooving and playing the engine sound
         touchpad.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if (touchpad.getKnobX() < touchpad.getPrefWidth()/2){
+                if (touchpad.getKnobX() < touchpad.getPrefWidth() / 2) {
                     forklift.moveForkliftLeft();
-                } else if (touchpad.getKnobX() > touchpad.getPrefWidth()/2){
+                    if (paused){
+                        engineSound.resume(soundID);
+                        paused = false;
+                    }
+
+                } else if (touchpad.getKnobX() > touchpad.getPrefWidth() / 2) {
                     forklift.moveForkliftRight();
+                    if (paused){
+                        engineSound.resume(soundID);
+                        paused = false;
+                    }
                 } else {
                     forklift.stopMoveForkliftLeft();
+                    if (!paused){
+                        engineSound.pause(soundID);
+                        paused = true;
+                    }
                 }
-//                System.out.println(touchpad.getPrefWidth());
+
             }
         });
 
-        table.add(touchpad);
+        table.add(touchpad).padRight((Gdx.graphics.getWidth() / 2) + 170f).padTop(215f);
         table.row();
 
         // Testing Fuel icon

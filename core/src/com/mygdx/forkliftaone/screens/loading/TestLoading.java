@@ -125,6 +125,8 @@ public class TestLoading extends ScreenAdapter {
     private void loadAssets(){
         assetManager.load(AssetDescriptors.FONT);
         assetManager.load(AssetDescriptors.TEST_ATLAS);
+        assetManager.load(AssetDescriptors.TEST_MUSIC);
+        assetManager.load(AssetDescriptors.TEST_ENGINE);
         assetManager.finishLoading();//?
     }
 }

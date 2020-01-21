@@ -51,10 +51,8 @@ public class ChoosingScreen extends ScreenAdapter {
     ProcessInventory pi = new ProcessInventory();
 
     private Box2DDebugRenderer b2dr;
-    private OrthogonalTiledMapRenderer tmr;
     private MapBase map;
     private ForkliftModel model;
-    private ForkliftActorBase forklift;
     private final AssetManager assetManager;
     private ForkliftData forkliftData;
     private MapData mapData;
@@ -151,8 +149,6 @@ public class ChoosingScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        update(Gdx.graphics.getDeltaTime());
-
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -355,15 +351,6 @@ public class ChoosingScreen extends ScreenAdapter {
 
 
 
-    private void update(float delta) {
-        world.step(1 / 60f, 6, 2);
-//        tmr.setView(camera);
-
-        // Разборки с текстурами
-//        stage.setViewport(viewport);
-//        batch.setProjectionMatrix(camera.combined);
-    }
-
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
@@ -380,10 +367,9 @@ public class ChoosingScreen extends ScreenAdapter {
         stage.dispose();
         uiStage.dispose();
         world.dispose();
-//        tmr.dispose();
         b2dr.dispose();
         map.disposeTiledMap();
-        skin.dispose();
+        skin.dispose(); // Should be removed
     }
 
 

@@ -9,4 +9,6 @@ public class AssetPaths {
     public static final String CUSTOM_PACK = "packed/customPack.atlas";
     public static final String TEST_TILED_MAP = "mapAssets/map-sample.tmx";
     public static final String CUSTOM_TILED_MAP = "mapAssets/customMap.tmx";
+    public static final String TEST_MUSIC = "music.mp3";
+    public static final String TEST_ENGINE_SOUND = "engine.wav";
 }

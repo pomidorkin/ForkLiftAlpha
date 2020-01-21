@@ -1,30 +1,38 @@
 package com.mygdx.forkliftaone.screens.market;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.forkliftaone.ForkLiftGame;
 import com.mygdx.forkliftaone.ForkliftModel;
-import com.mygdx.forkliftaone.screens.game.ChoosingScreen;
 import com.mygdx.forkliftaone.screens.menu.MenuScreen;
-import com.mygdx.forkliftaone.screens.menu.MenuScreenBase;
+import com.mygdx.forkliftaone.utils.AssetDescriptors;
 import com.mygdx.forkliftaone.utils.ForkliftData;
 import com.mygdx.forkliftaone.utils.GeneralData;
 import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.MapData;
-import com.mygdx.forkliftaone.utils.MapModel;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MarketScreen extends MenuScreenBase {
+public class MarketScreen extends ScreenAdapter {
 
+    private ForkLiftGame game;
     private Skin skin;
     private Table table;
     private TextButton buyButton, backButton;
@@ -33,6 +41,13 @@ public class MarketScreen extends MenuScreenBase {
     private GeneralData gd;
     private ForkliftData forkliftData;
     private MapData mapData;
+    private SpriteBatch batch;
+    private Stage stage;
+    private OrthographicCamera camera;
+    private Viewport viewport;
+    private ForkliftModel model;
+    private AssetManager assetManager;
+    private TextureAtlas gamePlayAtlas;
 
     private List<ForkliftData> unpurchasedForklifts;
     private List<MapData> unpurchasedMaps;
@@ -41,28 +56,55 @@ public class MarketScreen extends MenuScreenBase {
     private int mapCounter;
 
     public MarketScreen(ForkLiftGame game) {
-        super(game);
+        this.game = game;
         this.counter = 0;
         this.mapCounter = 0;
+        assetManager = game.getAssetManager();
+        batch = game.getBatch();
+        unpurchasedForklifts = new ArrayList<>();
+        unpurchasedMaps = new ArrayList<>();
         inv = pi.read();
         gd = pi.readGeneralData();
         this.forkliftData = gd.getAllModels()[0];
-        unpurchasedForklifts = new ArrayList<>();
-        unpurchasedMaps = new ArrayList<>();
+
+//        model = new ForkliftModel(unpurchasedForklifts.get(0), gamePlayAtlas);
+
+
     }
 
     public MarketScreen(ForkLiftGame game, int counter, int mapCounter) {
-        super(game);
+        this.game = game;
         this.counter = counter;
         this.mapCounter = mapCounter;
+        assetManager = game.getAssetManager();
+        batch = game.getBatch();
+        unpurchasedForklifts = new ArrayList<>();
+        unpurchasedMaps = new ArrayList<>();
         inv = pi.read();
         gd = pi.readGeneralData();
         this.forkliftData = gd.getAllModels()[counter];
-        unpurchasedForklifts = new ArrayList<>();
-        unpurchasedMaps = new ArrayList<>();
+
+
+//        model = new ForkliftModel(unpurchasedForklifts.get(counter), gamePlayAtlas);
+
+
     }
 
     @Override
+    public void show() {
+        super.show();
+        camera = new OrthographicCamera();
+        viewport = new FitViewport(800f, 480f, camera);
+        stage = new Stage(viewport, game.getBatch());
+        gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
+        stage.addActor(createUi());
+
+        model = new ForkliftModel(unpurchasedForklifts.get(counter), gamePlayAtlas);
+
+        Gdx.input.setInputProcessor(stage);
+
+    }
+
     protected Actor createUi() {
         skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
 
@@ -290,8 +332,6 @@ public class MarketScreen extends MenuScreenBase {
         }
 
 
-
-
 //        TextButton previousTB = new TextButton("Previous", skin);
 //        previousTB.addListener(new ClickListener() {
 //            @Override
@@ -327,6 +367,30 @@ public class MarketScreen extends MenuScreenBase {
         table.add(backButton);
 
         return table;
+    }
+
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        stage.draw();
+        draw();
+    }
+
+    private void draw() {
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+
+        batch.draw(model.getForkliftRegion(), // Texture
+                2f, 2f, // Texture position
+                model.getForkliftRegion().getRegionWidth() / 2, model.getForkliftRegion().getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
+                viewport.getScreenHeight() / 10f, viewport.getScreenHeight() / 10f, // Width and height of the texture
+                1f, 1f, //scaling
+                0); // Rotation (radiants to degrees)
+
+        batch.end();
     }
 
     @Override
