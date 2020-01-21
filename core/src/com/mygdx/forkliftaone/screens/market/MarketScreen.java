@@ -215,23 +215,28 @@ public class MarketScreen extends ScreenAdapter {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
 
-                    inv.setBalance(inv.getBalance() - 10);
-//                    forkliftData.setPurchased(true);
                     forkliftData = unpurchasedForklifts.get(counter);
-                    forkliftData.setPurchased(true);
+                    if (inv.getBalance() >= forkliftData.getPrice()) {
+                        inv.setBalance(inv.getBalance() - forkliftData.getPrice());
+//                    forkliftData.setPurchased(true);
 
-                    // Saving models
-                    inv.getAllModels().add(forkliftData);
+                        forkliftData.setPurchased(true);
 
-                    // Saving
-                    Inventory inv2 = new Inventory(inv.getBalance(), inv.getAllModels(), inv.getAllMaps());
-                    pi.write(inv2);
+                        // Saving models
+                        inv.getAllModels().add(forkliftData);
 
-                    GeneralData gd2 = new GeneralData(gd.getAllModels(), gd.getAllMaps());
-                    pi.write(gd2);
+                        // Saving
+                        Inventory inv2 = new Inventory(inv.getBalance(), inv.getAllModels(), inv.getAllMaps());
+                        pi.write(inv2);
 
-                    // Refreshing market screen
-                    game.setScreen(new MarketScreen(game));
+                        GeneralData gd2 = new GeneralData(gd.getAllModels(), gd.getAllMaps());
+                        pi.write(gd2);
+
+                        // Refreshing market screen
+                        game.setScreen(new MarketScreen(game));
+                    } else {
+                        System.out.println("Not enough money. Forklift price:" + forkliftData.getPrice());
+                    }
 
                 }
             });
@@ -392,13 +397,13 @@ public class MarketScreen extends ScreenAdapter {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        batch.draw(backgroundTexture, 0,0,
+        batch.draw(backgroundTexture, 0, 0,
                 viewport.getWorldWidth(), viewport.getWorldHeight());
 
 
         batch.draw(model.getForkliftRegion(), // Texture
-                viewport.getScreenWidth()/2f - (model.getForkliftRegion().getRegionWidth()/2f) * 0.75f ,
-                viewport.getScreenHeight()/2f - (model.getForkliftRegion().getRegionHeight()/2f) * 0.75f, // Texture position
+                viewport.getScreenWidth() / 2f - (model.getForkliftRegion().getRegionWidth() / 2f) * 0.75f,
+                viewport.getScreenHeight() / 2f - (model.getForkliftRegion().getRegionHeight() / 2f) * 0.75f, // Texture position
                 (model.getForkliftRegion().getRegionWidth() / 2) * 100f, (model.getForkliftRegion().getRegionHeight() / 2) * 100f, // Rotation point (width / 2, height /2 = center)
                 model.getForkliftRegion().getRegionWidth() * 0.75f, model.getForkliftRegion().getRegionHeight() * 0.75f, // Width and height of the texture
                 1f, 1f, //scaling

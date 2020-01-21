@@ -6,6 +6,7 @@ public class ForkliftData {
     private ForkliftModel.ModelName name;
     private int engine;
     private int tubes;
+    private int price;
     private Boolean purchased;
 
     // To be added: price, TextureRegion
@@ -40,5 +41,13 @@ public class ForkliftData {
 
     public void setTubes(int tubes) {
         this.tubes = tubes;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

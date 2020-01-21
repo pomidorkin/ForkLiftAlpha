@@ -30,6 +30,7 @@ public class ForkliftModel {
     private Vector2 frontWheelPosition, rearWheelPosition;
     private ForkliftData fd;
     private TextureRegion forkliftRegion, wheelRegion, tubeRegion, forkRegion;
+    private int price;
 
 //    public ForkliftModel(ModelName modelName, int numberOfTubes, MapBase map){
 public ForkliftModel(ForkliftData fd, MapBase map, TextureAtlas atlas){
@@ -187,4 +188,5 @@ public ForkliftModel(ForkliftData fd, MapBase map, TextureAtlas atlas){
     public TextureRegion getForkRegion() {
         return forkRegion;
     }
+
 }

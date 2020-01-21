@@ -268,12 +268,22 @@ public class ChoosingScreen extends ScreenAdapter {
         upgrateButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                forkliftData.setTubes(forkliftData.getTubes()+1);
+                if (forkliftData.getTubes() < 7) {
+                    if (inv.getBalance() >= ((forkliftData.getTubes() - 1) * 100) + 300) {
+                        int newBalance = inv.getBalance() - (((forkliftData.getTubes() - 1) * 100) + 300);
+                        forkliftData.setTubes(forkliftData.getTubes() + 1);
 
 //                Inventory inv2 = new Inventory(inv.getBalance() - 10, inv.getAllModels(), mapData);
-                Inventory inv2 = new Inventory(inv.getBalance() - 10, inv.getAllModels(), inv.getAllMaps());
-                pi.write(inv2);
-                game.setScreen(new ChoosingScreen(game, counter, mapCounter));
+                        Inventory inv2 = new Inventory( newBalance, inv.getAllModels(), inv.getAllMaps());
+                        pi.write(inv2);
+                        System.out.println("Balance: " + inv.getBalance());
+                        game.setScreen(new ChoosingScreen(game, counter, mapCounter));
+                    } else {
+                        System.out.println("Not enough money! Your balance: " + inv.getBalance() + ", upgrate price: " + ((forkliftData.getTubes() - 1) * 100 + 300));
+                    }
+                } else {
+                    System.out.println("You have reached the upgrade limit");
+                }
             }
         });
 
