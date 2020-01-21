@@ -7,9 +7,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -26,6 +28,7 @@ import com.mygdx.forkliftaone.utils.GeneralData;
 import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.MapData;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
+import com.mygdx.forkliftaone.utils.RegionNames;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +51,7 @@ public class MarketScreen extends ScreenAdapter {
     private ForkliftModel model;
     private AssetManager assetManager;
     private TextureAtlas gamePlayAtlas;
+    private TextureRegion backgroundTexture;
 
     private List<ForkliftData> unpurchasedForklifts;
     private List<MapData> unpurchasedMaps;
@@ -100,6 +104,7 @@ public class MarketScreen extends ScreenAdapter {
         stage.addActor(createUi());
 
         model = new ForkliftModel(unpurchasedForklifts.get(counter), gamePlayAtlas);
+        backgroundTexture = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
 
         Gdx.input.setInputProcessor(stage);
 
@@ -148,7 +153,8 @@ public class MarketScreen extends ScreenAdapter {
 
         // Forklift scrolling buttons logic
         if (unpurchasedForklifts.size() > 0) {
-            TextButton nextTB = new TextButton("Next", skin);
+            ImageButton nextTB = new ImageButton(skin.get("rightButton", ImageButton.ImageButtonStyle.class));
+//            TextButton nextTB = new TextButton("Next", skin);
             nextTB.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -176,7 +182,8 @@ public class MarketScreen extends ScreenAdapter {
             });
 
             // "Previous button"
-            TextButton previousTB = new TextButton("Previous", skin);
+            ImageButton previousTB = new ImageButton(skin.get("leftButton", ImageButton.ImageButtonStyle.class));
+//            TextButton previousTB = new TextButton("Previous", skin);
             previousTB.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -232,8 +239,8 @@ public class MarketScreen extends ScreenAdapter {
             table.row();
             table.add(buyButton);
             table.row();
-            table.add(nextTB);
             table.add(previousTB);
+            table.add(nextTB);
         } else {
             System.out.println("No forklifts to buy");
             // Code telling that everything is purchased here
@@ -241,7 +248,8 @@ public class MarketScreen extends ScreenAdapter {
 
         // Maps buying scrolling logic
         if (unpurchasedMaps.size() > 0) {
-            TextButton nextMapTB = new TextButton("Next map", skin);
+            ImageButton nextMapTB = new ImageButton(skin.get("rightButton", ImageButton.ImageButtonStyle.class));
+//            TextButton nextMapTB = new TextButton("Next map", skin);
             nextMapTB.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -375,18 +383,24 @@ public class MarketScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        stage.draw();
         draw();
+        stage.draw();
+
     }
 
     private void draw() {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
+        batch.draw(backgroundTexture, 0,0,
+                viewport.getWorldWidth(), viewport.getWorldHeight());
+
+
         batch.draw(model.getForkliftRegion(), // Texture
-                2f, 2f, // Texture position
-                model.getForkliftRegion().getRegionWidth() / 2, model.getForkliftRegion().getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
-                viewport.getScreenHeight() / 10f, viewport.getScreenHeight() / 10f, // Width and height of the texture
+                viewport.getScreenWidth()/2f - (model.getForkliftRegion().getRegionWidth()/2f) * 0.75f ,
+                viewport.getScreenHeight()/2f - (model.getForkliftRegion().getRegionHeight()/2f) * 0.75f, // Texture position
+                (model.getForkliftRegion().getRegionWidth() / 2) * 100f, (model.getForkliftRegion().getRegionHeight() / 2) * 100f, // Rotation point (width / 2, height /2 = center)
+                model.getForkliftRegion().getRegionWidth() * 0.75f, model.getForkliftRegion().getRegionHeight() * 0.75f, // Width and height of the texture
                 1f, 1f, //scaling
                 0); // Rotation (radiants to degrees)
 

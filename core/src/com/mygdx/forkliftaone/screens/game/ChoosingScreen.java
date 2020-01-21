@@ -315,9 +315,8 @@ public class ChoosingScreen extends ScreenAdapter {
         batch.setProjectionMatrix(uiCamera.combined);
         batch.begin();
 
-        batch.draw(backgoundRegion, uiStage.getCamera().position.x - uiStage.getViewport().getWorldWidth()/2f,
-                uiStage.getCamera().position.y - uiStage.getViewport().getWorldHeight()/2f,
-                uiStage.getCamera().viewportWidth, uiStage.getCamera().viewportHeight);
+        batch.draw(backgoundRegion, 0,0,
+                hudViewport.getWorldWidth(), hudViewport.getWorldHeight());
 
         batch.draw(model.getForkliftRegion(), // Texture
                 2f,2f, // Texture position

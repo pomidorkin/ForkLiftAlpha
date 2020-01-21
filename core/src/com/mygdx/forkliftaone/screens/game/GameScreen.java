@@ -141,7 +141,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         paused = true;
         music.play();
         // Volume should be obtained from the savings
-        music.setVolume(0f);
+        music.setVolume(0.6f);
         music.setLooping(true);
 
         // May be refactor later, because there are too many stages
@@ -419,7 +419,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         bar = new ProgressBar(0, 100, 0.01f, false, skin);
 
         // The size of the fuel icon can be changed here
-        table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f).padRight((Gdx.graphics.getWidth() / 2) + 290f).padTop(20f);
+//        table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f).padRight((Gdx.graphics.getWidth() / 2) + 70f).padTop(20f);
+        table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f);
 //        table.add(pb);
 
         return table;
