@@ -49,6 +49,7 @@ public class ChoosingScreen extends ScreenAdapter {
     private Box2DDebugRenderer b2dr;
     private MapBase map;
     private ForkliftModel model;
+    private MapModel mapModel;
     private final AssetManager assetManager;
     private ForkliftData forkliftData;
     private MapData mapData;
@@ -102,14 +103,15 @@ public class ChoosingScreen extends ScreenAdapter {
 
         // Creating texture atlas
         TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
-        backgoundRegion = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
 
 
-        MapData mapData = new MapData();
-        mapData.setName(MapModel.MapName.CUSTOM);
-        MapModel md = new MapModel(mapData.getName(), world, camera, stage, gamePlayAtlas);
-        map = md.getMap();
+//        MapData mapData = new MapData();
+//        mapData.setName(MapModel.MapName.CUSTOM);
+        mapModel = new MapModel(mapData.getName(), world, camera, stage, gamePlayAtlas);
+        map = mapModel.getMap();
         map.createMap();
+
+        backgoundRegion = mapModel.getBackgroundTexture();
 
 //        stage.addActor(map);
         uiStage.addActor(map);
@@ -292,6 +294,9 @@ public class ChoosingScreen extends ScreenAdapter {
 
         batch.draw(backgoundRegion, 0, 0,
                 hudViewport.getWorldWidth(), hudViewport.getWorldHeight());
+
+//        batch.draw(mapModel.getBackgroundTexture(), 0, 0,
+//                viewport.getWorldWidth(), viewport.getWorldHeight());
 
         batch.draw(model.getForkliftRegion(), // Texture
                 hudViewport.getScreenWidth() / 2f - (model.getForkliftRegion().getRegionWidth() / 2f) * 0.75f,

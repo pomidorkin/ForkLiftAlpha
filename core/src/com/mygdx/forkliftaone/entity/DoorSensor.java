@@ -10,9 +10,12 @@ import com.mygdx.forkliftaone.maps.MapBase;
 public class DoorSensor {
 
     private MapBase map;
+    private float x, y;
 
     public DoorSensor(World world, MapBase map, float x, float y, float width, float height){
         this.map = map;
+        this.x = x;
+        this.y = y;
 
         Body box;
         BodyDef bodyDef = new BodyDef();
@@ -34,5 +37,13 @@ public class DoorSensor {
 
     public MapBase getMap() {
         return map;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
     }
 }

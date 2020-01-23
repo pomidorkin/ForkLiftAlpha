@@ -26,9 +26,11 @@ public class CustomTestMap extends MapBase {
     private TextureAtlas atlas;
     private Camera camera;
     private Stage stage;
+    private DoorSensor doorSensor;
 
     private PrismaticJoint prismaticJoint, elevatorJoint;
-    private float elevatorTimer;
+    private float elevatorTimer, blinkingTimer;
+    private boolean drawing;
 
     public CustomTestMap(World world, TextureRegion backTexture, TextureRegion middleTexture, Camera camera, Stage stage, TextureAtlas atlas) {
         super(world, AssetPaths.CUSTOM_TILED_MAP, new Vector2(1.5f, 1.5f), 10f, 1f, 1f, 0.5f);
@@ -71,7 +73,7 @@ public class CustomTestMap extends MapBase {
         createObstacles(8f, 4f, 0.1f, 1f,
                 8f, 4f, 0.1f, 1f,
                 6f, 6f, 1f, 0.05f);
-        DoorSensor doorSensor = new DoorSensor(world, this, 1.5f, 1f, 1f, 1f);
+        doorSensor = new DoorSensor(world, this, 1.5f, 1f, 1f, 1f);
     }
 
     public void spawnBoxes() {
@@ -220,6 +222,19 @@ public class CustomTestMap extends MapBase {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         // Drawing wall n` doors here
+//        batch.setProjectionMatrix(camera.combined);
+//        batch.begin();
+
+        if (drawing) {
+            batch.draw(atlas.findRegion(RegionNames.BOX_TEXTURE), // Texture
+                    doorSensor.getX() - 0.5f, doorSensor.getY() - 0.5f, // Texture position
+                    getOriginX(), getOriginY(), // Rotation point (width / 2, height /2 = center)
+                    1f, 1f, // Width and height of the texture
+                    1f, 1f, //scaling
+                    0); // Rotation (radiants to degrees)
+        }
+
+//        batch.end();
     }
 
     @Override
@@ -242,6 +257,16 @@ public class CustomTestMap extends MapBase {
                 elevatorTimer = 0;
             }
         }
+
+
+            blinkingTimer += 1f * delta;
+            if (blinkingTimer <= 0.75f){
+                drawing = false;
+            } else if (blinkingTimer >= 0.75f && blinkingTimer <= 1.5f){
+                drawing = true;
+            } else if (blinkingTimer >= 1.5f){
+                blinkingTimer = 0;
+            }
 
     }
 }

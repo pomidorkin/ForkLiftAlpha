@@ -29,8 +29,8 @@ public class MapModel {
                 break;
 
             case TEST:
-                this.backgroundTexture = atlas.findRegion(RegionNames.BOX_TEXTURE);
-                this.middleTexture = atlas.findRegion(RegionNames.TEST_BACKGROUND);
+                this.backgroundTexture = atlas.findRegion(RegionNames.TEST_BACKGROUND);
+                this.middleTexture = atlas.findRegion(RegionNames.BOX_TEXTURE);
                 map = new TestMap(world, backgroundTexture, middleTexture, camera, stage, atlas);
                 break;
         }
@@ -45,8 +45,8 @@ public class MapModel {
                 break;
 
             case TEST:
-                this.backgroundTexture = atlas.findRegion(RegionNames.BOX_TEXTURE);
-                this.middleTexture = atlas.findRegion(RegionNames.TEST_BACKGROUND);
+                this.backgroundTexture = atlas.findRegion(RegionNames.TEST_BACKGROUND);
+                this.middleTexture = atlas.findRegion(RegionNames.BOX_TEXTURE);
                 break;
         }
 
