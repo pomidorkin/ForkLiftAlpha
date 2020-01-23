@@ -3,6 +3,7 @@ package com.mygdx.forkliftaone.maps;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -16,6 +17,7 @@ import com.mygdx.forkliftaone.config.GameConfig;
 import com.mygdx.forkliftaone.entity.DoorSensor;
 import com.mygdx.forkliftaone.utils.AssetPaths;
 import com.mygdx.forkliftaone.utils.BoxFactory;
+import com.mygdx.forkliftaone.utils.RegionNames;
 
 public class CustomTestMap extends MapBase {
     private Vector2[][] boxCoords;
@@ -28,7 +30,7 @@ public class CustomTestMap extends MapBase {
     private PrismaticJoint prismaticJoint, elevatorJoint;
     private float elevatorTimer;
 
-    public CustomTestMap(World world, Camera camera, Stage stage, TextureAtlas atlas) {
+    public CustomTestMap(World world, TextureRegion backTexture, TextureRegion middleTexture, Camera camera, Stage stage, TextureAtlas atlas) {
         super(world, AssetPaths.CUSTOM_TILED_MAP, new Vector2(1.5f, 1.5f), 10f, 1f, 1f, 0.5f);
 
         this.world = world;
@@ -36,6 +38,9 @@ public class CustomTestMap extends MapBase {
         this.camera = camera;
         this.stage = stage;
         factory = new BoxFactory();
+
+        this.backTexture = backTexture;
+        this.middleTexture = middleTexture;
 
         // Logic for spawning different number of different goods
         // Total number of good-types (4 = fuel, cheap, middle, expensive)

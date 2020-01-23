@@ -1,12 +1,15 @@
 package com.mygdx.forkliftaone.config;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 
 public class GameConfig {
-    private GameConfig(){}
+    private GameConfig() {
+    }
 
-    public static final float WIDTH = 800f; // pixels
+    public static final float WIDTH = 1000f; // pixels
     public static final float HEIGHT = 480f; // pixels
+//    public static final float WIDTH = (Gdx.graphics.getWidth() / Gdx.graphics.getHeight()) * HEIGHT;
 
     public static final float WORLD_WIDTH = 80f; // world units
     public static final float WORLD_HEIGHT = 48f; // world units

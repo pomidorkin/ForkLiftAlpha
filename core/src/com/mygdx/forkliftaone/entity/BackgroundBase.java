@@ -12,13 +12,14 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class BackgroundBase extends Actor {
 
-    private TextureRegion backgroundTexture;
+    private TextureRegion backgroundTexture, middleTexture;
     private ForkliftActorBase forklift;
     private Vector2 backTexturePosition, middleTexturePosition, frontTexturePosition;
     private Viewport viewport;
 
-    public BackgroundBase(TextureRegion backgroundTexture, Viewport viewport, ForkliftActorBase forklift, Camera camera) {
+    public BackgroundBase(TextureRegion backgroundTexture, TextureRegion middleTexture, Viewport viewport, ForkliftActorBase forklift, Camera camera) {
         this.backgroundTexture = backgroundTexture;
+        this.middleTexture = middleTexture;
         this.forklift = forklift;
         this.viewport = viewport;
 
@@ -46,11 +47,11 @@ public class BackgroundBase extends Actor {
                         backTexturePosition.y = getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f,
                         getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
 
-            batch.draw(backgroundTexture, middleTexturePosition.x,
+            batch.draw(middleTexture, middleTexturePosition.x,
                     middleTexturePosition.y = getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f - 3f,
                     getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
 
-            batch.draw(backgroundTexture, middleTexturePosition.x + viewport.getWorldWidth(),
+            batch.draw(middleTexture, middleTexturePosition.x + viewport.getWorldWidth(),
                     middleTexturePosition.y = getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f - 3f,
                     getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
 
@@ -81,7 +82,7 @@ public class BackgroundBase extends Actor {
             System.out.println("Triggered");
         }
 
-//        System.out.println("Backgroung X: " + backTexturePosition.x + " Camera X: " +
+//        System.out.println("Backgroung X: " + backTexture.x + " Camera X: " +
 //                (viewport.getCamera().position.x - viewport.getWorldWidth()/2f));
 
     }

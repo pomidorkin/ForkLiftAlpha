@@ -1,14 +1,14 @@
 package com.mygdx.forkliftaone.maps;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.mygdx.forkliftaone.entity.TestBox;
 import com.mygdx.forkliftaone.utils.AssetPaths;
 import com.mygdx.forkliftaone.utils.BoxFactory;
+import com.mygdx.forkliftaone.utils.RegionNames;
 
 public class TestMap extends MapBase {
     private Vector2[] boxCoords;
@@ -18,7 +18,7 @@ public class TestMap extends MapBase {
     private Camera camera;
     private Stage stage;
 
-    public TestMap(World world, Camera camera, Stage stage, TextureAtlas atlas) {
+    public TestMap(World world, TextureRegion backTexture, TextureRegion middleTexture, Camera camera, Stage stage, TextureAtlas atlas) {
         super(world, AssetPaths.TEST_TILED_MAP, new Vector2(0.5f, 1.5f), 10f, 1f, 1f, 0.5f);
 
         this.world = world;
@@ -26,6 +26,9 @@ public class TestMap extends MapBase {
         this.camera = camera;
         this.stage = stage;
         factory = new BoxFactory();
+
+        this.backTexture = backTexture;
+        this.middleTexture = middleTexture;
 
         boxCoords = new Vector2[2];
         boxCoords[0] = new Vector2(4f, 5f);

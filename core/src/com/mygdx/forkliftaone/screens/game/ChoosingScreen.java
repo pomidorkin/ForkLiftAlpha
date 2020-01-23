@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -24,10 +23,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.forkliftaone.ForkLiftGame;
 import com.mygdx.forkliftaone.ForkliftModel;
-import com.mygdx.forkliftaone.config.GameConfig;
-import com.mygdx.forkliftaone.entity.ForkliftActorBase;
 import com.mygdx.forkliftaone.maps.MapBase;
-import com.mygdx.forkliftaone.maps.TestMap;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
 import com.mygdx.forkliftaone.utils.ForkliftData;
 import com.mygdx.forkliftaone.utils.Inventory;
@@ -65,7 +61,7 @@ public class ChoosingScreen extends ScreenAdapter {
     private int mapCounter;
 
 
-    public ChoosingScreen(ForkLiftGame game){
+    public ChoosingScreen(ForkLiftGame game) {
         this.game = game;
         assetManager = game.getAssetManager();
         inv = pi.read();
@@ -76,15 +72,7 @@ public class ChoosingScreen extends ScreenAdapter {
         batch = game.getBatch();
     }
 
-//    public ChoosingScreen(ForkLiftGame game, ForkliftData chosenModel, int counter){
-//        this.game = game;
-//        assetManager = game.getAssetManager();
-//        inv = pi.read();
-//        forkliftData = chosenModel;
-//        this.counter = counter;
-//    }
-
-    private ChoosingScreen(ForkLiftGame game, int counter, int mapCounter){
+    private ChoosingScreen(ForkLiftGame game, int counter, int mapCounter) {
         this.game = game;
         assetManager = game.getAssetManager();
         inv = pi.read();
@@ -99,12 +87,12 @@ public class ChoosingScreen extends ScreenAdapter {
     public void show() {
         super.show();
 
-        camera = new OrthographicCamera();
-        viewport = new FitViewport(8f, 4.8f, camera);
-        stage = new Stage(viewport, game.getBatch());
+//        camera = new OrthographicCamera();
+//        viewport = new FitViewport(Gdx.graphics.getWidth() / 100f, 4.8f, camera);
+//        stage = new Stage(viewport, game.getBatch());
 
         uiCamera = new OrthographicCamera();
-        hudViewport = new FitViewport(800f, 480f, uiCamera);
+        hudViewport = new FitViewport(Gdx.graphics.getWidth(), 480f, uiCamera);
         uiStage = new Stage(hudViewport, game.getBatch());
 
         Gdx.input.setInputProcessor(uiStage);
@@ -114,36 +102,21 @@ public class ChoosingScreen extends ScreenAdapter {
 
         // Creating texture atlas
         TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
-        TextureRegion forkliftRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_BODY);
-        TextureRegion wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
-//        TextureRegion backgoundRegion = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
         backgoundRegion = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
-         forkliftRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_BODY);
-         wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
 
-//        map = new TestMap(world, camera, stage, gamePlayAtlas);
-//        map.setRegion(backgoundRegion);
-//        map.createMap();
 
         MapData mapData = new MapData();
         mapData.setName(MapModel.MapName.CUSTOM);
-        MapModel md = new MapModel(mapData.getName(), world, camera, stage, gamePlayAtlas );
+        MapModel md = new MapModel(mapData.getName(), world, camera, stage, gamePlayAtlas);
         map = md.getMap();
         map.createMap();
 
-        stage.addActor(map);
+//        stage.addActor(map);
+        uiStage.addActor(map);
 
         model = new ForkliftModel(forkliftData, map, gamePlayAtlas);
-//        forklift = new ForkliftActorBase(world, model);
-//        forklift.createForklift(model);
-//        // Change the texture later so that they are different for each forklift
-//        forklift.setRegion();
-//        stage.addActor(forklift);
 
         b2dr = new Box2DDebugRenderer();
-        //Second parameter is responsible for scaling
-//        tmr = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1/ GameConfig.SCALE);
-
         uiStage.addActor(createUi());
     }
 
@@ -153,37 +126,34 @@ public class ChoosingScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-        viewport.apply();
-//        tmr.render();
-//        b2dr.render(world, camera.combined);
-//        stage.draw();
+//        viewport.apply();
         hudViewport.apply();
 
         drawMain();
         uiStage.draw();
     }
 
-    private Actor createUi(){
+    private Actor createUi() {
         skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
 
         table = new Table();
         table.setWidth(Gdx.graphics.getWidth());
         table.align(Align.center | Align.top);
-        table.setPosition(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight());
+        table.setPosition(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight());
 
         // Test (selection via next/previous buttons is working)
 //        final ForkliftData[] fdArray;
         final ArrayList<ForkliftData> fdArray = new ArrayList<>();
-        for (int i = 0; i < inv.getAllModels().size(); i++){
-            if (inv.getAllModels().get(i).getPurchased()){
+        for (int i = 0; i < inv.getAllModels().size(); i++) {
+            if (inv.getAllModels().get(i).getPurchased()) {
                 fdArray.add(inv.getAllModels().get(i));
             }
         }
 
         // Map selection
         final ArrayList<MapData> mdArray = new ArrayList<>();
-        for (int i = 0; i < inv.getAllMaps().size(); i++){
-            if (inv.getAllMaps().get(i).getPurchased()){
+        for (int i = 0; i < inv.getAllMaps().size(); i++) {
+            if (inv.getAllMaps().get(i).getPurchased()) {
                 mdArray.add(inv.getAllMaps().get(i));
             }
         }
@@ -193,7 +163,7 @@ public class ChoosingScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
-                if (counter+1 == fdArray.size()){
+                if (counter + 1 == fdArray.size()) {
                     counter = 0;
                 } else {
                     counter++;
@@ -202,7 +172,6 @@ public class ChoosingScreen extends ScreenAdapter {
                 // Delete SOUT
                 System.out.println(forkliftData.getName() + "" + fdArray.size() + "" + counter);
                 // Refreshing screen
-//                game.setScreen(new GameScreen(game, fd));
                 game.setScreen(new ChoosingScreen(game, counter, mapCounter));
 
             }
@@ -211,8 +180,8 @@ public class ChoosingScreen extends ScreenAdapter {
         previousTB.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (counter == 0){
-                    counter = fdArray.size()-1;
+                if (counter == 0) {
+                    counter = fdArray.size() - 1;
                 } else {
                     counter--;
                 }
@@ -220,7 +189,6 @@ public class ChoosingScreen extends ScreenAdapter {
                 // Delete SOUT
                 System.out.println(forkliftData.getName() + "" + fdArray.size() + "" + counter);
                 // Refreshing screen
-//                game.setScreen(new GameScreen(game, fd));
                 game.setScreen(new ChoosingScreen(game, counter, mapCounter));
 
             }
@@ -231,7 +199,7 @@ public class ChoosingScreen extends ScreenAdapter {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
-                if (mapCounter+1 == mdArray.size()){
+                if (mapCounter + 1 == mdArray.size()) {
                     mapCounter = 0;
                 } else {
                     mapCounter++;
@@ -240,7 +208,6 @@ public class ChoosingScreen extends ScreenAdapter {
                 // Delete SOUT
                 System.out.println(mapData.getName() + "" + mdArray.size() + "" + mapCounter);
                 // Refreshing screen
-//                game.setScreen(new GameScreen(game, fd));
                 game.setScreen(new ChoosingScreen(game, counter, mapCounter));
 
             }
@@ -249,8 +216,8 @@ public class ChoosingScreen extends ScreenAdapter {
         previousMap.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (mapCounter == 0){
-                    mapCounter = mdArray.size()-1;
+                if (mapCounter == 0) {
+                    mapCounter = mdArray.size() - 1;
                 } else {
                     mapCounter--;
                 }
@@ -258,7 +225,6 @@ public class ChoosingScreen extends ScreenAdapter {
                 // Delete SOUT
                 System.out.println(mapData.getName() + "" + mdArray.size() + "" + mapCounter);
                 // Refreshing screen
-//                game.setScreen(new GameScreen(game, fd));
                 game.setScreen(new ChoosingScreen(game, counter, mapCounter));
 
             }
@@ -273,8 +239,7 @@ public class ChoosingScreen extends ScreenAdapter {
                         int newBalance = inv.getBalance() - (((forkliftData.getTubes() - 1) * 100) + 300);
                         forkliftData.setTubes(forkliftData.getTubes() + 1);
 
-//                Inventory inv2 = new Inventory(inv.getBalance() - 10, inv.getAllModels(), mapData);
-                        Inventory inv2 = new Inventory( newBalance, inv.getAllModels(), inv.getAllMaps());
+                        Inventory inv2 = new Inventory(newBalance, inv.getAllModels(), inv.getAllMaps());
                         pi.write(inv2);
                         System.out.println("Balance: " + inv.getBalance());
                         game.setScreen(new ChoosingScreen(game, counter, mapCounter));
@@ -298,7 +263,7 @@ public class ChoosingScreen extends ScreenAdapter {
         table.row();
 
         startButton = new TextButton("Play", skin);
-        startButton.addListener(new ClickListener(){
+        startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new GameScreen(game, forkliftData, mapData));
@@ -306,7 +271,7 @@ public class ChoosingScreen extends ScreenAdapter {
         });
 
         quitButton = new TextButton("Choose map", skin);
-        quitButton.addListener(new ClickListener(){
+        quitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 //                quit();
@@ -321,48 +286,29 @@ public class ChoosingScreen extends ScreenAdapter {
         return table;
     }
 
-    private void drawMain(){
+    private void drawMain() {
         batch.setProjectionMatrix(uiCamera.combined);
         batch.begin();
 
-        batch.draw(backgoundRegion, 0,0,
+        batch.draw(backgoundRegion, 0, 0,
                 hudViewport.getWorldWidth(), hudViewport.getWorldHeight());
 
         batch.draw(model.getForkliftRegion(), // Texture
-                2f,2f, // Texture position
-                model.getForkliftRegion().getRegionWidth()/2, model.getForkliftRegion().getRegionHeight()/2, // Rotation point (width / 2, height /2 = center)
-                hudViewport.getScreenHeight() / 10f, hudViewport.getScreenHeight() / 10f, // Width and height of the texture
+                hudViewport.getScreenWidth() / 2f - (model.getForkliftRegion().getRegionWidth() / 2f) * 0.75f,
+                hudViewport.getScreenHeight() / 2f - (model.getForkliftRegion().getRegionHeight() / 2f) * 0.75f, // Texture position
+                model.getForkliftRegion().getRegionWidth() / 2, model.getForkliftRegion().getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
+                model.getForkliftRegion().getRegionWidth() * 0.75f, model.getForkliftRegion().getRegionHeight() * 0.75f, // Width and height of the texture
                 1f, 1f, //scaling
                 0); // Rotation (radiants to degrees)
-
-        batch.draw(model.getWheelRegion(), // Texture
-                model.getFrontWheelPosition().x-model.getFrontWheelRadius(), model.getFrontWheelPosition().y-model.getFrontWheelRadius(), // Texture position
-                model.getFrontWheelRadius(), model.getFrontWheelRadius(), // Rotation point (width / 2, height /2 = center)
-                model.getFrontWheelRadius() * 200f, model.getFrontWheelRadius() * 200f, // Width and height of the texture
-                1f,1f, //scaling
-                0);
-
-        batch.draw(model.getWheelRegion(), // Texture
-                model.getRearWheelPosition().x-model.getRearWheelRadius(), model.getRearWheelPosition().y-model.getRearWheelRadius(), // Texture position
-                model.getRearWheelRadius(), model.getRearWheelRadius(), // Rotation point (width / 2, height /2 = center)
-                model.getRearWheelRadius() * 200f, model.getRearWheelRadius() * 200f, // Width and height of the texture
-                1f, 1f, //scaling
-                0);
-
-
-
-
-
 
 
         batch.end();
     }
 
 
-
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
+//        viewport.update(width, height);
         hudViewport.update(width, height);
     }
 
@@ -373,7 +319,7 @@ public class ChoosingScreen extends ScreenAdapter {
 
     @Override
     public void dispose() {
-        stage.dispose();
+//        stage.dispose();
         uiStage.dispose();
         world.dispose();
         b2dr.dispose();

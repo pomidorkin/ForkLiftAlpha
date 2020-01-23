@@ -27,6 +27,7 @@ import com.mygdx.forkliftaone.utils.ForkliftData;
 import com.mygdx.forkliftaone.utils.GeneralData;
 import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.MapData;
+import com.mygdx.forkliftaone.utils.MapModel;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
 import com.mygdx.forkliftaone.utils.RegionNames;
 
@@ -49,6 +50,7 @@ public class MarketScreen extends ScreenAdapter {
     private OrthographicCamera camera;
     private Viewport viewport;
     private ForkliftModel model;
+    private MapModel mapModel;
     private AssetManager assetManager;
     private TextureAtlas gamePlayAtlas;
     private TextureRegion backgroundTexture;
@@ -98,12 +100,22 @@ public class MarketScreen extends ScreenAdapter {
     public void show() {
         super.show();
         camera = new OrthographicCamera();
-        viewport = new FitViewport(800f, 480f, camera);
+        viewport = new FitViewport(Gdx.graphics.getWidth(), 480f, camera);
         stage = new Stage(viewport, game.getBatch());
         gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
         stage.addActor(createUi());
 
-        model = new ForkliftModel(unpurchasedForklifts.get(counter), gamePlayAtlas);
+        if (unpurchasedForklifts.size() <= 0) {
+            model = null;
+        } else {
+            model = new ForkliftModel(unpurchasedForklifts.get(counter), gamePlayAtlas);
+        }
+
+        if (unpurchasedMaps.size() <= 0) {
+            mapModel = null;
+        } else {
+            mapModel = new MapModel(unpurchasedMaps.get(mapCounter).getName(), gamePlayAtlas);
+        }
         backgroundTexture = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
 
         Gdx.input.setInputProcessor(stage);
@@ -313,23 +325,29 @@ public class MarketScreen extends ScreenAdapter {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
 
-                    inv.setBalance(inv.getBalance() - 10);
-//                    forkliftData.setPurchased(true);
                     mapData = unpurchasedMaps.get(mapCounter);
-                    mapData.setPurchased(true);
+                    if (inv.getBalance() >= mapData.getPrice()) {
 
-                    // Saving models
-                    inv.getAllMaps().add(mapData);
+                        inv.setBalance(inv.getBalance() - mapData.getPrice());
 
-                    // Saving
-                    Inventory inv2 = new Inventory(inv.getBalance(), inv.getAllModels(), inv.getAllMaps());
-                    pi.write(inv2);
 
-                    GeneralData gd2 = new GeneralData(gd.getAllModels(), gd.getAllMaps());
-                    pi.write(gd2);
+                        mapData.setPurchased(true);
 
-                    // Refreshing market screen
-                    game.setScreen(new MarketScreen(game));
+                        // Saving models
+                        inv.getAllMaps().add(mapData);
+
+                        // Saving
+                        Inventory inv2 = new Inventory(inv.getBalance(), inv.getAllModels(), inv.getAllMaps());
+                        pi.write(inv2);
+
+                        GeneralData gd2 = new GeneralData(gd.getAllModels(), gd.getAllMaps());
+                        pi.write(gd2);
+
+                        // Refreshing market screen
+                        game.setScreen(new MarketScreen(game));
+                    } else {
+                        System.out.println("Not enough money. Map price:" + mapData.getPrice());
+                    }
 
                 }
             });
@@ -397,17 +415,26 @@ public class MarketScreen extends ScreenAdapter {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        batch.draw(backgroundTexture, 0, 0,
-                viewport.getWorldWidth(), viewport.getWorldHeight());
+//        batch.draw(backgroundTexture, 0, 0,
+//                viewport.getWorldWidth(), viewport.getWorldHeight());
+
+        if (mapModel != null) {
+            batch.draw(mapModel.getBackgroundTexture(), 0, 0,
+                    viewport.getWorldWidth(), viewport.getWorldHeight());
+        }
 
 
-        batch.draw(model.getForkliftRegion(), // Texture
-                viewport.getScreenWidth() / 2f - (model.getForkliftRegion().getRegionWidth() / 2f) * 0.75f,
-                viewport.getScreenHeight() / 2f - (model.getForkliftRegion().getRegionHeight() / 2f) * 0.75f, // Texture position
-                (model.getForkliftRegion().getRegionWidth() / 2) * 100f, (model.getForkliftRegion().getRegionHeight() / 2) * 100f, // Rotation point (width / 2, height /2 = center)
-                model.getForkliftRegion().getRegionWidth() * 0.75f, model.getForkliftRegion().getRegionHeight() * 0.75f, // Width and height of the texture
-                1f, 1f, //scaling
-                0); // Rotation (radiants to degrees)
+        if (model != null) {
+            batch.draw(model.getForkliftRegion(), // Texture
+                    viewport.getScreenWidth() / 2f - (model.getForkliftRegion().getRegionWidth() / 2f) * 0.75f,
+                    viewport.getScreenHeight() / 2f - (model.getForkliftRegion().getRegionHeight() / 2f) * 0.75f, // Texture position
+                    (model.getForkliftRegion().getRegionWidth() / 2) * 100f, (model.getForkliftRegion().getRegionHeight() / 2) * 100f, // Rotation point (width / 2, height /2 = center)
+                    model.getForkliftRegion().getRegionWidth() * 0.75f, model.getForkliftRegion().getRegionHeight() * 0.75f, // Width and height of the texture
+                    1f, 1f, //scaling
+                    0); // Rotation (radiants to degrees)
+
+
+        }
 
         batch.end();
     }

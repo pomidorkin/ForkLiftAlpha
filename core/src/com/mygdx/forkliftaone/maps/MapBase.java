@@ -5,16 +5,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.mygdx.forkliftaone.config.GameConfig;
 import com.mygdx.forkliftaone.entity.Sensor;
-import com.mygdx.forkliftaone.utils.AssetDescriptors;
-import com.mygdx.forkliftaone.utils.AssetPaths;
 import com.mygdx.forkliftaone.utils.TiledObjectUtil;
 
 //Spawning objects should be up to the map actor
@@ -25,6 +18,7 @@ public abstract class MapBase extends Actor{
     private Vector2 spawnCoordinates;
     private String mapName;
     private Sensor sensor;
+    protected TextureRegion backTexture, middleTexture, frontTexture;
 
     public MapBase(World world, String mapName, Vector2 spawnCoordinates, float x, float y, float width, float height){
         this.world = world;
@@ -75,4 +69,16 @@ public abstract class MapBase extends Actor{
     public abstract void openDoor();
 
     public abstract void spawnBoxes();
+
+    public TextureRegion getBackTexture() {
+        return backTexture;
+    }
+
+    public TextureRegion getMiddleTexture() {
+        return middleTexture;
+    }
+
+    public TextureRegion getFrontTexture() {
+        return frontTexture;
+    }
 }

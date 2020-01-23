@@ -17,15 +17,36 @@ public class MapModel {
     }
 
     private MapBase map;
+    private TextureRegion backgroundTexture, middleTexture, frontTexture;
 
-    public  MapModel(MapName md, World world, OrthographicCamera camera, Stage stage,  TextureAtlas atlas){
+    public  MapModel(MapName md, World world, OrthographicCamera camera, Stage stage, TextureAtlas atlas){
         switch (md){
             case CUSTOM:
-                map = new CustomTestMap(world, camera, stage, atlas);
+                this.backgroundTexture = atlas.findRegion(RegionNames.BOX_TEXTURE);
+                this.middleTexture = atlas.findRegion(RegionNames.TEST_BACKGROUND);
+
+                map = new CustomTestMap(world, backgroundTexture, middleTexture, camera, stage, atlas);
                 break;
 
             case TEST:
-                map = new TestMap(world, camera, stage, atlas);
+                this.backgroundTexture = atlas.findRegion(RegionNames.BOX_TEXTURE);
+                this.middleTexture = atlas.findRegion(RegionNames.TEST_BACKGROUND);
+                map = new TestMap(world, backgroundTexture, middleTexture, camera, stage, atlas);
+                break;
+        }
+
+    }
+
+    public  MapModel(MapName md, TextureAtlas atlas){
+        switch (md){
+            case CUSTOM:
+                this.backgroundTexture = atlas.findRegion(RegionNames.BOX_TEXTURE);
+                this.middleTexture = atlas.findRegion(RegionNames.TEST_BACKGROUND);
+                break;
+
+            case TEST:
+                this.backgroundTexture = atlas.findRegion(RegionNames.BOX_TEXTURE);
+                this.middleTexture = atlas.findRegion(RegionNames.TEST_BACKGROUND);
                 break;
         }
 
@@ -33,5 +54,17 @@ public class MapModel {
 
     public MapBase getMap() {
         return map;
+    }
+
+    public TextureRegion getBackgroundTexture() {
+        return backgroundTexture;
+    }
+
+    public TextureRegion getMiddleTexture() {
+        return middleTexture;
+    }
+
+    public TextureRegion getFrontTexture() {
+        return frontTexture;
     }
 }

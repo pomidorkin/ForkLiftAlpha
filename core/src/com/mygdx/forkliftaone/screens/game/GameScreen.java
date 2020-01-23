@@ -8,20 +8,16 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -36,7 +32,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -46,16 +41,11 @@ import com.mygdx.forkliftaone.config.GameConfig;
 import com.mygdx.forkliftaone.dialogs.BackToMenuDialog;
 import com.mygdx.forkliftaone.entity.BackgroundBase;
 import com.mygdx.forkliftaone.entity.ForkliftActorBase;
-import com.mygdx.forkliftaone.entity.BoxBase;
 import com.mygdx.forkliftaone.entity.FuelCan;
-import com.mygdx.forkliftaone.entity.TestBox;
 import com.mygdx.forkliftaone.handlers.SensorContactListener;
-import com.mygdx.forkliftaone.maps.CustomTestMap;
 import com.mygdx.forkliftaone.maps.MapBase;
-import com.mygdx.forkliftaone.maps.TestMap;
 import com.mygdx.forkliftaone.screens.menu.MenuScreen;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
-import com.mygdx.forkliftaone.utils.BoxFactory;
 import com.mygdx.forkliftaone.utils.ForkliftData;
 import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.MapData;
@@ -106,8 +96,6 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     private MapBase map;
 
-    // Test Parallax background
-    private TextureRegion parallax;
 
     public GameScreen(ForkLiftGame game, ForkliftData fd, MapData md) {
         this.game = game;
@@ -122,7 +110,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         // Разборки с текстурами end here
 
         camera = new OrthographicCamera();
-        viewport = new FitViewport(8f, 4.8f, camera);
+        float width = Gdx.graphics.getWidth()/100f;
+        viewport = new FitViewport(width, 4.8f, camera);
         stage = new Stage(viewport, batch);
 //        Gdx.input.setInputProcessor(this);
 
@@ -141,7 +130,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         paused = true;
         music.play();
         // Volume should be obtained from the savings
-        music.setVolume(0.6f);
+        music.setVolume(0f);
         music.setLooping(true);
 
         // May be refactor later, because there are too many stages
@@ -194,9 +183,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         //Second parameter is responsible for scaling
         tmr = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1 / GameConfig.SCALE);
 
-        // Parallax
-        this.parallax = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
-        BackgroundBase backBase = new BackgroundBase(parallax, viewport, forklift, camera);
+        // Parallax background
+        BackgroundBase backBase = new BackgroundBase(map.getBackTexture(), map.getMiddleTexture(), viewport, forklift, camera);
 
         // The order determines the drawing consequence
         stage.addActor(backBase);
