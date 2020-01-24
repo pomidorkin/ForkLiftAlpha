@@ -1,5 +1,6 @@
 package com.mygdx.forkliftaone.handlers;
 
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -26,10 +27,10 @@ public class SensorContactListener implements ContactListener {
         if (fa.getUserData() == null || fb.getUserData() == null)
             return;
 
-        if (isSensorContact(fa, fb)){
+        if (isSensorContact(fa, fb)) {
             Sensor sensor;
             BoxBase rubbishBox;
-            if (fa.getUserData() instanceof Sensor){
+            if (fa.getUserData() instanceof Sensor) {
                 sensor = (Sensor) fa.getUserData();
                 rubbishBox = (BoxBase) fb.getUserData();
             } else {
@@ -42,10 +43,10 @@ public class SensorContactListener implements ContactListener {
 
         }
 
-        if (isForkFuelCollide(fa, fb)){
+        if (isForkFuelCollide(fa, fb)) {
             ForkliftActorBase forklift;
             FuelCan fuel;
-            if (fa.getUserData() instanceof ForkliftActorBase){
+            if (fa.getUserData() instanceof ForkliftActorBase) {
                 forklift = (ForkliftActorBase) fa.getUserData();
                 fuel = (FuelCan) fb.getUserData();
             } else {
@@ -58,10 +59,10 @@ public class SensorContactListener implements ContactListener {
 
         }
 
-        if (isDoorOpen(fa, fb)){
+        if (isDoorOpen(fa, fb)) {
             BoxBase boxBase;
             DoorSensor doorSensor;
-            if (fa.getUserData() instanceof BoxBase){
+            if (fa.getUserData() instanceof BoxBase) {
                 boxBase = (BoxBase) fa.getUserData();
                 doorSensor = (DoorSensor) fb.getUserData();
             } else {
@@ -70,6 +71,26 @@ public class SensorContactListener implements ContactListener {
             }
 
             doorSensor.getMap().openDoor();
+
+        }
+
+        if (isFallen(fa, fb)) {
+            BoxBase boxBase;
+            MapObject mapObject;
+            if (fa.getUserData() instanceof BoxBase) {
+                boxBase = (BoxBase) fa.getUserData();
+                mapObject = (MapObject) fb.getUserData();
+            } else {
+                boxBase = (BoxBase) fb.getUserData();
+                mapObject = (MapObject) fa.getUserData();
+            }
+
+            System.out.println("Map collides with box. Box Speed = " + boxBase.getBody().getLinearVelocity().y);
+            // Destroying box if speed is more then 6f (Falling and breaking logic), should play a breaking sound
+            // World cannot be changed from listener, so instead the "dead" status is set to true
+            if (boxBase.getBody().getLinearVelocity().y <= -6f){
+                    boxBase.setDead(true);
+            }
 
         }
 
@@ -86,10 +107,10 @@ public class SensorContactListener implements ContactListener {
         if (fa.getUserData() == null || fb.getUserData() == null)
             return;
 
-        if (isSensorContact(fa, fb)){
+        if (isSensorContact(fa, fb)) {
             Sensor sensor;
             BoxBase rubbishBox;
-            if (fa.getUserData() instanceof Sensor){
+            if (fa.getUserData() instanceof Sensor) {
                 sensor = (Sensor) fa.getUserData();
                 rubbishBox = (BoxBase) fb.getUserData();
             } else {
@@ -102,10 +123,10 @@ public class SensorContactListener implements ContactListener {
 
         }
 
-        if (isForkFuelCollide(fa, fb)){
+        if (isForkFuelCollide(fa, fb)) {
             ForkliftActorBase forklift;
             FuelCan fuel;
-            if (fa.getUserData() instanceof ForkliftActorBase){
+            if (fa.getUserData() instanceof ForkliftActorBase) {
                 forklift = (ForkliftActorBase) fa.getUserData();
                 fuel = (FuelCan) fb.getUserData();
             } else {
@@ -130,34 +151,40 @@ public class SensorContactListener implements ContactListener {
 
     }
 
-    private boolean isSensorContact(Fixture a, Fixture b){
-        if (a.getUserData() instanceof BoxBase || b.getUserData() instanceof BoxBase){
-            if (a.getUserData() instanceof Sensor || b.getUserData() instanceof Sensor){
+    private boolean isSensorContact(Fixture a, Fixture b) {
+        if (a.getUserData() instanceof BoxBase || b.getUserData() instanceof BoxBase) {
+            if (a.getUserData() instanceof Sensor || b.getUserData() instanceof Sensor) {
                 return true;
             }
         }
         return false;
-
     }
 
-    private boolean isForkFuelCollide(Fixture a, Fixture b){
-        if (a.getUserData() instanceof FuelCan || b.getUserData() instanceof FuelCan){
-            if (a.getUserData() instanceof ForkliftActorBase || b.getUserData() instanceof ForkliftActorBase){
+    private boolean isForkFuelCollide(Fixture a, Fixture b) {
+        if (a.getUserData() instanceof FuelCan || b.getUserData() instanceof FuelCan) {
+            if (a.getUserData() instanceof ForkliftActorBase || b.getUserData() instanceof ForkliftActorBase) {
                 return true;
             }
         }
         return false;
-
     }
 
-    private boolean isDoorOpen(Fixture a, Fixture b){
-        if (a.getUserData() instanceof BoxBase || b.getUserData() instanceof BoxBase){
-            if (a.getUserData() instanceof DoorSensor || b.getUserData() instanceof DoorSensor){
+    private boolean isDoorOpen(Fixture a, Fixture b) {
+        if (a.getUserData() instanceof BoxBase || b.getUserData() instanceof BoxBase) {
+            if (a.getUserData() instanceof DoorSensor || b.getUserData() instanceof DoorSensor) {
                 return true;
             }
         }
         return false;
+    }
 
+    private boolean isFallen(Fixture a, Fixture b) {
+        if (a.getUserData() instanceof BoxBase || b.getUserData() instanceof BoxBase) {
+            if (a.getUserData() instanceof MapObject || b.getUserData() instanceof MapObject) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public int getSalary() {

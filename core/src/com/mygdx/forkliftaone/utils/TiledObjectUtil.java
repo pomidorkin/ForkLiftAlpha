@@ -31,7 +31,7 @@ public static void parseTiledTiledObjectLayer(World world, MapObjects mapObjects
         fixDef.shape = shape;
         fixDef.density = 1f;
         fixDef.filter.categoryBits = GameConfig.BIT_MAP;
-        body.createFixture(fixDef);
+        body.createFixture(fixDef).setUserData(object); // required for collision
         shape.dispose();
     }
 

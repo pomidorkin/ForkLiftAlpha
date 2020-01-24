@@ -26,6 +26,7 @@ public abstract class BoxBase extends Actor {
     private TextureRegion goodTexture;
     private Vector2 position;
     private int price;
+    private boolean dead;
 
     public BoxBase(World world, Camera camera, TextureAtlas atlas, float boxDensity,
                    float boxWidth, float boxHeight, String goodTexture, Vector2 coords){
@@ -97,6 +98,9 @@ public abstract class BoxBase extends Actor {
 
     @Override
     public void act(float delta) {
+        if (dead){
+            detroyBox();
+        }
         super.act(delta);
         isBoxInCamera();
     }
@@ -120,5 +124,17 @@ public abstract class BoxBase extends Actor {
 
     public void setPrice(int price){
         this.price = price;
+    }
+
+    public Body getBody() {
+        return body;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
     }
 }
