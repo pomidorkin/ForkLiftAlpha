@@ -13,6 +13,9 @@ import com.mygdx.forkliftaone.entity.Sensor;
 import com.mygdx.forkliftaone.maps.CustomTestMap;
 
 public class SensorContactListener implements ContactListener {
+
+    private int salary;
+
     @Override
     public void beginContact(Contact contact) {
         Fixture fa = contact.getFixtureA();
@@ -35,6 +38,7 @@ public class SensorContactListener implements ContactListener {
             }
 
             sensor.trigger(rubbishBox.getPrice());
+            salary += rubbishBox.getPrice();
 
         }
 
@@ -94,6 +98,7 @@ public class SensorContactListener implements ContactListener {
             }
 
             sensor.untrigger(rubbishBox.getPrice());
+            salary -= rubbishBox.getPrice();
 
         }
 
@@ -153,5 +158,9 @@ public class SensorContactListener implements ContactListener {
         }
         return false;
 
+    }
+
+    public int getSalary() {
+        return salary;
     }
 }

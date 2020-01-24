@@ -91,6 +91,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private MapData md;
     private ProcessInventory pi = new ProcessInventory();
     private Inventory inv;
+    private SensorContactListener scl;
 
     private ProgressBar bar;
 
@@ -150,7 +151,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         //test
         world = new World(new Vector2(0, -9.8f), false);
         // Adding contact listeners
-        world.setContactListener(new SensorContactListener());
+        this.scl = new SensorContactListener();
+        world.setContactListener(scl);
 
         // Creating texture atlas
         TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
@@ -272,9 +274,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         batch.setProjectionMatrix(uiCamera.combined);
         batch.begin();
 
-        // draw lives
-        String livesText = "" + inv.getBalance();
-        layout.setText(font, livesText);
+        // draw balance
+        String balanceText = "" + inv.getBalance() + " +" + scl.getSalary();
+        layout.setText(font, balanceText);
         font.draw(batch, layout, coinTexture.getRegionWidth() + 10f, 480f - coinTexture.getRegionHeight() / 2);
 
         // draw score

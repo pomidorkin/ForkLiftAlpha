@@ -53,7 +53,7 @@ public class MarketScreen extends ScreenAdapter {
     private MapModel mapModel;
     private AssetManager assetManager;
     private TextureAtlas gamePlayAtlas;
-    private TextureRegion backgroundTexture;
+    private TextureRegion backgroundPlaceholder;
 
     private List<ForkliftData> unpurchasedForklifts;
     private List<MapData> unpurchasedMaps;
@@ -116,7 +116,7 @@ public class MarketScreen extends ScreenAdapter {
         } else {
             mapModel = new MapModel(unpurchasedMaps.get(mapCounter).getName(), gamePlayAtlas);
         }
-        backgroundTexture = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
+        backgroundPlaceholder = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
 
         Gdx.input.setInputProcessor(stage);
 
@@ -420,6 +420,9 @@ public class MarketScreen extends ScreenAdapter {
 
         if (mapModel != null) {
             batch.draw(mapModel.getBackgroundTexture(), 0, 0,
+                    viewport.getWorldWidth(), viewport.getWorldHeight());
+        } else {
+            batch.draw(backgroundPlaceholder, 0, 0,
                     viewport.getWorldWidth(), viewport.getWorldHeight());
         }
 
