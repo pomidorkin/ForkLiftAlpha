@@ -16,6 +16,7 @@ public class TestBox extends BoxBase {
         super(world, camera,  atlas,0.1f, 0.3f, 0.3f, RegionNames.BOX_TEXTURE, coords);
 
         setPrice(new Random().nextInt(5) + 1);
+        setDonatePrice(new Random().nextInt(5) + 1);
 
     }
 }

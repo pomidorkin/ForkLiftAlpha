@@ -9,7 +9,7 @@ import com.mygdx.forkliftaone.config.GameConfig;
 
 public class Sensor {
 
-    private int salary;
+    private int salary, donateSalary;
 
     public Sensor(World world, float x, float y, float width, float height){
         Body box;
@@ -32,14 +32,20 @@ public class Sensor {
 
     // (To Do) Implement saving logic
 
-    public void trigger(int boxPrice){
+    public void trigger(int boxPrice, int donatePrice){
         salary += boxPrice;
+        donateSalary += donatePrice;
         System.out.println("Balance: " + salary);
     }
 
-    public void untrigger(int boxPrice){
+    public void untrigger(int boxPrice, int donatePrice){
         salary -= boxPrice;
+        donateSalary -= donatePrice;
         System.out.println("Balance: " + salary);
+    }
+
+    public int getDonateSalary() {
+        return donateSalary;
     }
 
     public int getSalary() {

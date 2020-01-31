@@ -14,6 +14,7 @@ public class FuelCan extends BoxBase {
         super(world, camera, atlas, 0.1f, 0.3f, 0.21f, RegionNames.FORKLIFT_WHEEL, coords);
 
         setPrice(0);
+        setDonatePrice(0);
     }
 
     public boolean isActive() {

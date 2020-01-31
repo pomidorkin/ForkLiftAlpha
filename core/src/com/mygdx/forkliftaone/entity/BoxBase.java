@@ -25,7 +25,7 @@ public abstract class BoxBase extends Actor {
     private float boxWidth, boxHeight;// Should by multiplied by 2
     private TextureRegion goodTexture;
     private Vector2 position;
-    private int price;
+    private int price, donatePrice;
     private boolean dead;
 
     public BoxBase(World world, Camera camera, TextureAtlas atlas, float boxDensity,
@@ -136,5 +136,14 @@ public abstract class BoxBase extends Actor {
 
     public void setDead(boolean dead) {
         this.dead = dead;
+        // Play breaking sound here
+    }
+
+    public int getDonatePrice() {
+        return donatePrice;
+    }
+
+    public void setDonatePrice(int donatePrice) {
+        this.donatePrice = donatePrice;
     }
 }

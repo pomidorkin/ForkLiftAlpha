@@ -17,7 +17,11 @@ import com.mygdx.forkliftaone.config.GameConfig;
 import com.mygdx.forkliftaone.entity.DoorSensor;
 import com.mygdx.forkliftaone.utils.AssetPaths;
 import com.mygdx.forkliftaone.utils.BoxFactory;
+import com.mygdx.forkliftaone.utils.Inventory;
+import com.mygdx.forkliftaone.utils.ProcessInventory;
 import com.mygdx.forkliftaone.utils.RegionNames;
+
+import java.util.Random;
 
 public class CustomTestMap extends MapBase {
     private Vector2[][] boxCoords;
@@ -32,6 +36,10 @@ public class CustomTestMap extends MapBase {
     private float elevatorTimer, blinkingTimer;
     private boolean drawing;
 
+    private Inventory inv;
+
+    ProcessInventory pi = new ProcessInventory();
+
     public CustomTestMap(World world, TextureRegion backTexture, TextureRegion middleTexture, Camera camera, Stage stage, TextureAtlas atlas) {
         super(world, AssetPaths.CUSTOM_TILED_MAP, new Vector2(1.5f, 1.5f), 10f, 1f, 1f, 0.5f);
 
@@ -39,6 +47,7 @@ public class CustomTestMap extends MapBase {
         this.atlas = atlas;
         this.camera = camera;
         this.stage = stage;
+        inv = pi.read();
         factory = new BoxFactory();
 
         this.backTexture = backTexture;
@@ -54,7 +63,7 @@ public class CustomTestMap extends MapBase {
         // Only one middle will be spawned
         boxCoords[2] = new Vector2[1];
         // Only one expensive will be spawned
-        boxCoords[3] = new Vector2[1];
+        boxCoords[3] = new Vector2[5];
 
 
         // Coordinates of each box
@@ -68,7 +77,10 @@ public class CustomTestMap extends MapBase {
 //        boxCoords[2][1] = new Vector2(5.5f, 5f);
 //
         boxCoords[3][0] = new Vector2(6.5f, 5f);
-//        boxCoords[3][1] = new Vector2(5.5f, 5f);
+        boxCoords[3][1] = new Vector2(5.5f, 5f);
+        boxCoords[3][2] = new Vector2(5.5f, 5f);
+        boxCoords[3][3] = new Vector2(5.5f, 5f);
+        boxCoords[3][4] = new Vector2(5.5f, 5f);
 
         createObstacles(8f, 4f, 0.1f, 1f,
                 8f, 4f, 0.1f, 1f,
@@ -93,10 +105,33 @@ public class CustomTestMap extends MapBase {
             stage.addActor(factory.getBox(world, camera, atlas, coord));
         }
 
-        // Spawn expeisive goods
-        for (Vector2 coord : boxCoords[3]) {
-            stage.addActor(factory.getBox(world, camera, atlas, coord));
+        // Spawn expensive goods
+        // (Logic works OK)
+        if (inv.isDonateBoxesPurchased()){
+            Vector2 coord;
+            int rand = new Random().nextInt(boxCoords[3].length) + 1;
+            for (int i = 0; i < rand; i++){
+                coord = boxCoords[3][i];
+                // Spawn donate boxes here
+                stage.addActor(factory.getBox(world, camera, atlas, coord));
+                System.out.println("Donate box spawned");
+            }
+
+            if (boxCoords[3].length > rand){
+                for (int i = rand; i < boxCoords[3].length; i++){
+                    coord = boxCoords[3][i];
+                    // Spawn expensive, but not donate boxes here
+                    stage.addActor(factory.getBox(world, camera, atlas, coord));
+                    System.out.println("Not donate box spawned");
+                }
+            }
+
+        } else {
+            for (Vector2 coord : boxCoords[3]) {
+                stage.addActor(factory.getBox(world, camera, atlas, coord));
+            }
         }
+
     }
 
     private void createObstacles(float wallX, float wallY, float wallWidth, float wallHeight,

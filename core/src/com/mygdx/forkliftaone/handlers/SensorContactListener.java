@@ -15,7 +15,7 @@ import com.mygdx.forkliftaone.maps.CustomTestMap;
 
 public class SensorContactListener implements ContactListener {
 
-    private int salary;
+    private int salary, donateSalary;
 
     @Override
     public void beginContact(Contact contact) {
@@ -38,8 +38,9 @@ public class SensorContactListener implements ContactListener {
                 rubbishBox = (BoxBase) fa.getUserData();
             }
 
-            sensor.trigger(rubbishBox.getPrice());
+            sensor.trigger(rubbishBox.getPrice(), rubbishBox.getDonatePrice());
             salary += rubbishBox.getPrice();
+            donateSalary += rubbishBox.getDonatePrice();
 
         }
 
@@ -118,8 +119,9 @@ public class SensorContactListener implements ContactListener {
                 rubbishBox = (BoxBase) fa.getUserData();
             }
 
-            sensor.untrigger(rubbishBox.getPrice());
+            sensor.untrigger(rubbishBox.getPrice(), rubbishBox.getDonatePrice());
             salary -= rubbishBox.getPrice();
+            donateSalary -= rubbishBox.getDonatePrice();
 
         }
 
@@ -189,5 +191,9 @@ public class SensorContactListener implements ContactListener {
 
     public int getSalary() {
         return salary;
+    }
+
+    public int getDonateSalary() {
+        return donateSalary;
     }
 }

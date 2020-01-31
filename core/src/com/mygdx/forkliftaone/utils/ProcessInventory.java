@@ -83,7 +83,7 @@ public class ProcessInventory {
             md.get(0).setPurchased(true);
 
 
-            Inventory inv = new Inventory(15000, 0, fd, md);
+            Inventory inv = new Inventory(15000, 0, false, fd, md);
             write(inv);
             return inv;
         }

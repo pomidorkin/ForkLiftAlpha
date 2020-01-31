@@ -193,7 +193,8 @@ public class PurchaseScreen extends MenuScreenBase {
 //                            buyEntitlement.setBought(fromRestore);
                         if (transaction.getIdentifier().equals(MY_CONSUMABLE))
                             buyButton.setBought(fromRestore);
-                        Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency() + 10,
+                        // Test (Should be changed later)
+                        Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency() + 10, true,
                                 inv.getAllModels(), inv.getAllMaps());
                         pi.write(inv2);
                         game.setScreen(new PurchaseScreen(game));

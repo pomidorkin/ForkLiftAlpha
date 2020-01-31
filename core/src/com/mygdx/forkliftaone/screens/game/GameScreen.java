@@ -280,10 +280,10 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         font.draw(batch, layout, coinTexture.getRegionWidth() + 10f, 480f - coinTexture.getRegionHeight() / 2);
 
         // draw score
-        String scoreText = "SCORE: ";
-        layout.setText(font, scoreText);
+        String donate = "Gems: " + inv.getDonateCurrency() + " +" + scl.getDonateSalary();
+        layout.setText(font, donate);
         font.draw(batch, layout,
-                Gdx.graphics.getWidth() - layout.width - 20f,
+                Gdx.graphics.getWidth() - layout.width - 170f,
                 Gdx.graphics.getHeight() - layout.height
         );
 
@@ -357,7 +357,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
-                Inventory inv2 = new Inventory(inv.getBalance() + map.getSalary(), inv.getDonateCurrency(), inv.getAllModels(), inv.getAllMaps());
+                Inventory inv2 = new Inventory(inv.getBalance() + map.getSalary(),
+                        inv.getDonateCurrency() + map.getDonateSalary(),
+                        inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps());
                 pi.write(inv2);
 //                game.setScreen(new MenuScreen(game));
                 BackToMenuDialog menuDialog = new BackToMenuDialog(game, "Return to menu?", skin);

@@ -54,6 +54,10 @@ public abstract class MapBase extends Actor{
         return sensor.getSalary();
     }
 
+    public int getDonateSalary() {
+        return sensor.getDonateSalary();
+    }
+
     public TiledMap getTiledMap() {
         return tiledMap;
     }
