@@ -3,12 +3,14 @@ package com.mygdx.forkliftaone;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.pay.PurchaseManager;
 import com.badlogic.gdx.utils.Logger;
 import com.mygdx.forkliftaone.screens.loading.TestLoading;
 
 public class ForkLiftGame extends Game {
     private AssetManager assetManager;
     private SpriteBatch batch;
+    public PurchaseManager purchaseManager;
 //	private Inventory inv;
 
 
@@ -27,6 +29,9 @@ public class ForkLiftGame extends Game {
     public void dispose() {
         assetManager.dispose();
         batch.dispose();
+
+        if (purchaseManager != null)
+            purchaseManager.dispose();
     }
 
     public SpriteBatch getBatch() {

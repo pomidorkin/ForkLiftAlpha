@@ -357,7 +357,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
-                Inventory inv2 = new Inventory(inv.getBalance() + map.getSalary(), inv.getAllModels(), inv.getAllMaps());
+                Inventory inv2 = new Inventory(inv.getBalance() + map.getSalary(), inv.getDonateCurrency(), inv.getAllModels(), inv.getAllMaps());
                 pi.write(inv2);
 //                game.setScreen(new MenuScreen(game));
                 BackToMenuDialog menuDialog = new BackToMenuDialog(game, "Return to menu?", skin);

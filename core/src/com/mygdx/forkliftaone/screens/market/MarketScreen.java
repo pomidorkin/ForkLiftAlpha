@@ -238,7 +238,7 @@ public class MarketScreen extends ScreenAdapter {
                         inv.getAllModels().add(forkliftData);
 
                         // Saving
-                        Inventory inv2 = new Inventory(inv.getBalance(), inv.getAllModels(), inv.getAllMaps());
+                        Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency(), inv.getAllModels(), inv.getAllMaps());
                         pi.write(inv2);
 
                         GeneralData gd2 = new GeneralData(gd.getAllModels(), gd.getAllMaps());
@@ -337,7 +337,7 @@ public class MarketScreen extends ScreenAdapter {
                         inv.getAllMaps().add(mapData);
 
                         // Saving
-                        Inventory inv2 = new Inventory(inv.getBalance(), inv.getAllModels(), inv.getAllMaps());
+                        Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency(), inv.getAllModels(), inv.getAllMaps());
                         pi.write(inv2);
 
                         GeneralData gd2 = new GeneralData(gd.getAllModels(), gd.getAllMaps());

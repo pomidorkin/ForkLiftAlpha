@@ -15,11 +15,12 @@ import com.mygdx.forkliftaone.ForkLiftGame;
 import com.mygdx.forkliftaone.screens.game.ChoosingScreen;
 import com.mygdx.forkliftaone.screens.game.GameScreen;
 import com.mygdx.forkliftaone.screens.market.MarketScreen;
+import com.mygdx.forkliftaone.screens.purchase.PurchaseScreen;
 
 public class MenuScreen extends MenuScreenBase {
     private Skin skin;
     private Table table;
-    private TextButton startButton, quitButton, marketButton;
+    private TextButton startButton, quitButton, marketButton, donateButton;
 
     public MenuScreen(ForkLiftGame game){super(game);}
 
@@ -53,6 +54,14 @@ public class MenuScreen extends MenuScreenBase {
             }
         });
 
+        donateButton = new TextButton("Donate market", skin);
+        donateButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                openDonate();
+            }
+        });
+
         quitButton = new TextButton("Quit Game", skin);
         quitButton.addListener(new ClickListener(){
             @Override
@@ -66,7 +75,11 @@ public class MenuScreen extends MenuScreenBase {
         table.row();
         table.add(marketButton).padBottom(30);
         table.row();
+        table.add(donateButton);
+        table.row();
         table.add(quitButton);
+
+
 
         return table;
     }
@@ -79,6 +92,10 @@ public class MenuScreen extends MenuScreenBase {
 
     private void shop(){
         game.setScreen(new MarketScreen(game));
+    }
+
+    private void openDonate(){
+        game.setScreen(new PurchaseScreen(game));
     }
 
     private void quit() {
