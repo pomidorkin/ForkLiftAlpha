@@ -132,7 +132,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         paused = true;
         music.play();
         // Volume should be obtained from the savings
-        music.setVolume(0f);
+        music.setVolume(0.5f);
         music.setLooping(true);
 
         // May be refactor later, because there are too many stages

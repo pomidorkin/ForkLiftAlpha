@@ -7,6 +7,7 @@ import com.mygdx.forkliftaone.entity.ForkliftActorBase;
 import com.mygdx.forkliftaone.maps.MapBase;
 import com.mygdx.forkliftaone.screens.game.GameScreen;
 import com.mygdx.forkliftaone.screens.menu.MenuScreen;
+import com.mygdx.forkliftaone.screens.purchase.PurchaseScreen;
 import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
 
@@ -43,14 +44,18 @@ public class EmptyFuelDialog extends Dialog {
             pi.write(inv2);
             game.setScreen(new MenuScreen(game));
         } else if (object.equals(2)) {
-            Inventory inv2 = new Inventory(inv.getBalance(),
-                    inv.getDonateCurrency() - 10,
-                    inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps());
-            pi.write(inv2);
-            forklift.setFuelTank(100f);
-            gs.setInv(pi.read());
-            remove();
-            gs.setGamePaused(false);
+            if (inv.getDonateCurrency() - 10 < 0){
+                game.setScreen(new PurchaseScreen(game));
+            }else {
+                Inventory inv2 = new Inventory(inv.getBalance(),
+                        inv.getDonateCurrency() - 10,
+                        inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps());
+                pi.write(inv2);
+                forklift.setFuelTank(100f);
+                gs.setInv(pi.read());
+                remove();
+                gs.setGamePaused(false);
+            }
         }
     }
 }
