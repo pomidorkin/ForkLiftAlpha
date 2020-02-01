@@ -274,7 +274,7 @@ public class ForkliftActorBase extends Actor {
 
         //Fuel burning speed
         if (fuelTank > 0){
-            fuelTank -= 0.5f * delta;
+            fuelTank -= 15f * delta;
         }
 
     }

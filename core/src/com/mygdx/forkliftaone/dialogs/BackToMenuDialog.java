@@ -3,22 +3,17 @@ package com.mygdx.forkliftaone.dialogs;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.forkliftaone.ForkLiftGame;
+import com.mygdx.forkliftaone.screens.game.GameScreen;
 import com.mygdx.forkliftaone.screens.menu.MenuScreen;
 
 public class BackToMenuDialog extends Dialog {
     ForkLiftGame game;
+    GameScreen gs;
 
-    public BackToMenuDialog(ForkLiftGame game, String title, Skin skin) {
+    public BackToMenuDialog(ForkLiftGame game, GameScreen gs, String title, Skin skin) {
         super(title, skin);
         this.game = game;
-    }
-
-    public BackToMenuDialog(String title, Skin skin, String windowStyleName) {
-        super(title, skin, windowStyleName);
-    }
-
-    public BackToMenuDialog(String title, WindowStyle windowStyle) {
-        super(title, windowStyle);
+        this.gs = gs;
     }
 
     {
@@ -34,6 +29,7 @@ public class BackToMenuDialog extends Dialog {
             game.setScreen(new MenuScreen(game));
         } else if (object.equals(2)) {
             remove();
+            gs.setGamePaused(false);
         }
     }
 }

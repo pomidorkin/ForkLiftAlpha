@@ -39,6 +39,7 @@ import com.mygdx.forkliftaone.ForkLiftGame;
 import com.mygdx.forkliftaone.ForkliftModel;
 import com.mygdx.forkliftaone.config.GameConfig;
 import com.mygdx.forkliftaone.dialogs.BackToMenuDialog;
+import com.mygdx.forkliftaone.dialogs.EmptyFuelDialog;
 import com.mygdx.forkliftaone.entity.BackgroundBase;
 import com.mygdx.forkliftaone.entity.ForkliftActorBase;
 import com.mygdx.forkliftaone.entity.FuelCan;
@@ -94,9 +95,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private SensorContactListener scl;
 
     private ProgressBar bar;
-
     private MapBase map;
 
+    private boolean gamePaused;
 
     public GameScreen(ForkLiftGame game, ForkliftData fd, MapData md) {
         this.game = game;
@@ -205,56 +206,71 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     @Override
     public void render(float delta) {
-        update(Gdx.graphics.getDeltaTime());
 
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        if (!gamePaused) {
+            // Stage acting
+            update(Gdx.graphics.getDeltaTime());
+            stage.act();
 
-        // Разборки с текстурами
-        viewport.apply();
-        stage.draw();
-        tmr.render();
-        b2dr.render(world, camera.combined);
-
-        // Testing UI
-        uiViewport.apply();
-        renderUi();
-
-
-        // Stage acting
-        stage.act();
-
-        // Fuel system
-        // Should be implemented through dialog window with saving
-        if (forklift.isFuelTankEmpty()) {
-            game.setScreen(new MenuScreen(game));
-        }
-
-        if (forklift.isHasFuel()) {
-            if (fuelButton.getTouchable().equals(Touchable.disabled)) {
-                fuelButton.setTouchable(Touchable.enabled);
+            // Fuel system
+            if (forklift.isFuelTankEmpty()) {
+                final GameScreen gs = this;
+//                game.setScreen(new MenuScreen(game));
+//                Inventory inv2 = new Inventory(inv.getBalance() + map.getSalary(),
+//                        inv.getDonateCurrency() + map.getDonateSalary(),
+//                        inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps());
+//                pi.write(inv2);
+//                game.setScreen(new MenuScreen(game));
+                EmptyFuelDialog fuelDialog = new EmptyFuelDialog(game, gs, forklift, map, "Return to menu?", skin);
+                gs.setGamePaused(true);
+                fuelDialog.show(uiStage);
             }
-            fuelStage.draw();
-        } else if (fuelButton.getTouchable().equals(Touchable.enabled)) {
-            fuelButton.setTouchable(Touchable.disabled);
+
+            if (forklift.isHasFuel()) {
+                if (fuelButton.getTouchable().equals(Touchable.disabled)) {
+                    fuelButton.setTouchable(Touchable.enabled);
+                }
+                fuelStage.draw();
+            } else if (fuelButton.getTouchable().equals(Touchable.enabled)) {
+                fuelButton.setTouchable(Touchable.disabled);
+            }
         }
 
-        uiStage.draw();
+
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+            // Разборки с текстурами
+            viewport.apply();
+            stage.draw();
+            tmr.render();
+            b2dr.render(world, camera.combined);
+
+            // Testing UI
+            uiViewport.apply();
+            renderUi();
+
+//        if (!gamePaused) {
+//            // Stage acting
+//            stage.act();
+//        }
+
+            uiStage.draw();
 
     }
 
     private void update(float delta) {
-        // fixed time step
-        // max frame time to avoid spiral of death (on slow devices)
-        float frameTime = Math.min(delta, 0.25f);
-        accumulator += frameTime;
-        while (accumulator >= 1 / 60f) {
-            world.step(1 / 60f, 6, 2);
-            accumulator -= 1 / 60f;
-        }
+            // fixed time step
+            // max frame time to avoid spiral of death (on slow devices)
+            float frameTime = Math.min(delta, 0.25f);
+            accumulator += frameTime;
+            while (accumulator >= 1 / 60f) {
+                world.step(1 / 60f, 6, 2);
+                accumulator -= 1 / 60f;
+            }
 
-        tmr.setView(camera);
-        cameraUpdate(delta);
+            tmr.setView(camera);
+            cameraUpdate(delta);
 
         // Разборки с текстурами
 //        stage.setViewport(viewport);
@@ -353,6 +369,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
 //        TextButton menuButton = new TextButton("Menu", skin);
         ImageButton menuButton = new ImageButton(skin.get("pauseButton", ImageButton.ImageButtonStyle.class));
+        final GameScreen gs = this;
         menuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -362,7 +379,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
                         inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps());
                 pi.write(inv2);
 //                game.setScreen(new MenuScreen(game));
-                BackToMenuDialog menuDialog = new BackToMenuDialog(game, "Return to menu?", skin);
+                BackToMenuDialog menuDialog = new BackToMenuDialog(game, gs, "Return to menu?", skin);
+                gs.setGamePaused(true);
                 menuDialog.show(uiStage);
             }
         });
@@ -451,6 +469,10 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     }
 
+    public void setGamePaused(boolean gamePaused) {
+        this.gamePaused = gamePaused;
+    }
+
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.D) {
@@ -529,6 +551,14 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         camera.position.set(position);
 
         camera.update();
+    }
+
+    public Inventory getInv() {
+        return inv;
+    }
+
+    public void setInv(Inventory inv) {
+        this.inv = inv;
     }
 
     @Override
