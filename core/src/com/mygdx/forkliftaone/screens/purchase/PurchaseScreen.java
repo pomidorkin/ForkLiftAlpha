@@ -24,12 +24,14 @@ import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
 
 public class PurchaseScreen extends MenuScreenBase {
+    // A stock-keeping unit (SKU) is a scannable bar code
     public static final String MY_CONSUMABLE = "consumable_sku";
+    public static final String MY_BOX = "box_sku";
 
     private Skin skin;
     private Table table;
     private TextButton backButton;
-    private IapButton buyButton;
+    private IapButton buyButton, buyBox;
     private Inventory inv;
 
     ProcessInventory pi = new ProcessInventory();
@@ -43,17 +45,17 @@ public class PurchaseScreen extends MenuScreenBase {
     @Override
     protected Actor createUi() {
         // При использовании Скин Композера ОБЯЗАТЕЛЬНО указывать зависимости на тен патч
-        skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
+//        skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
+        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
 
         table = new Table();
         table.setWidth(Gdx.graphics.getWidth());
         table.align(Align.center | Align.top);
         table.setPosition(0, Gdx.graphics.getHeight());
 
-        buyButton = new IapButton(MY_CONSUMABLE, 5);
-        buyButton.addListener(new ClickListener() {
-            // code
-        });
+        buyButton = new IapButton(MY_CONSUMABLE, 500);
+        buyBox = new IapButton(MY_BOX, 500);
+
 
         backButton = new TextButton("Back", skin);
         backButton.addListener(new ClickListener() {
@@ -65,6 +67,8 @@ public class PurchaseScreen extends MenuScreenBase {
 
         table.padTop(30f);
         table.add(buyButton).padBottom(30);
+        table.row();
+        table.add(buyBox).padBottom(30);
         table.row();
         table.add(backButton).padBottom(30);
 
@@ -128,6 +132,7 @@ public class PurchaseScreen extends MenuScreenBase {
     private void updateGuiWhenPurchaseManInstalled(String errorMessage) {
         // einfüllen der Infos
         buyButton.updateFromManager();
+        buyBox.updateFromManager();
 
         if (game.purchaseManager.installed() && errorMessage == null) {
 //            restoreButton.setDisabled(false);
@@ -191,13 +196,19 @@ public class PurchaseScreen extends MenuScreenBase {
                     if (transaction.isPurchased()) {
 //                        if (transaction.getIdentifier().equals(MY_ENTITLEMENT))
 //                            buyEntitlement.setBought(fromRestore);
-                        if (transaction.getIdentifier().equals(MY_CONSUMABLE))
+                        if (transaction.getIdentifier().equals(MY_CONSUMABLE)) {
                             buyButton.setBought(fromRestore);
-                        // Test (Should be changed later)
-                        Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency() + 10, true,
-                                inv.getAllModels(), inv.getAllMaps());
-                        pi.write(inv2);
-                        game.setScreen(new PurchaseScreen(game));
+                            // Test (Should be changed later)
+                            Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency() + 10, inv.isDonateBoxesPurchased(),
+                                    inv.getAllModels(), inv.getAllMaps());
+                            pi.write(inv2);
+                            game.setScreen(new PurchaseScreen(game));
+                        } else if (transaction.getIdentifier().equals(MY_BOX)) {
+                            Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency(), true,
+                                    inv.getAllModels(), inv.getAllMaps());
+                            pi.write(inv2);
+                            game.setScreen(new PurchaseScreen(game));
+                        }
                     }
                 }
             });
