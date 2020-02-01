@@ -207,6 +207,26 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     @Override
     public void render(float delta) {
 
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+            // Разборки с текстурами
+            viewport.apply();
+            stage.draw();
+            tmr.render();
+            b2dr.render(world, camera.combined);
+
+            // Testing UI
+            uiViewport.apply();
+            renderUi();
+
+//        if (!gamePaused) {
+//            // Stage acting
+//            stage.act();
+//        }
+
+            uiStage.draw();
+
         if (!gamePaused) {
             // Stage acting
             update(Gdx.graphics.getDeltaTime());
@@ -235,27 +255,6 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
                 fuelButton.setTouchable(Touchable.disabled);
             }
         }
-
-
-            Gdx.gl.glClearColor(0, 0, 0, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-            // Разборки с текстурами
-            viewport.apply();
-            stage.draw();
-            tmr.render();
-            b2dr.render(world, camera.combined);
-
-            // Testing UI
-            uiViewport.apply();
-            renderUi();
-
-//        if (!gamePaused) {
-//            // Stage acting
-//            stage.act();
-//        }
-
-            uiStage.draw();
 
     }
 
@@ -374,12 +373,12 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
-                Inventory inv2 = new Inventory(inv.getBalance() + map.getSalary(),
-                        inv.getDonateCurrency() + map.getDonateSalary(),
-                        inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps());
-                pi.write(inv2);
+//                Inventory inv2 = new Inventory(inv.getBalance() + map.getSalary(),
+//                        inv.getDonateCurrency() + map.getDonateSalary(),
+//                        inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps());
+//                pi.write(inv2);
 //                game.setScreen(new MenuScreen(game));
-                BackToMenuDialog menuDialog = new BackToMenuDialog(game, gs, "Return to menu?", skin);
+                BackToMenuDialog menuDialog = new BackToMenuDialog(game, gs, map, "Return to menu?", skin);
                 gs.setGamePaused(true);
                 menuDialog.show(uiStage);
             }
