@@ -388,6 +388,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         table.row();
 
         // Touchpad test
+        // Left touchpad
         skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
         final Touchpad touchpad = new Touchpad(1f, skin);
 
@@ -420,7 +421,39 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
             }
         });
 
+        final Touchpad rightTouchpad = new Touchpad(1f, skin);
+
+
+        // Logic for mooving and playing the engine sound
+        rightTouchpad.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (rightTouchpad.getKnobY() < rightTouchpad.getPrefHeight() / 2) {
+                    forklift.moveTubeDown();
+                    if (paused){
+                        engineSound.resume(soundID);
+                        paused = false;
+                    }
+                } else if (rightTouchpad.getKnobY() > rightTouchpad.getPrefHeight() / 2) {
+                    forklift.moveTubeUp();
+                    if (paused){
+                        engineSound.resume(soundID);
+                        paused = false;
+                    }
+                } else {
+                    forklift.stopMoveTubeUp();
+                    if (!paused){
+                        engineSound.pause(soundID);
+                        paused = true;
+                    }
+                }
+
+            }
+        });
+
         table.add(touchpad).padRight((Gdx.graphics.getWidth() / 2) + 170f).padTop(215f);
+//        table.row();
+        table.add(rightTouchpad).padRight(70f).padTop(215f);
         table.row();
 
         // Testing Fuel icon
