@@ -97,6 +97,9 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private ProgressBar bar;
     private MapBase map;
 
+    float width = Gdx.graphics.getWidth()/100f;
+    float height = Gdx.graphics.getHeight()/100f;
+
     private boolean gamePaused;
 
     public GameScreen(ForkLiftGame game, ForkliftData fd, MapData md) {
@@ -112,8 +115,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
         // Разборки с текстурами end here
 
         camera = new OrthographicCamera();
-        float width = Gdx.graphics.getWidth()/100f;
-        viewport = new FitViewport(width, 4.8f, camera);
+        viewport = new FitViewport(width, height, camera);
         stage = new Stage(viewport, batch);
 //        Gdx.input.setInputProcessor(this);
 
