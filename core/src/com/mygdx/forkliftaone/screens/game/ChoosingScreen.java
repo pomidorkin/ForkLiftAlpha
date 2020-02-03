@@ -93,7 +93,7 @@ public class ChoosingScreen extends ScreenAdapter {
 //        stage = new Stage(viewport, game.getBatch());
 
         uiCamera = new OrthographicCamera();
-        hudViewport = new FitViewport(Gdx.graphics.getWidth(), 480f, uiCamera);
+        hudViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), uiCamera);
         uiStage = new Stage(hudViewport, game.getBatch());
 
         Gdx.input.setInputProcessor(uiStage);

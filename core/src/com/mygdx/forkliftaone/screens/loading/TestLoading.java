@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.forkliftaone.ForkLiftGame;
 import com.mygdx.forkliftaone.screens.menu.MenuScreen;
+import com.mygdx.forkliftaone.screens.tests.LayoutTestScreen;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
 
 public class TestLoading extends ScreenAdapter {
@@ -78,6 +79,7 @@ public class TestLoading extends ScreenAdapter {
 
         if(changeScreen) {
             game.setScreen(new MenuScreen(game));
+//            game.setScreen(new LayoutTestScreen(game)); // Testing lining up & layout
         }
     }
 
