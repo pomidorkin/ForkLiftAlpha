@@ -52,6 +52,7 @@ import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.MapData;
 import com.mygdx.forkliftaone.utils.MapModel;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
+import com.mygdx.forkliftaone.utils.ProcessInventoryImproved;
 import com.mygdx.forkliftaone.utils.RegionNames;
 
 public class GameScreen extends ScreenAdapter implements InputProcessor {
@@ -90,7 +91,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private ForkliftActorBase forklift;
     private ForkliftData fd;
     private MapData md;
-    private ProcessInventory pi = new ProcessInventory();
+//    private ProcessInventory pi = new ProcessInventory();
+ProcessInventoryImproved pi = new ProcessInventoryImproved();
     private Inventory inv;
     private SensorContactListener scl;
 

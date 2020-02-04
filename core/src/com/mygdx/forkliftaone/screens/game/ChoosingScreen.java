@@ -30,6 +30,7 @@ import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.MapData;
 import com.mygdx.forkliftaone.utils.MapModel;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
+import com.mygdx.forkliftaone.utils.ProcessInventoryImproved;
 import com.mygdx.forkliftaone.utils.RegionNames;
 
 import java.util.ArrayList;
@@ -44,7 +45,8 @@ public class ChoosingScreen extends ScreenAdapter {
     private OrthographicCamera camera, uiCamera;
     private Stage stage, uiStage;
     private World world;
-    ProcessInventory pi = new ProcessInventory();
+    //    ProcessInventory pi = new ProcessInventory();
+    ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
     private Box2DDebugRenderer b2dr;
     private MapBase map;

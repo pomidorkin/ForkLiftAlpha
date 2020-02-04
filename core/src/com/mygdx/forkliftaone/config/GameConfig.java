@@ -7,10 +7,10 @@ public class GameConfig {
     private GameConfig() {
     }
 
-//    public static final float WIDTH = 1000f; // pixels
-//    public static final float HEIGHT = 480f; // pixels
-    public static final float WIDTH = (Gdx.graphics.getWidth());
-    public static final float HEIGHT = (Gdx.graphics.getHeight());
+    public static final float WIDTH = 1000f; // pixels
+    public static final float HEIGHT = 480f; // pixels
+//    public static final float WIDTH = (Gdx.graphics.getWidth());
+//    public static final float HEIGHT = (Gdx.graphics.getHeight());
 
     public static final float WORLD_WIDTH = 80f; // world units
     public static final float WORLD_HEIGHT = 48f; // world units

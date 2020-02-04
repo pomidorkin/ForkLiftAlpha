@@ -8,11 +8,13 @@ import com.mygdx.forkliftaone.screens.game.GameScreen;
 import com.mygdx.forkliftaone.screens.menu.MenuScreen;
 import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
+import com.mygdx.forkliftaone.utils.ProcessInventoryImproved;
 
 public class BackToMenuDialog extends Dialog {
     ForkLiftGame game;
     GameScreen gs;
-    ProcessInventory pi = new ProcessInventory();
+//    ProcessInventory pi = new ProcessInventory();
+ProcessInventoryImproved pi = new ProcessInventoryImproved();
     Inventory inv;
     MapBase map;
 

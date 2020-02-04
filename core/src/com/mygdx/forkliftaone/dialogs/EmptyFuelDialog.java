@@ -10,12 +10,14 @@ import com.mygdx.forkliftaone.screens.menu.MenuScreen;
 import com.mygdx.forkliftaone.screens.purchase.PurchaseScreen;
 import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
+import com.mygdx.forkliftaone.utils.ProcessInventoryImproved;
 
 public class EmptyFuelDialog extends Dialog {
     ForkLiftGame game;
     GameScreen gs;
     ForkliftActorBase forklift;
-    ProcessInventory pi = new ProcessInventory();
+//    ProcessInventory pi = new ProcessInventory();
+ProcessInventoryImproved pi = new ProcessInventoryImproved();
     Inventory inv;
     MapBase map;
 

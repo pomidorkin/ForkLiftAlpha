@@ -29,6 +29,7 @@ import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.MapData;
 import com.mygdx.forkliftaone.utils.MapModel;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
+import com.mygdx.forkliftaone.utils.ProcessInventoryImproved;
 import com.mygdx.forkliftaone.utils.RegionNames;
 
 import java.util.ArrayList;
@@ -40,7 +41,8 @@ public class MarketScreen extends ScreenAdapter {
     private Skin skin;
     private Table table;
     private TextButton buyButton, backButton;
-    ProcessInventory pi = new ProcessInventory();
+    //    ProcessInventory pi = new ProcessInventory();
+    ProcessInventoryImproved pi = new ProcessInventoryImproved();
     private Inventory inv;
     private GeneralData gd;
     private ForkliftData forkliftData;

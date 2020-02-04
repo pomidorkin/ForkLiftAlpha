@@ -22,6 +22,7 @@ import com.mygdx.forkliftaone.screens.menu.MenuScreen;
 import com.mygdx.forkliftaone.screens.menu.MenuScreenBase;
 import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
+import com.mygdx.forkliftaone.utils.ProcessInventoryImproved;
 
 public class PurchaseScreen extends MenuScreenBase {
     // A stock-keeping unit (SKU) is a scannable bar code
@@ -34,7 +35,8 @@ public class PurchaseScreen extends MenuScreenBase {
     private IapButton buyButton, buyBox;
     private Inventory inv;
 
-    ProcessInventory pi = new ProcessInventory();
+//    ProcessInventory pi = new ProcessInventory();
+ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
     public PurchaseScreen(ForkLiftGame game) {
         super(game);

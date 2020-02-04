@@ -19,6 +19,7 @@ import com.mygdx.forkliftaone.utils.AssetPaths;
 import com.mygdx.forkliftaone.utils.BoxFactory;
 import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.ProcessInventory;
+import com.mygdx.forkliftaone.utils.ProcessInventoryImproved;
 import com.mygdx.forkliftaone.utils.RegionNames;
 
 import java.util.Random;
@@ -38,7 +39,8 @@ public class CustomTestMap extends MapBase {
 
     private Inventory inv;
 
-    ProcessInventory pi = new ProcessInventory();
+//    ProcessInventory pi = new ProcessInventory();
+ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
     public CustomTestMap(World world, TextureRegion backTexture, TextureRegion middleTexture, Camera camera, Stage stage, TextureAtlas atlas) {
         super(world, AssetPaths.CUSTOM_TILED_MAP, new Vector2(1.5f, 1.5f), 10f, 1f, 1f, 0.5f);
