@@ -99,8 +99,9 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
     private ProgressBar bar;
     private MapBase map;
 
-    float width = Gdx.graphics.getWidth()/100f;
-    float height = Gdx.graphics.getHeight()/100f;
+    float width = Gdx.graphics.getWidth();
+    float height = Gdx.graphics.getHeight();
+    float ratio = width / height;
 
     private boolean gamePaused;
 
@@ -117,7 +118,8 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         // Разборки с текстурами end here
 
         camera = new OrthographicCamera();
-        viewport = new FitViewport(width, height, camera);
+//        viewport = new FitViewport(width, height, camera);
+        viewport = new FitViewport(8f, 8f / ratio, camera);
         stage = new Stage(viewport, batch);
 //        Gdx.input.setInputProcessor(this);
 
