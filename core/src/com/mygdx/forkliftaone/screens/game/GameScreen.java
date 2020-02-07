@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -125,7 +126,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
         // Initializing UI
         uiCamera = new OrthographicCamera();
-        uiViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), uiCamera);
+        uiViewport = new FitViewport(width, height, uiCamera);
         font = assetManager.get(AssetDescriptors.FONT);
 //        shapeRenderer = new ShapeRenderer();
         uiStage = new Stage(uiViewport, game.getBatch());
@@ -138,7 +139,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         paused = true;
         music.play();
         // Volume should be obtained from the savings
-        music.setVolume(0.5f);
+        music.setVolume(0f);
         music.setLooping(true);
 
         // May be refactor later, because there are too many stages
@@ -298,14 +299,14 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         // draw balance
         String balanceText = "" + inv.getBalance() + " +" + scl.getSalary();
         layout.setText(font, balanceText);
-        font.draw(batch, layout, coinTexture.getRegionWidth() + 10f, 480f - coinTexture.getRegionHeight() / 2);
+        font.draw(batch, layout, (uiViewport.getScreenHeight() / 10f) * 1.5f, height - uiViewport.getScreenHeight() / 10f / 2);
 
-        // draw score
+        // draw gems
         String donate = "Gems: " + inv.getDonateCurrency() + " +" + scl.getDonateSalary();
         layout.setText(font, donate);
         font.draw(batch, layout,
-                Gdx.graphics.getWidth() - layout.width - 170f,
-                Gdx.graphics.getHeight() - layout.height
+                (uiViewport.getScreenHeight() / 10f) * 1.5f,
+                height - uiViewport.getScreenHeight() / 6f
         );
 
         // Draw fuel icon
@@ -313,7 +314,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
         // Drawing coin image
         batch.draw(coinTexture, // Texture
-                10f, 480f - coinTexture.getRegionHeight(), // Texture position
+                10f, height - uiViewport.getScreenHeight() / 10f - 10f, // Texture position
                 coinTexture.getRegionWidth() / 2, coinTexture.getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
                 uiViewport.getScreenHeight() / 10f, uiViewport.getScreenHeight() / 10f, // Width and height of the texture
                 1f, 1f, //scaling
@@ -368,9 +369,10 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
 
         table = new Table();
-        table.setWidth(Gdx.graphics.getWidth());
-        table.align(Align.center | Align.top);
-        table.setPosition(0, Gdx.graphics.getHeight());
+//        table.setWidth(width);
+//        System.out.println(width);
+//        table.align(Align.center | Align.top);
+//        table.setPosition(0, height);
 
 //        TextButton menuButton = new TextButton("Menu", skin);
         ImageButton menuButton = new ImageButton(skin.get("pauseButton", ImageButton.ImageButtonStyle.class));
@@ -390,7 +392,11 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
             }
         });
 
-        table.add(menuButton).padLeft(Gdx.graphics.getWidth() - 100f);
+//        table.add(menuButton).padLeft(Gdx.graphics.getWidth() - 100f);
+//        table.add(menuButton).expandX().align(Align.right);
+        table.add(); // Adding an empty column (Empty cell)
+        table.add(menuButton).right().align(Align.right);
+//        header.add(testThree).width(150f).height(150f).expandX().align(Align.right);
         table.row();
 
         // Touchpad test
@@ -457,10 +463,14 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
             }
         });
 
-        table.add(touchpad).padRight((Gdx.graphics.getWidth() / 2) + 170f).padTop(215f);
-//        table.row();
-        table.add(rightTouchpad).padRight(70f).padTop(215f);
+//        table.add(touchpad).padRight((Gdx.graphics.getWidth() / 2) + 170f).padTop(215f);
+////        table.row();
+//        table.add(rightTouchpad).padRight(70f).padTop(215f);
+        table.add(touchpad);
+        table.add(rightTouchpad);
         table.row();
+        // Debug enabled
+        table.debug();
 
         // Testing Fuel icon
 
@@ -471,7 +481,16 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f);
 //        table.add(pb);
 
-        return table;
+        Table main = new Table();
+        main.add(table).fill();
+        main.row();
+//        main.add(testFour).expandX().fill();
+        main.debug();
+        main.setFillParent(true);
+
+        return main;
+
+//        return table;
     }
 
     private Actor createFuelButton() {

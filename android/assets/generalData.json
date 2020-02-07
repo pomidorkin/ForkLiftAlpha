@@ -1,0 +1,1 @@
+{"allModels":[{"name":"SMALL","engine":3,"tubes":3,"price":0,"purchased":true},{"name":"MEDIUM","engine":3,"tubes":3,"price":3000,"purchased":true},{"name":"LARGE","engine":3,"tubes":3,"price":7000,"purchased":false}],"allMaps":[{"name":"CUSTOM","purchased":true,"price":100},{"name":"TEST","purchased":true,"price":500}]}
