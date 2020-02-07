@@ -367,14 +367,8 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 //        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
         skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
 
-
         table = new Table();
-//        table.setWidth(width);
-//        System.out.println(width);
-//        table.align(Align.center | Align.top);
-//        table.setPosition(0, height);
 
-//        TextButton menuButton = new TextButton("Menu", skin);
         ImageButton menuButton = new ImageButton(skin.get("pauseButton", ImageButton.ImageButtonStyle.class));
         final GameScreen gs = this;
         menuButton.addListener(new ClickListener() {
@@ -392,11 +386,19 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
             }
         });
 
-//        table.add(menuButton).padLeft(Gdx.graphics.getWidth() - 100f);
-//        table.add(menuButton).expandX().align(Align.right);
-        table.add(); // Adding an empty column (Empty cell)
-        table.add(menuButton).right().align(Align.right);
-//        header.add(testThree).width(150f).height(150f).expandX().align(Align.right);
+        // Testing Fuel icon
+        bar = new ProgressBar(0, 100, 0.01f, false, skin);
+
+        // The size of the fuel icon can be changed here
+//        table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f);
+
+        table.add().height(height/3);// Adding an empty column (Empty cell)
+        table.add(bar).top().width(width/5);
+        table.add(menuButton).right().top();
+        table.row();
+        table.add().width((width/5) - 10f).height(height/3);
+        table.add().width((width/5) * 3f).height(height/3);
+        table.add().width((width/5) - 10f).height(height/3);
         table.row();
 
         // Touchpad test
@@ -463,34 +465,26 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
             }
         });
 
-//        table.add(touchpad).padRight((Gdx.graphics.getWidth() / 2) + 170f).padTop(215f);
-////        table.row();
-//        table.add(rightTouchpad).padRight(70f).padTop(215f);
         table.add(touchpad);
+        table.add().height(height/3);
         table.add(rightTouchpad);
         table.row();
         // Debug enabled
         table.debug();
 
-        // Testing Fuel icon
-
-        bar = new ProgressBar(0, 100, 0.01f, false, skin);
-
-        // The size of the fuel icon can be changed here
-//        table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f).padRight((Gdx.graphics.getWidth() / 2) + 70f).padTop(20f);
-        table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f);
-//        table.add(pb);
+//        // Testing Fuel icon
+//        bar = new ProgressBar(0, 100, 0.01f, false, skin);
+//
+//        // The size of the fuel icon can be changed here
+//        table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f);
 
         Table main = new Table();
         main.add(table).fill();
         main.row();
-//        main.add(testFour).expandX().fill();
         main.debug();
         main.setFillParent(true);
 
         return main;
-
-//        return table;
     }
 
     private Actor createFuelButton() {
