@@ -479,7 +479,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 //        table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f);
 
         Table main = new Table();
-        main.add(table).fill();
+        main.add(table).padTop(20f).fill();
         main.row();
         main.debug();
         main.setFillParent(true);
