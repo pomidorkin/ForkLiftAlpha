@@ -128,6 +128,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         uiCamera = new OrthographicCamera();
         uiViewport = new FitViewport(width, height, uiCamera);
         font = assetManager.get(AssetDescriptors.FONT);
+        font.getData().setScale(height / 480f);
 //        shapeRenderer = new ShapeRenderer();
         uiStage = new Stage(uiViewport, game.getBatch());
 
@@ -394,11 +395,11 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
         table.add().height(height/3);// Adding an empty column (Empty cell)
         table.add(bar).top().width(width/5);
-        table.add(menuButton).right().top();
+        table.add(menuButton).width(height/6).height(height/6).padRight(20f).right().top();
         table.row();
-        table.add().width((width/5) - 10f).height(height/3);
+        table.add().width(width/5).height(height/3);
         table.add().width((width/5) * 3f).height(height/3);
-        table.add().width((width/5) - 10f).height(height/3);
+        table.add().width(width/5).padRight(20f).height(height/3);
         table.row();
 
         // Touchpad test
@@ -411,14 +412,13 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         touchpad.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if (touchpad.getKnobX() < touchpad.getPrefWidth() / 2) {
+                if (touchpad.getKnobX() < touchpad.getWidth() / 2) {
                     forklift.moveForkliftLeft();
                     if (paused){
                         engineSound.resume(soundID);
                         paused = false;
                     }
-
-                } else if (touchpad.getKnobX() > touchpad.getPrefWidth() / 2) {
+                } else if (touchpad.getKnobX() > touchpad.getWidth() / 2) {
                     forklift.moveForkliftRight();
                     if (paused){
                         engineSound.resume(soundID);
@@ -442,13 +442,13 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         rightTouchpad.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if (rightTouchpad.getKnobY() < rightTouchpad.getPrefHeight() / 2) {
+                if (rightTouchpad.getKnobY() < rightTouchpad.getHeight() / 2) {
                     forklift.moveTubeDown();
                     if (paused){
                         engineSound.resume(soundID);
                         paused = false;
                     }
-                } else if (rightTouchpad.getKnobY() > rightTouchpad.getPrefHeight() / 2) {
+                } else if (rightTouchpad.getKnobY() > rightTouchpad.getHeight() / 2) {
                     forklift.moveTubeUp();
                     if (paused){
                         engineSound.resume(soundID);
@@ -465,12 +465,15 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
             }
         });
 
-        table.add(touchpad);
+        table.add(touchpad).height(height/3).width(height/3);
         table.add().height(height/3);
-        table.add(rightTouchpad);
+        table.add(rightTouchpad).height(height/3).width(height/3);
+//        table.add(touchpad);
+//        table.add().height(height/3);
+//        table.add(rightTouchpad);
         table.row();
         // Debug enabled
-        table.debug();
+//        table.debug();
 
 //        // Testing Fuel icon
 //        bar = new ProgressBar(0, 100, 0.01f, false, skin);
@@ -479,9 +482,9 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 //        table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f);
 
         Table main = new Table();
-        main.add(table).padTop(20f).fill();
+        main.add(table).padTop(20f).padRight(20f).padLeft(20f).fill();
         main.row();
-        main.debug();
+//        main.debug();
         main.setFillParent(true);
 
         return main;
@@ -491,10 +494,10 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 //        skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
 
 
-        table = new Table();
-        table.setWidth(Gdx.graphics.getWidth());
-        table.align(Align.center | Align.top);
-        table.setPosition(0, Gdx.graphics.getHeight());
+        Table localTable = new Table();
+//        table.setWidth(Gdx.graphics.getWidth());
+//        table.align(Align.center | Align.top);
+//        table.setPosition(0, Gdx.graphics.getHeight());
 
         // Fuel button test rough
         fuelButton = new TextButton("Fill", skin);
@@ -513,10 +516,27 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
             }
         });
 
-        table.add(fuelButton).padRight((Gdx.graphics.getWidth() / 2) + 70f).padTop(80f);
-        table.row();
+        localTable.add().height(height/3).width(width/5);// Adding an empty column (Empty cell)
+        localTable.add().height(height/3).width((width/5) * 3f);
+        localTable.add().height(height/3);
+        localTable.row();
+        localTable.add(fuelButton).width(height/6).height(height/6).padLeft(20f).left();
+        localTable.add().height(height/3).width((width/5) * 3f);
+        localTable.add().width(width/5).padRight(20f).height(height/3);
+        localTable.row();
+        localTable.add().height(height/3);// Adding an empty column (Empty cell)
+        localTable.add().height(height/3).width((width/5) * 3f);
+        localTable.add().height(height/3);
 
-        return table;
+        localTable.debug();
+
+        Table main = new Table();
+        main.add(localTable).padTop(20f).padRight(20f).padLeft(20f).fill();
+        main.row();
+//        main.debug();
+        main.setFillParent(true);
+
+        return main;
 
     }
 
