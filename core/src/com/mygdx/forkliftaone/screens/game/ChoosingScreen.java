@@ -141,9 +141,9 @@ public class ChoosingScreen extends ScreenAdapter {
         skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
 
         table = new Table();
-        table.setWidth(Gdx.graphics.getWidth());
-        table.align(Align.center | Align.top);
-        table.setPosition(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight());
+//        table.setWidth(Gdx.graphics.getWidth());
+//        table.align(Align.center | Align.top);
+//        table.setPosition(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight());
 
         // Test (selection via next/previous buttons is working)
 //        final ForkliftData[] fdArray;
@@ -256,16 +256,6 @@ public class ChoosingScreen extends ScreenAdapter {
             }
         });
 
-        // Work with alignment a little bit
-        table.add(nextTB).padLeft(-100);
-        table.add(previousTB).padLeft(-100);
-        table.row();
-        table.add(nextMap).padLeft(-100);
-        table.add(previousMap).padLeft(-100);
-        table.row();
-        table.add(upgrateButton);
-        table.row();
-
         startButton = new TextButton("Play", skin);
         startButton.addListener(new ClickListener() {
             @Override
@@ -282,12 +272,32 @@ public class ChoosingScreen extends ScreenAdapter {
             }
         });
 
-        table.padTop(30f);
-        table.add(startButton).padBottom(30);
+        // Work with alignment a little bit
+        table.add(nextTB).padBottom(30).padRight(30);
+        table.add(previousTB).padBottom(30);
         table.row();
-        table.add(quitButton);
+        table.add(nextMap).padBottom(30).padRight(30);
+        table.add(previousMap).padBottom(30);
+        table.row();
+        table.add(upgrateButton).colspan(2).padBottom(30);
+        table.row();
+        table.add(startButton).colspan(2).padBottom(30);
+        table.row();
+        table.add(quitButton).colspan(2).padBottom(30);
 
-        return table;
+        table.debug();
+
+        Table main = new Table();
+        main.add().width(Gdx.graphics.getWidth() / 2).height(Gdx.graphics.getHeight());
+//        main.setWidth(Gdx.graphics.getWidth());
+//        main.align(Align.center | Align.top);
+//        main.setPosition(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight());
+        main.add(table).fill();
+        main.row();
+//        main.debug();
+        main.setFillParent(true);
+
+        return main;
     }
 
     private void drawMain() {
@@ -301,7 +311,7 @@ public class ChoosingScreen extends ScreenAdapter {
 //                viewport.getWorldWidth(), viewport.getWorldHeight());
 
         batch.draw(model.getForkliftRegion(), // Texture
-                hudViewport.getScreenWidth() / 2f - (model.getForkliftRegion().getRegionWidth() / 2f) * 0.75f,
+                hudViewport.getScreenWidth() / 4f - (model.getForkliftRegion().getRegionWidth() / 2f) * 0.75f,
                 hudViewport.getScreenHeight() / 2f - (model.getForkliftRegion().getRegionHeight() / 2f) * 0.75f, // Texture position
                 model.getForkliftRegion().getRegionWidth() / 2, model.getForkliftRegion().getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
                 model.getForkliftRegion().getRegionWidth() * 0.75f, model.getForkliftRegion().getRegionHeight() * 0.75f, // Width and height of the texture

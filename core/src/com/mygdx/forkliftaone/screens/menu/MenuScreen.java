@@ -34,9 +34,9 @@ public class MenuScreen extends MenuScreenBase {
         skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
 
         table = new Table();
-        table.setWidth(Gdx.graphics.getWidth());
-        table.align(Align.center | Align.top);
-        table.setPosition(0, Gdx.graphics.getHeight());
+//        table.setWidth(Gdx.graphics.getWidth());
+//        table.align(Align.center | Align.top);
+//        table.setPosition(0, Gdx.graphics.getHeight());
 
         startButton = new TextButton("Start Game", skin);
         startButton.addListener(new ClickListener(){
@@ -70,18 +70,22 @@ public class MenuScreen extends MenuScreenBase {
             }
         });
 
-        table.padTop(30f);
         table.add(startButton).padBottom(30);
         table.row();
         table.add(marketButton).padBottom(30);
         table.row();
-        table.add(donateButton);
+        table.add(donateButton).padBottom(30);
         table.row();
         table.add(quitButton);
+        table.debug();
 
+        Table main = new Table();
+        main.add(table).padTop(20f).padRight(20f).padLeft(20f).fill();
+        main.row();
+//        main.debug();
+        main.setFillParent(true);
 
-
-        return table;
+        return main;
     }
 
 
