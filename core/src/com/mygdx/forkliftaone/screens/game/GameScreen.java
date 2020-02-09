@@ -393,23 +393,24 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         // The size of the fuel icon can be changed here
 //        table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f);
 
-        table.add().height(height/3);// Adding an empty column (Empty cell)
-        table.add(bar).top().width(width/5);
-        table.add(menuButton).width(height/6).height(height/6).padRight(20f).right().top();
+        table.add().height(height/3 - 50);// Adding an empty column (Empty cell)
+        table.add(bar).top().width(width/5 - 50);
+        table.add(menuButton).width(height/6).height(height/6).right().top();
         table.row();
         table.add().width(width/5).height(height/3);
-        table.add().width((width/5) * 3f).height(height/3);
-        table.add().width(width/5).padRight(20f).height(height/3);
+        table.add().width((width/5) * 3f  - 50).height(height/3);
+        table.add().width(width/5).height(height/3);
         table.row();
 
         // Touchpad test
         // Left touchpad
-        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
+//        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
+        skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
         final Touchpad touchpad = new Touchpad(1f, skin);
 
         // Setting the minimal size of the knob (Размер джойстика)
-        touchpad.getStyle().knob.setMinWidth(height/10f);
-        touchpad.getStyle().knob.setMinHeight(height/10f);
+        touchpad.getStyle().knob.setMinWidth(height/6f);
+        touchpad.getStyle().knob.setMinHeight(height/6f);
 
 
         // Logic for mooving and playing the engine sound
@@ -477,7 +478,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 //        table.add(rightTouchpad);
         table.row();
         // Debug enabled
-//        table.debug();
+        table.debug();
 
 //        // Testing Fuel icon
 //        bar = new ProgressBar(0, 100, 0.01f, false, skin);
@@ -486,7 +487,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 //        table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f);
 
         Table main = new Table();
-        main.add(table).padTop(20f).padRight(20f).padLeft(20f).fill();
+        main.add(table).padTop(25f).padRight(25f).padLeft(25f).padBottom(25f).fill();
         main.row();
 //        main.debug();
         main.setFillParent(true);

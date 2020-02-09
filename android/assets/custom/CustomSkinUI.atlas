@@ -6,85 +6,99 @@ filter: Linear,Linear
 repeat: none
 myfont
   rotate: false
-  xy: 1, 494
+  xy: 1, 490
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 dialog
   rotate: false
-  xy: 1, 181
+  xy: 1, 177
   size: 326, 239
   orig: 326, 239
   offset: 0, 0
   index: -1
 leftButton
   rotate: false
-  xy: 623, 856
+  xy: 109, 97
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 leftButtonPushed
   rotate: false
-  xy: 1, 1
+  xy: 329, 238
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 pause
   rotate: false
-  xy: 329, 322
+  xy: 329, 318
   size: 106, 98
   orig: 106, 98
   offset: 0, 0
   index: -1
 pausePushed
   rotate: false
-  xy: 515, 736
+  xy: 515, 732
   size: 106, 98
   orig: 106, 98
   offset: 0, 0
   index: -1
 rightsButton
   rotate: false
-  xy: 109, 101
+  xy: 515, 652
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 rightsButtonPushed
   rotate: false
-  xy: 329, 242
+  xy: 623, 776
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 squereBackground
   rotate: false
-  xy: 1, 422
+  xy: 1, 418
   size: 449, 70
   orig: 449, 70
   offset: 0, 0
   index: -1
 squereBar
   rotate: false
-  xy: 515, 936
+  xy: 515, 932
   size: 430, 70
   orig: 430, 70
   offset: 0, 0
   index: -1
 textButton
   rotate: false
-  xy: 515, 836
+  xy: 515, 832
   size: 106, 98
   orig: 106, 98
   offset: 0, 0
   index: -1
 textButtonPushed
   rotate: false
-  xy: 1, 81
+  xy: 1, 77
   size: 106, 98
   orig: 106, 98
+  offset: 0, 0
+  index: -1
+toucpadBackground
+  rotate: false
+  xy: 623, 856
+  size: 74, 74
+  orig: 74, 74
+  offset: 0, 0
+  index: -1
+toucpadKnob
+  rotate: false
+  xy: 1, 1
+  size: 74, 74
+  orig: 74, 74
   offset: 0, 0
   index: -1
