@@ -165,6 +165,25 @@ com.ray3k.tenpatch.TenPatchDrawable: {
 		regions: []
 		playMode: 2
 	}
+	dialog2Patched: {
+		region: dialog2
+		horizontalStretchAreas: [ 34, 134 ]
+		verticalStretchAreas: [ 25, 103 ]
+		tiling: false
+		minWidth: 171
+		minHeight: 132
+		rightWidth: 31
+		leftWidth: 35
+		bottomHeight: 21
+		topHeight: 21
+		offsetX: 0
+		offsetY: 0
+		offsetXspeed: 0
+		offsetYspeed: 0
+		frameDuration: 0.03
+		regions: []
+		playMode: 2
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	leftButton: {
@@ -211,8 +230,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
+		background: dialog2Patched
 		titleFont: myfont
-		stageBackground: dialog
 	}
 }
 }

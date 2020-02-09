@@ -381,9 +381,13 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 //                        inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps());
 //                pi.write(inv2);
 //                game.setScreen(new MenuScreen(game));
-                BackToMenuDialog menuDialog = new BackToMenuDialog(game, gs, map, "Return to menu?", skin);
+                BackToMenuDialog menuDialog = new BackToMenuDialog(game, gs, map, "", skin);
                 gs.setGamePaused(true);
                 menuDialog.show(uiStage);
+                menuDialog.setWidth(width/2);
+                menuDialog.setHeight(height/2);
+                menuDialog.setPosition(width/2 - (menuDialog.getWidth()/2), height/2 - (menuDialog.getHeight()/2));
+                menuDialog.setMovable(false);
             }
         });
 
