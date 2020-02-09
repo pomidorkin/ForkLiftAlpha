@@ -407,6 +407,10 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
         final Touchpad touchpad = new Touchpad(1f, skin);
 
+        // Setting the minimal size of the knob (Размер джойстика)
+        touchpad.getStyle().knob.setMinWidth(height/10f);
+        touchpad.getStyle().knob.setMinHeight(height/10f);
+
 
         // Logic for mooving and playing the engine sound
         touchpad.addListener(new ChangeListener() {
