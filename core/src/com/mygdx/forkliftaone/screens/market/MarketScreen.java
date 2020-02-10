@@ -256,9 +256,8 @@ public class MarketScreen extends ScreenAdapter {
             });
 
             table.row();
-            table.add(buyButton);
-            table.row();
             table.add(previousTB);
+            table.add(buyButton);
             table.add(nextTB);
         } else {
             System.out.println("No forklifts to buy");
@@ -295,7 +294,7 @@ public class MarketScreen extends ScreenAdapter {
                 }
             });
 
-            TextButton previousMapTB = new TextButton("Previous map", skin);
+            ImageButton previousMapTB = new ImageButton(skin.get("leftButton", ImageButton.ImageButtonStyle.class));
             previousMapTB.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -355,10 +354,9 @@ public class MarketScreen extends ScreenAdapter {
             });
 
             table.row();
-            table.add(buyMapButton);
-            table.row();
-            table.add(nextMapTB);
             table.add(previousMapTB);
+            table.add(buyMapButton);
+            table.add(nextMapTB);
         } else {
             System.out.println("No maps to buy");
             // Code telling that everything is purchased here
@@ -396,10 +394,21 @@ public class MarketScreen extends ScreenAdapter {
         });
 
 
-        table.padTop(30f);
-        table.add(backButton);
+        table.row();
+        table.add(backButton).colspan(3);
+        table.debug();
 
-        return table;
+        Table main = new Table();
+        main.add().padTop(20f).padRight(20f).padLeft(20f).fill();
+//        main.setWidth(Gdx.graphics.getWidth());
+//        main.align(Align.center | Align.top);
+//        main.setPosition(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight());
+        main.add(table).fill();
+        main.row();
+//        main.debug();
+        main.setFillParent(true);
+
+        return main;
     }
 
     @Override
