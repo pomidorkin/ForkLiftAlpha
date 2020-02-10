@@ -41,7 +41,7 @@ public class MenuScreen extends MenuScreenBase {
         startButton = new TextButton("Start Game", skin);
 
         // Font scaling
-        startButton.getStyle().font.getData().setScale(2f);
+//        startButton.getStyle().font.getData().setScale(2f);
 
         startButton.addListener(new ClickListener(){
             @Override

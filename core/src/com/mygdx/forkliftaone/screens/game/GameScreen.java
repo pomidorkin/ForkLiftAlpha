@@ -126,7 +126,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
         // Initializing UI
         uiCamera = new OrthographicCamera();
-        uiViewport = new FitViewport(width, height, uiCamera);
+        uiViewport = new FitViewport(800, 800/ratio, uiCamera);
         font = assetManager.get(AssetDescriptors.FONT);
         font.getData().setScale(height / 480f);
 //        shapeRenderer = new ShapeRenderer();
@@ -397,13 +397,22 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         // The size of the fuel icon can be changed here
 //        table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f);
 
-        table.add().height(height/3 - 50);// Adding an empty column (Empty cell)
-        table.add(bar).top().width(width/5 - 50);
-        table.add(menuButton).width(height/6).height(height/6).right().top();
+//        table.add().height(height/3 - 50);// Adding an empty column (Empty cell)
+//        table.add(bar).top().width(width/5 - 50);
+//        table.add(menuButton).width(height/6).height(height/6).right().top();
+//        table.row();
+//        table.add().width(width/5).height(height/3);
+//        table.add().width((width/5) * 3f  - 50).height(height/3);
+//        table.add().width(width/5).height(height/3);
+//        table.row();
+
+        table.add().height(800/ratio/3 - 50);// Adding an empty column (Empty cell)
+        table.add(bar).top().width(800/5 - 50);
+        table.add(menuButton).width(800/ratio/6).height(height/6).right().top();
         table.row();
-        table.add().width(width/5).height(height/3);
-        table.add().width((width/5) * 3f  - 50).height(height/3);
-        table.add().width(width/5).height(height/3);
+        table.add().width(800/5).height(800/ratio/3);
+        table.add().width((800/5) * 3f  - 50).height(800/ratio/3);
+        table.add().width(800/5).height(800/ratio/3);
         table.row();
 
         // Touchpad test
@@ -474,9 +483,17 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
             }
         });
 
-        table.add(touchpad).height(height/3).width(height/3);
-        table.add().height(height/3);
-        table.add(rightTouchpad).height(height/3).width(height/3);
+//        table.add(touchpad).height(height/3).width(height/3);
+//        table.add().height(height/3);
+//        table.add(rightTouchpad).height(height/3).width(height/3);
+////        table.add(touchpad);
+////        table.add().height(height/3);
+////        table.add(rightTouchpad);
+//        table.row();
+
+        table.add(touchpad).height(800/ratio/3).width(800/ratio/3);
+        table.add().height(800/ratio/3);
+        table.add(rightTouchpad).height(800/ratio/3).width(800/ratio/3);
 //        table.add(touchpad);
 //        table.add().height(height/3);
 //        table.add(rightTouchpad);

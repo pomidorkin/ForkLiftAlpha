@@ -63,6 +63,10 @@ public class MarketScreen extends ScreenAdapter {
     private int counter;
     private int mapCounter;
 
+    float width = Gdx.graphics.getWidth();
+    float height = Gdx.graphics.getHeight();
+    float ratio = width / height;
+
     public MarketScreen(ForkLiftGame game) {
         this.game = game;
         this.counter = 0;
@@ -102,7 +106,7 @@ public class MarketScreen extends ScreenAdapter {
     public void show() {
         super.show();
         camera = new OrthographicCamera();
-        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+        viewport = new FitViewport(1200, 1200 / ratio, camera);
         stage = new Stage(viewport, game.getBatch());
         gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
         stage.addActor(createUi());

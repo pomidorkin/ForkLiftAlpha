@@ -63,6 +63,10 @@ public class ChoosingScreen extends ScreenAdapter {
     private int counter;
     private int mapCounter;
 
+    float width = Gdx.graphics.getWidth();
+    float height = Gdx.graphics.getHeight();
+    float ratio = width / height;
+
 
     public ChoosingScreen(ForkLiftGame game) {
         this.game = game;
@@ -95,7 +99,7 @@ public class ChoosingScreen extends ScreenAdapter {
 //        stage = new Stage(viewport, game.getBatch());
 
         uiCamera = new OrthographicCamera();
-        hudViewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), uiCamera);
+        hudViewport = new FitViewport(1200, 1200 / ratio, uiCamera);
         uiStage = new Stage(hudViewport, game.getBatch());
 
         Gdx.input.setInputProcessor(uiStage);
@@ -264,14 +268,6 @@ public class ChoosingScreen extends ScreenAdapter {
             }
         });
 
-        quitButton = new TextButton("Choose map", skin);
-        quitButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-//                quit();
-            }
-        });
-
         // Work with alignment a little bit
         table.add(nextTB).padBottom(30).padRight(30);
         table.add(previousTB).padBottom(30);
@@ -282,8 +278,6 @@ public class ChoosingScreen extends ScreenAdapter {
         table.add(upgrateButton).colspan(2).padBottom(30);
         table.row();
         table.add(startButton).colspan(2).padBottom(30);
-        table.row();
-        table.add(quitButton).colspan(2).padBottom(30);
 
         table.debug();
 

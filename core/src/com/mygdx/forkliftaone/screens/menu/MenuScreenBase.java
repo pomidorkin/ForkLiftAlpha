@@ -28,6 +28,10 @@ public abstract class MenuScreenBase extends ScreenAdapter {
 
     TextureRegion backgoundRegion;
 
+    float width = Gdx.graphics.getWidth();
+    float height = Gdx.graphics.getHeight();
+    float ratio = width / height;
+
 
     public MenuScreenBase(ForkLiftGame game){
         this.game = game;
@@ -39,7 +43,7 @@ public abstract class MenuScreenBase extends ScreenAdapter {
     public void show() {
         super.show();
         uiCamera = new OrthographicCamera();
-        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), uiCamera);
+        viewport = new FitViewport(1200, 1200/ratio, uiCamera);
 //        viewport = new FitViewport(8f, 4.8f);
         stage = new Stage(viewport, game.getBatch());
 
