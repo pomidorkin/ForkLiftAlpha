@@ -39,6 +39,10 @@ public class MenuScreen extends MenuScreenBase {
 //        table.setPosition(0, Gdx.graphics.getHeight());
 
         startButton = new TextButton("Start Game", skin);
+
+        // Font scaling
+        startButton.getStyle().font.getData().setScale(2f);
+
         startButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {

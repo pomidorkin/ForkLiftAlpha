@@ -1,7 +1,9 @@
 package com.mygdx.forkliftaone.dialogs;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Align;
 import com.mygdx.forkliftaone.ForkLiftGame;
 import com.mygdx.forkliftaone.maps.MapBase;
 import com.mygdx.forkliftaone.screens.game.GameScreen;
@@ -13,8 +15,8 @@ import com.mygdx.forkliftaone.utils.ProcessInventoryImproved;
 public class BackToMenuDialog extends Dialog {
     ForkLiftGame game;
     GameScreen gs;
-//    ProcessInventory pi = new ProcessInventory();
-ProcessInventoryImproved pi = new ProcessInventoryImproved();
+    //    ProcessInventory pi = new ProcessInventory();
+    ProcessInventoryImproved pi = new ProcessInventoryImproved();
     Inventory inv;
     MapBase map;
 
@@ -27,9 +29,16 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
     }
 
     {
+        add().height(((Gdx.graphics.getHeight() / 2f) / 3f));
         text("Do you want to go back to the menu?");
-        button("Menu", 1);
+        row();
+        button("Menu", 1).setHeight(((Gdx.graphics.getHeight() / 2f) / 3f));
         button("Continue", 2);
+        row();
+        add().height(((Gdx.graphics.getHeight() / 2f) / 4f));
+
+
+        debug();
     }
 
     @Override
