@@ -30,6 +30,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -63,8 +64,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private final SpriteBatch batch;
     private final GlyphLayout layout = new GlyphLayout();
 
-    private Viewport viewport, uiViewport;
-    private OrthographicCamera camera, uiCamera;
+    private Viewport viewport, uiViewport, dynamicViewport;
+    private OrthographicCamera camera, uiCamera, dynamicCamera;
     private Stage stage, uiStage, fuelStage;
     private float accumulator = 0;
 
@@ -126,7 +127,10 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
         // Initializing UI
         uiCamera = new OrthographicCamera();
+        dynamicCamera = new OrthographicCamera();
         uiViewport = new FitViewport(800, 800/ratio, uiCamera);
+        dynamicViewport = new FitViewport(width, height, dynamicCamera);
+//        uiViewport = new FitViewport(width, height, uiCamera);
         font = assetManager.get(AssetDescriptors.FONT);
         font.getData().setScale(height / 480f);
 //        shapeRenderer = new ShapeRenderer();
@@ -225,14 +229,14 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
             b2dr.render(world, camera.combined);
 
             // Testing UI
-            uiViewport.apply();
+            dynamicViewport.apply();
             renderUi();
 
 //        if (!gamePaused) {
 //            // Stage acting
 //            stage.act();
 //        }
-
+        uiViewport.apply();
             uiStage.draw();
 
         if (!gamePaused) {
@@ -288,26 +292,22 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
     private void renderUi() {
         // Testing style. Should be replaced with a picture from Asset Manager
         // Position should be absolute. It should not depend on screen/viewport width and height
-//        shapeRenderer.setColor(Color.CYAN);
-//        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-//        shapeRenderer.box(0, 480f - (layout.height + 40f), 0,
-//                800f, layout.height + 40f, 1);
-//        shapeRenderer.end();
 
-        batch.setProjectionMatrix(uiCamera.combined);
+        batch.setProjectionMatrix(dynamicCamera.combined);
         batch.begin();
 
         // draw balance
         String balanceText = "" + inv.getBalance() + " +" + scl.getSalary();
         layout.setText(font, balanceText);
-        font.draw(batch, layout, (uiViewport.getScreenHeight() / 10f) * 1.5f, height - uiViewport.getScreenHeight() / 10f / 2);
+//        font.draw(batch, layout, (uiViewport.getScreenHeight() / 10f) * 1.5f, height - uiViewport.getScreenHeight() / 10f / 2);
+        font.draw(batch, layout, (Gdx.graphics.getHeight() / 10f) * 1.5f, height - Gdx.graphics.getHeight()  / 10f / 2);
 
         // draw gems
         String donate = "Gems: " + inv.getDonateCurrency() + " +" + scl.getDonateSalary();
         layout.setText(font, donate);
         font.draw(batch, layout,
-                (uiViewport.getScreenHeight() / 10f) * 1.5f,
-                height - uiViewport.getScreenHeight() / 6f
+                (dynamicViewport.getScreenHeight() / 10f) * 1.5f,
+                height - dynamicViewport.getScreenHeight() / 6f
         );
 
         // Draw fuel icon
@@ -315,15 +315,13 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
         // Drawing coin image
         batch.draw(coinTexture, // Texture
-                10f, height - uiViewport.getScreenHeight() / 10f - 10f, // Texture position
+                10f, height - dynamicViewport.getScreenHeight() / 10f - 10f, // Texture position
                 coinTexture.getRegionWidth() / 2, coinTexture.getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
-                uiViewport.getScreenHeight() / 10f, uiViewport.getScreenHeight() / 10f, // Width and height of the texture
+                dynamicViewport.getScreenHeight() / 10f, dynamicViewport.getScreenHeight() / 10f, // Width and height of the texture
                 1f, 1f, //scaling
                 0); // Rotation (radiants to degrees)
 
-
         batch.end();
-
 
     }
 
@@ -331,6 +329,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
     public void resize(int width, int height) {
         viewport.update(width, height);
         uiViewport.update(width, height, true);
+        dynamicViewport.update(width, height, true);
     }
 
     @Override
@@ -384,9 +383,9 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
                 BackToMenuDialog menuDialog = new BackToMenuDialog(game, gs, map, "", skin);
                 gs.setGamePaused(true);
                 menuDialog.show(uiStage);
-                menuDialog.setWidth(width/2);
-                menuDialog.setHeight(height/2);
-                menuDialog.setPosition(width/2 - (menuDialog.getWidth()/2), height/2 - (menuDialog.getHeight()/2));
+                menuDialog.setWidth(1200/2);
+                menuDialog.setHeight(1200/ratio/2);
+                menuDialog.setPosition(800/2f - (menuDialog.getWidth()/2), 800/ratio/2f - (menuDialog.getHeight()/2));
                 menuDialog.setMovable(false);
             }
         });
@@ -397,21 +396,13 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         // The size of the fuel icon can be changed here
 //        table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f);
 
-//        table.add().height(height/3 - 50);// Adding an empty column (Empty cell)
-//        table.add(bar).top().width(width/5 - 50);
-//        table.add(menuButton).width(height/6).height(height/6).right().top();
-//        table.row();
-//        table.add().width(width/5).height(height/3);
-//        table.add().width((width/5) * 3f  - 50).height(height/3);
-//        table.add().width(width/5).height(height/3);
-//        table.row();
-
         table.add().height(800/ratio/3 - 50);// Adding an empty column (Empty cell)
-        table.add(bar).top().width(800/5 - 50);
-        table.add(menuButton).width(800/ratio/6).height(height/6).right().top();
+        table.add(bar).top().width((800 - (800 / ratio /3) * 2f) / 4f);
+        table.add(menuButton).width(800/ratio/6).height(800/ratio/6).right().top();
         table.row();
         table.add().width(800/5).height(800/ratio/3);
-        table.add().width((800/5) * 3f  - 50).height(800/ratio/3);
+//        table.add().width((800/5) * 3f  - 50).height(800/ratio/3);
+        table.add().width((800 - ((800 / ratio /3) * 2f)) - 100f);
         table.add().width(800/5).height(800/ratio/3);
         table.row();
 
@@ -422,8 +413,8 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         final Touchpad touchpad = new Touchpad(1f, skin);
 
         // Setting the minimal size of the knob (Размер джойстика)
-        touchpad.getStyle().knob.setMinWidth(height/6f);
-        touchpad.getStyle().knob.setMinHeight(height/6f);
+//        touchpad.getStyle().knob.setMinWidth(height/6f);
+//        touchpad.getStyle().knob.setMinHeight(height/6f);
 
 
         // Logic for mooving and playing the engine sound
@@ -483,21 +474,12 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
             }
         });
 
-//        table.add(touchpad).height(height/3).width(height/3);
-//        table.add().height(height/3);
-//        table.add(rightTouchpad).height(height/3).width(height/3);
-////        table.add(touchpad);
-////        table.add().height(height/3);
-////        table.add(rightTouchpad);
-//        table.row();
 
         table.add(touchpad).height(800/ratio/3).width(800/ratio/3);
-        table.add().height(800/ratio/3);
+        table.add();
         table.add(rightTouchpad).height(800/ratio/3).width(800/ratio/3);
-//        table.add(touchpad);
-//        table.add().height(height/3);
-//        table.add(rightTouchpad);
         table.row();
+
         // Debug enabled
         table.debug();
 

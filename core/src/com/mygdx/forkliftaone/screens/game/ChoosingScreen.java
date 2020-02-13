@@ -282,7 +282,7 @@ public class ChoosingScreen extends ScreenAdapter {
         table.debug();
 
         Table main = new Table();
-        main.add().width(Gdx.graphics.getWidth() / 2).height(Gdx.graphics.getHeight());
+        main.add().width(1200 / 2).height(1200 / ratio);
 //        main.setWidth(Gdx.graphics.getWidth());
 //        main.align(Align.center | Align.top);
 //        main.setPosition(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight());
@@ -301,17 +301,13 @@ public class ChoosingScreen extends ScreenAdapter {
         batch.draw(backgoundRegion, 0, 0,
                 hudViewport.getWorldWidth(), hudViewport.getWorldHeight());
 
-//        batch.draw(mapModel.getBackgroundTexture(), 0, 0,
-//                viewport.getWorldWidth(), viewport.getWorldHeight());
-
         batch.draw(model.getForkliftRegion(), // Texture
-                hudViewport.getScreenWidth() / 4f - (model.getForkliftRegion().getRegionWidth() / 2f) * 0.75f,
-                hudViewport.getScreenHeight() / 2f - (model.getForkliftRegion().getRegionHeight() / 2f) * 0.75f, // Texture position
+                1200 / 4f - (model.getForkliftRegion().getRegionWidth() / 2f) * 0.75f,
+                1200/ratio / 2f - (model.getForkliftRegion().getRegionHeight() / 2f) * 0.75f, // Texture position
                 model.getForkliftRegion().getRegionWidth() / 2, model.getForkliftRegion().getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
                 model.getForkliftRegion().getRegionWidth() * 0.75f, model.getForkliftRegion().getRegionHeight() * 0.75f, // Width and height of the texture
                 1f, 1f, //scaling
                 0); // Rotation (radiants to degrees)
-
 
         batch.end();
     }

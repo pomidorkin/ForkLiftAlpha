@@ -20,6 +20,10 @@ public class BackToMenuDialog extends Dialog {
     Inventory inv;
     MapBase map;
 
+    float width = Gdx.graphics.getWidth();
+    float height = Gdx.graphics.getHeight();
+    float ratio = width / height;
+
     public BackToMenuDialog(ForkLiftGame game, GameScreen gs, MapBase map, String title, Skin skin) {
         super(title, skin);
         this.game = game;
@@ -28,15 +32,26 @@ public class BackToMenuDialog extends Dialog {
         this.map = map;
     }
 
+//    {
+//        add().height(((Gdx.graphics.getHeight() / 2f) / 3f));
+//        text("Do you want to go back to the menu?");
+//        row();
+//        button("Menu", 1).setHeight(((Gdx.graphics.getHeight() / 2f) / 3f));
+//        button("Continue", 2);
+//        row();
+//        add().height(((Gdx.graphics.getHeight() / 2f) / 4f));
+//
+//        debug();
+//    }
+
     {
-        add().height(((Gdx.graphics.getHeight() / 2f) / 3f));
+        add().height(((1200 / ratio / 2f) / 3f));
         text("Do you want to go back to the menu?");
         row();
-        button("Menu", 1).setHeight(((Gdx.graphics.getHeight() / 2f) / 3f));
+        button("Menu", 1);
         button("Continue", 2);
         row();
-        add().height(((Gdx.graphics.getHeight() / 2f) / 4f));
-
+        add().height(((1200 / ratio / 2f) / 4f));
 
         debug();
     }

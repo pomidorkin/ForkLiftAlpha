@@ -1,1 +1,1 @@
-{"allModels":[{"name":"SMALL","engine":3,"tubes":3,"price":0,"purchased":true}],"allMaps":[{"name":"TEST","purchased":true,"price":0}],"balance":15000,"donateCurrency":0,"donateBoxesPurchased":false}
+{"allModels":[{"name":"SMALL","engine":3,"tubes":3,"price":0,"purchased":true},{"name":"MEDIUM","engine":3,"tubes":3,"price":3000,"purchased":true}],"allMaps":[{"name":"TEST","purchased":true,"price":0}],"balance":12000,"donateCurrency":0,"donateBoxesPurchased":false}
