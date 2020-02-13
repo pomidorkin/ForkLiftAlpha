@@ -132,9 +132,9 @@ public class MarketScreen extends ScreenAdapter {
         skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
 
         table = new Table();
-        table.setWidth(Gdx.graphics.getWidth());
-        table.align(Align.center | Align.top);
-        table.setPosition(0, Gdx.graphics.getHeight());
+//        table.setWidth(1200);
+//        table.align(Align.center | Align.top);
+//        table.setPosition(0, 1200 / ratio);
 
         // Testing cycle for showing models
         // Testing buying is working
@@ -403,10 +403,6 @@ public class MarketScreen extends ScreenAdapter {
         table.debug();
 
         Table main = new Table();
-        main.add().padTop(20f).padRight(20f).padLeft(20f).fill();
-//        main.setWidth(Gdx.graphics.getWidth());
-//        main.align(Align.center | Align.top);
-//        main.setPosition(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight());
         main.add(table).fill();
         main.row();
 //        main.debug();
@@ -444,8 +440,8 @@ public class MarketScreen extends ScreenAdapter {
 
         if (model != null) {
             batch.draw(model.getForkliftRegion(), // Texture
-                    viewport.getScreenWidth() / 2f - (model.getForkliftRegion().getRegionWidth() / 2f) * 0.75f,
-                    viewport.getScreenHeight() / 2f - (model.getForkliftRegion().getRegionHeight() / 2f) * 0.75f, // Texture position
+                    1200 / 2f - (model.getForkliftRegion().getRegionWidth() / 2f) * 0.75f,
+                    1200 / ratio / 2f - (model.getForkliftRegion().getRegionHeight() / 2f) * 0.75f, // Texture position
                     (model.getForkliftRegion().getRegionWidth() / 2) * 100f, (model.getForkliftRegion().getRegionHeight() / 2) * 100f, // Rotation point (width / 2, height /2 = center)
                     model.getForkliftRegion().getRegionWidth() * 0.75f, model.getForkliftRegion().getRegionHeight() * 0.75f, // Width and height of the texture
                     1f, 1f, //scaling
