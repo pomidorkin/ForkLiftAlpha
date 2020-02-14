@@ -47,13 +47,13 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
     @Override
     protected Actor createUi() {
         // При использовании Скин Композера ОБЯЗАТЕЛЬНО указывать зависимости на тен патч
-//        skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
-        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
+        skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
+//        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
 
         table = new Table();
-        table.setWidth(Gdx.graphics.getWidth());
-        table.align(Align.center | Align.top);
-        table.setPosition(0, Gdx.graphics.getHeight());
+//        table.setWidth(Gdx.graphics.getWidth());
+//        table.align(Align.center | Align.top);
+//        table.setPosition(0, Gdx.graphics.getHeight());
 
         buyButton = new IapButton(MY_CONSUMABLE, 500);
         buyBox = new IapButton(MY_BOX, 500);
@@ -67,14 +67,19 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
             }
         });
 
-        table.padTop(30f);
         table.add(buyButton).padBottom(30);
         table.row();
         table.add(buyBox).padBottom(30);
         table.row();
         table.add(backButton).padBottom(30);
 
-        return table;
+        Table main = new Table();
+        main.add(table).padTop(20f).padRight(20f).padLeft(20f).fill();
+        main.row();
+//        main.debug();
+        main.setFillParent(true);
+
+        return main;
     }
 
     private void initPurchaseManager() {

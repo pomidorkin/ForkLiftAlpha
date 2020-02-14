@@ -5,6 +5,8 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -45,6 +47,9 @@ public class ChoosingScreen extends ScreenAdapter {
     private OrthographicCamera camera, uiCamera;
     private Stage stage, uiStage;
     private World world;
+
+    private final GlyphLayout layout = new GlyphLayout();
+    private BitmapFont font;
     //    ProcessInventory pi = new ProcessInventory();
     ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
@@ -109,6 +114,10 @@ public class ChoosingScreen extends ScreenAdapter {
 
         // Creating texture atlas
         TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
+
+        // Initialize font
+        font = assetManager.get(AssetDescriptors.FONT);
+//        font.getData().setScale(height / 480f);
 
 
 //        MapData mapData = new MapData();
@@ -308,6 +317,12 @@ public class ChoosingScreen extends ScreenAdapter {
                 model.getForkliftRegion().getRegionWidth() * 0.75f, model.getForkliftRegion().getRegionHeight() * 0.75f, // Width and height of the texture
                 1f, 1f, //scaling
                 0); // Rotation (radiants to degrees)
+
+        // Draw upgrage message
+        String upgradeText = "Upgrade: " + forkliftData.getTubes() + "/7";
+        layout.setText(font, upgradeText);
+        font.draw(batch, layout, 1200 / 4f - layout.width/2f, 1200/ratio/2 - (model.getForkliftRegion().getRegionHeight() * 0.75f)/2f - 30f);
+
 
         batch.end();
     }
