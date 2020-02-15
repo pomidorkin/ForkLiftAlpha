@@ -5,6 +5,8 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -56,6 +58,10 @@ public class MarketScreen extends ScreenAdapter {
     private AssetManager assetManager;
     private TextureAtlas gamePlayAtlas;
     private TextureRegion backgroundPlaceholder;
+
+    private final GlyphLayout layout = new GlyphLayout();
+    private BitmapFont font;
+    private TextureRegion coinTexture;
 
     private List<ForkliftData> unpurchasedForklifts;
     private List<MapData> unpurchasedMaps;
@@ -110,6 +116,9 @@ public class MarketScreen extends ScreenAdapter {
         stage = new Stage(viewport, game.getBatch());
         gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
         stage.addActor(createUi());
+
+        font = assetManager.get(AssetDescriptors.FONT);
+        coinTexture = gamePlayAtlas.findRegion(RegionNames.COIN_TEXTURE);
 
         if (unpurchasedForklifts.size() <= 0) {
             model = null;
@@ -449,6 +458,29 @@ public class MarketScreen extends ScreenAdapter {
 
 
         }
+
+
+        // draw balance
+        String balanceText = "" + inv.getBalance();
+        layout.setText(font, balanceText);
+//        font.draw(batch, layout, (uiViewport.getScreenHeight() / 10f) * 1.5f, height - uiViewport.getScreenHeight() / 10f / 2);
+        font.draw(batch, layout, (1200/ratio / 10f) * 1.5f, 1200/ratio - 1200/ratio  / 10f / 2);
+
+        // draw gems
+        String donate = "Gems: " + inv.getDonateCurrency();
+        layout.setText(font, donate);
+        font.draw(batch, layout,
+                (1200/ratio / 10f) * 1.5f,
+                1200/ratio - 1200/ratio / 6f
+        );
+
+        // Drawing coin image
+        batch.draw(coinTexture, // Texture
+                10f, 1200/ratio - 1200/ratio / 10f - 10f, // Texture position
+                coinTexture.getRegionWidth() / 2, coinTexture.getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
+                1200/ratio / 10f, 1200/ratio / 10f, // Width and height of the texture
+                1f, 1f, //scaling
+                0); // Rotation (radiants to degrees)
 
         batch.end();
     }

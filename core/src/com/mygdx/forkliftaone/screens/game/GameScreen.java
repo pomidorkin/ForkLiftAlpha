@@ -132,7 +132,8 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         dynamicViewport = new FitViewport(width, height, dynamicCamera);
 //        uiViewport = new FitViewport(width, height, uiCamera);
         font = assetManager.get(AssetDescriptors.FONT);
-        font.getData().setScale(height / 480f);
+//        font.getData().setScale(height / 480f); // Should be fixed
+        font.getData().setScale(height / (800/ratio));
 //        shapeRenderer = new ShapeRenderer();
         uiStage = new Stage(uiViewport, game.getBatch());
 
@@ -302,6 +303,8 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 //        font.draw(batch, layout, (uiViewport.getScreenHeight() / 10f) * 1.5f, height - uiViewport.getScreenHeight() / 10f / 2);
         font.draw(batch, layout, (Gdx.graphics.getHeight() / 10f) * 1.5f, height - Gdx.graphics.getHeight()  / 10f / 2);
 
+
+
         // draw gems
         String donate = "Gems: " + inv.getDonateCurrency() + " +" + scl.getDonateSalary();
         layout.setText(font, donate);
@@ -317,7 +320,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         batch.draw(coinTexture, // Texture
                 10f, height - dynamicViewport.getScreenHeight() / 10f - 10f, // Texture position
                 coinTexture.getRegionWidth() / 2, coinTexture.getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
-                dynamicViewport.getScreenHeight() / 10f, dynamicViewport.getScreenHeight() / 10f, // Width and height of the texture
+                height / 10f, height / 10f, // Width and height of the texture
                 1f, 1f, //scaling
                 0); // Rotation (radiants to degrees)
 
@@ -524,22 +527,22 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
             }
         });
 
-        localTable.add().height(height/3).width(width/5);// Adding an empty column (Empty cell)
-        localTable.add().height(height/3).width((width/5) * 3f);
-        localTable.add().height(height/3);
+        localTable.add().height(800/ratio/3 - 50);// Adding an empty column (Empty cell)
+        localTable.add().width((800 - ((800 / ratio /3) * 2f)) - 100f);
+        localTable.add().width(800/5);
         localTable.row();
-        localTable.add(fuelButton).width(height/6).height(height/6).padLeft(20f).left();
-        localTable.add().height(height/3).width((width/5) * 3f);
-        localTable.add().width(width/5).padRight(20f).height(height/3);
+        localTable.add(fuelButton).width(800/ratio/6).height(800/ratio/6).left();
+        localTable.add().width((800 - ((800 / ratio /3) * 2f)) - 100f);
+        localTable.add().width(800/5).height(800/ratio/3);
         localTable.row();
-        localTable.add().height(height/3);// Adding an empty column (Empty cell)
-        localTable.add().height(height/3).width((width/5) * 3f);
-        localTable.add().height(height/3);
+        localTable.add().height(800/ratio/3).width(800/ratio/3);
+        localTable.add();
+        localTable.add().height(800/ratio/3).width(800/ratio/3);
 
         localTable.debug();
 
         Table main = new Table();
-        main.add(localTable).padTop(20f).padRight(20f).padLeft(20f).fill();
+        main.add(localTable).padTop(25f).padRight(25f).padLeft(25f).padBottom(25f).fill();
         main.row();
 //        main.debug();
         main.setFillParent(true);

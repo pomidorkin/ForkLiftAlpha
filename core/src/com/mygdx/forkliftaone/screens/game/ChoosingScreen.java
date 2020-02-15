@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -61,6 +62,7 @@ public class ChoosingScreen extends ScreenAdapter {
     private ForkliftData forkliftData;
     private MapData mapData;
     private Inventory inv;
+    private TextureRegion coinTexture;
 
     private SpriteBatch batch;
     TextureRegion backgoundRegion;
@@ -118,6 +120,7 @@ public class ChoosingScreen extends ScreenAdapter {
         // Initialize font
         font = assetManager.get(AssetDescriptors.FONT);
 //        font.getData().setScale(height / 480f);
+        coinTexture = gamePlayAtlas.findRegion(RegionNames.COIN_TEXTURE);
 
 
 //        MapData mapData = new MapData();
@@ -247,7 +250,15 @@ public class ChoosingScreen extends ScreenAdapter {
             }
         });
 
-        TextButton upgrateButton = new TextButton("Upgrate", skin);
+        String upgradeText;
+        if (forkliftData.getTubes() > 7){
+            upgradeText = "Upgrade " + (((forkliftData.getTubes() - 1) * 100) + 300) + "$";
+        } else {
+            upgradeText = "Upgrade";
+        }
+
+
+        TextButton upgrateButton = new TextButton(upgradeText, skin);
         upgrateButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -268,6 +279,10 @@ public class ChoosingScreen extends ScreenAdapter {
                 }
             }
         });
+
+        if (forkliftData.getTubes() >= 7){
+            upgrateButton.setTouchable(Touchable.disabled);
+        }
 
         startButton = new TextButton("Play", skin);
         startButton.addListener(new ClickListener() {
@@ -323,6 +338,27 @@ public class ChoosingScreen extends ScreenAdapter {
         layout.setText(font, upgradeText);
         font.draw(batch, layout, 1200 / 4f - layout.width/2f, 1200/ratio/2 - (model.getForkliftRegion().getRegionHeight() * 0.75f)/2f - 30f);
 
+        // draw balance
+        String balanceText = "" + inv.getBalance();
+        layout.setText(font, balanceText);
+//        font.draw(batch, layout, (uiViewport.getScreenHeight() / 10f) * 1.5f, height - uiViewport.getScreenHeight() / 10f / 2);
+        font.draw(batch, layout, (1200/ratio / 10f) * 1.5f, 1200/ratio - 1200/ratio  / 10f / 2);
+
+        // draw gems
+        String donate = "Gems: " + inv.getDonateCurrency();
+        layout.setText(font, donate);
+        font.draw(batch, layout,
+                (1200/ratio / 10f) * 1.5f,
+                1200/ratio - 1200/ratio / 6f
+        );
+
+        // Drawing coin image
+        batch.draw(coinTexture, // Texture
+                10f, 1200/ratio - 1200/ratio / 10f - 10f, // Texture position
+                coinTexture.getRegionWidth() / 2, coinTexture.getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
+                1200/ratio / 10f, 1200/ratio / 10f, // Width and height of the texture
+                1f, 1f, //scaling
+                0); // Rotation (radiants to degrees)
 
         batch.end();
     }
