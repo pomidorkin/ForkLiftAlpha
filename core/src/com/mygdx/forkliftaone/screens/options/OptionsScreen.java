@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.forkliftaone.ForkLiftGame;
 import com.mygdx.forkliftaone.screens.market.MarketScreen;
@@ -19,7 +20,7 @@ import com.mygdx.forkliftaone.utils.SettingsData;
 public class OptionsScreen extends MenuScreenBase {
     private Skin skin;
     private Table table;
-    private Slider slider;
+    private Slider slider, soundSlider;
     private SettingsData sd;
 
     ProcessInventoryImproved pi = new ProcessInventoryImproved();
@@ -40,12 +41,16 @@ public class OptionsScreen extends MenuScreenBase {
         slider = new Slider(0, 1f, 0.1f, false, skin);
         slider.setValue(inv.getSd().getMusicVolume());
 
+        soundSlider = new Slider(0, 1f, 0.1f, false, skin);
+        soundSlider.setValue(inv.getSd().getSoundVolume());
+
         TextButton saveButton = new TextButton("Save", skin);
         saveButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Saving
                 sd.setMusicVolume(slider.getValue());
+                sd.setSoundVolume(soundSlider.getValue());
 
                 Inventory inv2 = new Inventory(inv.getBalance(),
                         inv.getDonateCurrency(), inv.isDonateBoxesPurchased(),
@@ -56,7 +61,16 @@ public class OptionsScreen extends MenuScreenBase {
             }
         });
 
+        TextField musicText = new TextField("Music volume", skin);
+        TextField soundText = new TextField("Sound volume", skin);
+
+        table.add(musicText);
+        table.row();
         table.add(slider);
+        table.row();
+        table.add(soundText);
+        table.row();
+        table.add(soundSlider);
         table.row();
         table.add(saveButton);
 

@@ -143,6 +143,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         engineSound = assetManager.get(AssetDescriptors.TEST_ENGINE);
         soundID = engineSound.loop();
         engineSound.pause(soundID);
+        engineSound.setVolume(soundID, inv.getSd().getSoundVolume());
         paused = true;
         music.play();
         // Volume should be obtained from the savings
@@ -225,7 +226,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
             viewport.apply();
             stage.draw();
             tmr.render();
-            b2dr.render(world, camera.combined);
+//            b2dr.render(world, camera.combined);
 
             // Testing UI
             dynamicViewport.apply();
