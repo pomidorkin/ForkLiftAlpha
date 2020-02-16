@@ -117,8 +117,6 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
     @Override
     public void show() {
-        // Разборки с текстурами end here
-
         camera = new OrthographicCamera();
 //        viewport = new FitViewport(width, height, camera);
         viewport = new FitViewport(8f, 8f / ratio, camera);
@@ -137,6 +135,9 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 //        shapeRenderer = new ShapeRenderer();
         uiStage = new Stage(uiViewport, game.getBatch());
 
+        // Load & Saving logic
+        inv = pi.read();
+
         // Initializing music
         music = assetManager.get(AssetDescriptors.TEST_MUSIC);
         engineSound = assetManager.get(AssetDescriptors.TEST_ENGINE);
@@ -145,7 +146,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         paused = true;
         music.play();
         // Volume should be obtained from the savings
-        music.setVolume(0f);
+        music.setVolume(inv.getSd().getMusicVolume());
         music.setLooping(true);
 
         // May be refactor later, because there are too many stages
@@ -212,9 +213,6 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 //        BoxBase box = new TestBox(world, camera, gamePlayAtlas);
 //        BoxFactory factory = new BoxFactory();
 //        stage.addActor(factory.getBox(world, camera, gamePlayAtlas, new Vector2(5f, 5f)));
-
-        // Load & Saving logic
-        inv = pi.read();
     }
 
     @Override

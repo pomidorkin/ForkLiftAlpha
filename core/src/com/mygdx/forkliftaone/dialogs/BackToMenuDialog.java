@@ -3,13 +3,11 @@ package com.mygdx.forkliftaone.dialogs;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Align;
 import com.mygdx.forkliftaone.ForkLiftGame;
 import com.mygdx.forkliftaone.maps.MapBase;
 import com.mygdx.forkliftaone.screens.game.GameScreen;
 import com.mygdx.forkliftaone.screens.menu.MenuScreen;
 import com.mygdx.forkliftaone.utils.Inventory;
-import com.mygdx.forkliftaone.utils.ProcessInventory;
 import com.mygdx.forkliftaone.utils.ProcessInventoryImproved;
 
 public class BackToMenuDialog extends Dialog {
@@ -62,7 +60,7 @@ public class BackToMenuDialog extends Dialog {
         if (object.equals(1)) {
             Inventory inv2 = new Inventory(inv.getBalance() + map.getSalary(),
                     inv.getDonateCurrency() + map.getDonateSalary(),
-                    inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps());
+                    inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps(), inv.getSd());
             pi.write(inv2);
             game.setScreen(new MenuScreen(game));
             game.setScreen(new MenuScreen(game));

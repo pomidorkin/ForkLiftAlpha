@@ -267,7 +267,8 @@ public class ChoosingScreen extends ScreenAdapter {
                         int newBalance = inv.getBalance() - (((forkliftData.getTubes() - 1) * 100) + 300);
                         forkliftData.setTubes(forkliftData.getTubes() + 1);
 
-                        Inventory inv2 = new Inventory(newBalance, inv.getDonateCurrency(), inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps());
+                        Inventory inv2 = new Inventory(newBalance, inv.getDonateCurrency(), inv.isDonateBoxesPurchased(),
+                                inv.getAllModels(), inv.getAllMaps(), inv.getSd());
                         pi.write(inv2);
                         System.out.println("Balance: " + inv.getBalance());
                         game.setScreen(new ChoosingScreen(game, counter, mapCounter));

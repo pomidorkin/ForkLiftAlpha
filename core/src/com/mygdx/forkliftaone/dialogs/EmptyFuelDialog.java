@@ -42,7 +42,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         if (object.equals(1)) {
             Inventory inv2 = new Inventory(inv.getBalance() + map.getSalary(),
                     inv.getDonateCurrency() + map.getDonateSalary(),
-                    inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps());
+                    inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps(), inv.getSd());
             pi.write(inv2);
             game.setScreen(new MenuScreen(game));
         } else if (object.equals(2)) {
@@ -51,7 +51,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
             }else {
                 Inventory inv2 = new Inventory(inv.getBalance(),
                         inv.getDonateCurrency() - 10,
-                        inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps());
+                        inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps(), inv.getSd());
                 pi.write(inv2);
                 forklift.setFuelTank(100f);
                 gs.setInv(pi.read());

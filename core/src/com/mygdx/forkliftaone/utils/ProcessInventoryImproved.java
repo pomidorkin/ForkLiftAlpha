@@ -76,8 +76,12 @@ public class ProcessInventoryImproved {
             md.get(0).setName(MapModel.MapName.TEST);
             md.get(0).setPurchased(true);
 
+            SettingsData sd = new SettingsData();
+            sd.setMusicVolume(1f);
+            sd.setSoundVolume(1f);
 
-            Inventory inv = new Inventory(15000, 0, false, fd, md);
+
+            Inventory inv = new Inventory(15000, 0, false, fd, md, sd);
             write(inv);
             return inv;
         }
