@@ -251,7 +251,7 @@ public class ChoosingScreen extends ScreenAdapter {
         });
 
         String upgradeText;
-        if (forkliftData.getTubes() > 7){
+        if (forkliftData.getTubes() < 7){
             upgradeText = "Upgrade " + (((forkliftData.getTubes() - 1) * 100) + 300) + "$";
         } else {
             upgradeText = "Upgrade";

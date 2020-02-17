@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -85,8 +86,7 @@ public class MarketScreen extends ScreenAdapter {
         gd = pi.readGeneralData();
         this.forkliftData = gd.getAllModels()[0];
 
-//        model = new ForkliftModel(unpurchasedForklifts.get(0), gamePlayAtlas);
-
+        System.out.println(forkliftData.getPrice());
 
     }
 
@@ -102,10 +102,7 @@ public class MarketScreen extends ScreenAdapter {
         gd = pi.readGeneralData();
         this.forkliftData = gd.getAllModels()[counter];
 
-
 //        model = new ForkliftModel(unpurchasedForklifts.get(counter), gamePlayAtlas);
-
-
     }
 
     @Override
@@ -115,7 +112,7 @@ public class MarketScreen extends ScreenAdapter {
         viewport = new FitViewport(1200, 1200 / ratio, camera);
         stage = new Stage(viewport, game.getBatch());
         gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
-        stage.addActor(createUi());
+
 
         font = assetManager.get(AssetDescriptors.FONT);
         coinTexture = gamePlayAtlas.findRegion(RegionNames.COIN_TEXTURE);
@@ -133,6 +130,7 @@ public class MarketScreen extends ScreenAdapter {
         }
         backgroundPlaceholder = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
 
+        stage.addActor(createUi());
         Gdx.input.setInputProcessor(stage);
 
     }
@@ -180,6 +178,9 @@ public class MarketScreen extends ScreenAdapter {
 
         // Forklift scrolling buttons logic
         if (unpurchasedForklifts.size() > 0) {
+
+            forkliftData = unpurchasedForklifts.get(counter);
+
             ImageButton nextTB = new ImageButton(skin.get("rightButton", ImageButton.ImageButtonStyle.class));
 //            TextButton nextTB = new TextButton("Next", skin);
             nextTB.addListener(new ClickListener() {
@@ -197,7 +198,7 @@ public class MarketScreen extends ScreenAdapter {
                     System.out.println("counter = " + counter);
 
 
-                    forkliftData = unpurchasedForklifts.get(counter);
+//                    forkliftData = unpurchasedForklifts.get(counter);
 
                     // Refreshing market screen
                     game.setScreen(new MarketScreen(game, counter, mapCounter));
@@ -226,7 +227,7 @@ public class MarketScreen extends ScreenAdapter {
                     System.out.println("counter = " + counter);
 
 
-                    forkliftData = unpurchasedForklifts.get(counter);
+//                    forkliftData = unpurchasedForklifts.get(counter);
 
                     // Refreshing market screen
                     game.setScreen(new MarketScreen(game, counter, mapCounter));
@@ -237,7 +238,7 @@ public class MarketScreen extends ScreenAdapter {
                 }
             });
 
-            TextButton buyButton = new TextButton("Buy", skin);
+            TextButton buyButton = new TextButton("Buy " + forkliftData.getPrice() + "$", skin);
             buyButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -281,6 +282,9 @@ public class MarketScreen extends ScreenAdapter {
 
         // Maps buying scrolling logic
         if (unpurchasedMaps.size() > 0) {
+
+            mapData = unpurchasedMaps.get(mapCounter);
+
             ImageButton nextMapTB = new ImageButton(skin.get("rightButton", ImageButton.ImageButtonStyle.class));
 //            TextButton nextMapTB = new TextButton("Next map", skin);
             nextMapTB.addListener(new ClickListener() {
@@ -298,7 +302,7 @@ public class MarketScreen extends ScreenAdapter {
                     System.out.println("Map counter = " + mapCounter);
 
 
-                    mapData = unpurchasedMaps.get(mapCounter);
+//                    mapData = unpurchasedMaps.get(mapCounter);
 
                     // Refreshing market screen
                     game.setScreen(new MarketScreen(game, counter, mapCounter));
@@ -325,7 +329,7 @@ public class MarketScreen extends ScreenAdapter {
                     System.out.println("Map counter = " + mapCounter);
 
 
-                    mapData = unpurchasedMaps.get(mapCounter);
+//                    mapData = unpurchasedMaps.get(mapCounter);
 
                     // Refreshing market screen
                     game.setScreen(new MarketScreen(game, counter, mapCounter));
@@ -336,7 +340,7 @@ public class MarketScreen extends ScreenAdapter {
                 }
             });
 
-            TextButton buyMapButton = new TextButton("Buy Map", skin);
+            TextButton buyMapButton = new TextButton("Buy Map " + mapData.getPrice() + "$", skin);
             buyMapButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
