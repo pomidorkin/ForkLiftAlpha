@@ -128,7 +128,7 @@ public class ProcessInventoryImproved {
             fd[2].setTubes(3);
             fd[2].setName(ForkliftModel.ModelName.LARGE);
             fd[2].setEngine(3);
-            fd[2].setPrice(7000);
+            fd[2].setPrice(17000);
             fd[2].setPurchased(false);
 
             // Map saving

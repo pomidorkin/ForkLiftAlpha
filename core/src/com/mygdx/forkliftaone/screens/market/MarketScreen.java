@@ -24,6 +24,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.forkliftaone.ForkLiftGame;
 import com.mygdx.forkliftaone.ForkliftModel;
+import com.mygdx.forkliftaone.dialogs.BackToMenuDialog;
+import com.mygdx.forkliftaone.dialogs.MessageDialog;
 import com.mygdx.forkliftaone.screens.menu.MenuScreen;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
 import com.mygdx.forkliftaone.utils.ForkliftData;
@@ -113,6 +115,7 @@ public class MarketScreen extends ScreenAdapter {
         stage = new Stage(viewport, game.getBatch());
         gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
 
+        stage.addActor(createUi());
 
         font = assetManager.get(AssetDescriptors.FONT);
         coinTexture = gamePlayAtlas.findRegion(RegionNames.COIN_TEXTURE);
@@ -129,8 +132,6 @@ public class MarketScreen extends ScreenAdapter {
             mapModel = new MapModel(unpurchasedMaps.get(mapCounter).getName(), gamePlayAtlas);
         }
         backgroundPlaceholder = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
-
-        stage.addActor(createUi());
         Gdx.input.setInputProcessor(stage);
 
     }
@@ -265,7 +266,12 @@ public class MarketScreen extends ScreenAdapter {
                         // Refreshing market screen
                         game.setScreen(new MarketScreen(game));
                     } else {
-                        System.out.println("Not enough money. Forklift price:" + forkliftData.getPrice());
+                        MessageDialog menuDialog = new MessageDialog(game,"", "Not enough money", skin);
+                        menuDialog.show(stage);
+                        menuDialog.setWidth(1200/2);
+                        menuDialog.setHeight(1200/ratio/2);
+                        menuDialog.setPosition(1200/2f - (menuDialog.getWidth()/2), 1200/ratio/2f - (menuDialog.getHeight()/2));
+                        menuDialog.setMovable(false);
                     }
 
                 }
