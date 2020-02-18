@@ -11,6 +11,12 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0
 		a: 1
 	}
+	RGBA_255_255_255_255: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
 }
 com.ray3k.tenpatch.TenPatchDrawable: {
 	textButtonPatched: {
@@ -165,17 +171,36 @@ com.ray3k.tenpatch.TenPatchDrawable: {
 		regions: []
 		playMode: 2
 	}
-	dialog2Patched: {
-		region: dialog2
-		horizontalStretchAreas: [ 34, 134 ]
-		verticalStretchAreas: [ 25, 103 ]
+	squereBarSmallPatched: {
+		region: squereBarSmall
+		horizontalStretchAreas: [ 4, 175 ]
+		verticalStretchAreas: [ 5, 25 ]
 		tiling: false
-		minWidth: 171
-		minHeight: 132
-		rightWidth: 31
-		leftWidth: 35
-		bottomHeight: 21
-		topHeight: 21
+		minWidth: 0
+		minHeight: 28
+		rightWidth: 0
+		leftWidth: 0
+		bottomHeight: 0
+		topHeight: 0
+		offsetX: 0
+		offsetY: 0
+		offsetXspeed: 0
+		offsetYspeed: 0
+		frameDuration: 0.03
+		regions: []
+		playMode: 2
+	}
+	squereBackgroundSmallPatched: {
+		region: squereBackgroundSmall
+		horizontalStretchAreas: [ 3, 176 ]
+		verticalStretchAreas: [ 4, 25 ]
+		tiling: false
+		minWidth: 180
+		minHeight: 28
+		rightWidth: 2
+		leftWidth: 3
+		bottomHeight: 4
+		topHeight: 1
 		offsetX: 0
 		offsetY: 0
 		offsetXspeed: 0
@@ -206,8 +231,15 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 	default-horizontal: {
-		background: squereBackgroundPatched
-		knobBefore: squereBarPatched
+		background: squereBackgroundSmall
+		knobBefore: squereBarSmallPatched
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+	default-horizontal: {
+		background: squereBackgroundSmall
+		knob: squereSlider
+		knobBefore: squereBarSmallPatched
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
@@ -215,6 +247,12 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		font: myfont
 		up: textButtonPatched
 		down: textButtonPushedPatched
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: {
+		font: myfont
+		fontColor: RGBA_255_255_255_255
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
@@ -230,7 +268,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
 }
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
-		background: dialog2Patched
+		background: dialogPached
 		titleFont: myfont
 	}
 }

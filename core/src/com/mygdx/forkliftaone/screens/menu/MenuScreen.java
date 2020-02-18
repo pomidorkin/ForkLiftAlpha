@@ -83,21 +83,20 @@ public class MenuScreen extends MenuScreenBase {
             }
         });
 
-        table.add(startButton).padBottom(30);
+        table.add(startButton).padBottom(15).height((1200/ratio)/6);
         table.row();
-        table.add(marketButton).padBottom(30);
+        table.add(marketButton).padBottom(15).height((1200/ratio)/6);
         table.row();
-        table.add(donateButton).padBottom(30);
+        table.add(donateButton).padBottom(15).height((1200/ratio)/6);
         table.row();
-        table.add(optionsButton).padBottom(30);
+        table.add(optionsButton).padBottom(15).height((1200/ratio)/6);
         table.row();
-        table.add(quitButton);
+        table.add(quitButton).height((1200/ratio)/6);
         table.debug();
 
         Table main = new Table();
         main.add(table).padTop(20f).padRight(20f).padLeft(20f).fill();
-        main.row();
-//        main.debug();
+        main.debug();
         main.setFillParent(true);
 
         return main;

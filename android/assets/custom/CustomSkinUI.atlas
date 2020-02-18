@@ -6,105 +6,119 @@ filter: Linear,Linear
 repeat: none
 myfont
   rotate: false
-  xy: 1, 490
+  xy: 1, 444
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
 dialog
   rotate: false
-  xy: 1, 177
+  xy: 1, 131
   size: 326, 239
   orig: 326, 239
   offset: 0, 0
   index: -1
-dialog2
-  rotate: false
-  xy: 515, 798
-  size: 171, 132
-  orig: 171, 132
-  offset: 0, 0
-  index: -1
 leftButton
   rotate: false
-  xy: 329, 238
+  xy: 623, 776
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 leftButtonPushed
   rotate: false
-  xy: 515, 618
+  xy: 109, 21
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 pause
   rotate: false
-  xy: 515, 698
+  xy: 1, 1
   size: 106, 98
   orig: 106, 98
   offset: 0, 0
   index: -1
 pausePushed
   rotate: false
-  xy: 688, 832
+  xy: 329, 172
   size: 106, 98
   orig: 106, 98
   offset: 0, 0
   index: -1
 rightsButton
   rotate: false
-  xy: 623, 718
+  xy: 515, 524
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 rightsButtonPushed
   rotate: false
-  xy: 796, 852
+  xy: 515, 444
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 squereBackground
   rotate: false
-  xy: 1, 418
+  xy: 1, 372
   size: 449, 70
   orig: 449, 70
   offset: 0, 0
   index: -1
+squereBackgroundSmall
+  rotate: false
+  xy: 515, 856
+  size: 180, 28
+  orig: 180, 28
+  offset: 0, 0
+  index: -1
 squereBar
   rotate: false
-  xy: 515, 932
+  xy: 515, 886
   size: 430, 70
   orig: 430, 70
   offset: 0, 0
   index: -1
+squereBarSmall
+  rotate: false
+  xy: 1, 101
+  size: 180, 28
+  orig: 180, 28
+  offset: 0, 0
+  index: -1
+squereSlider
+  rotate: false
+  xy: 452, 408
+  size: 23, 34
+  orig: 23, 34
+  offset: 0, 0
+  index: -1
 textButton
   rotate: false
-  xy: 1, 77
+  xy: 329, 272
   size: 106, 98
   orig: 106, 98
   offset: 0, 0
   index: -1
 textButtonPushed
   rotate: false
-  xy: 329, 318
+  xy: 515, 756
   size: 106, 98
   orig: 106, 98
   offset: 0, 0
   index: -1
 toucpadBackground
   rotate: false
-  xy: 1, 1
+  xy: 515, 680
   size: 74, 74
   orig: 74, 74
   offset: 0, 0
   index: -1
 toucpadKnob
   rotate: false
-  xy: 109, 101
+  xy: 515, 604
   size: 74, 74
   orig: 74, 74
   offset: 0, 0

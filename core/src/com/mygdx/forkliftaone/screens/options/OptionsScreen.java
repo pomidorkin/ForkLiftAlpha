@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.mygdx.forkliftaone.ForkLiftGame;
 import com.mygdx.forkliftaone.screens.market.MarketScreen;
 import com.mygdx.forkliftaone.screens.menu.MenuScreen;
@@ -34,8 +35,8 @@ public class OptionsScreen extends MenuScreenBase {
 
     @Override
     protected Actor createUi() {
-//        skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
-        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
+        skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
+//        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
         table = new Table();
 
         slider = new Slider(0, 1f, 0.1f, false, skin);
@@ -64,13 +65,13 @@ public class OptionsScreen extends MenuScreenBase {
         TextField musicText = new TextField("Music volume", skin);
         TextField soundText = new TextField("Sound volume", skin);
 
-        table.add(musicText);
+        table.add(musicText).padBottom(30).width(1200/5);
         table.row();
-        table.add(slider);
+        table.add(slider).padBottom(30).width(1200/5);
         table.row();
-        table.add(soundText);
+        table.add(soundText).padBottom(30).width(1200/5);
         table.row();
-        table.add(soundSlider);
+        table.add(soundSlider).padBottom(30).width(1200/5);
         table.row();
         table.add(saveButton);
 
