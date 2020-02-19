@@ -118,6 +118,7 @@ public class MarketScreen extends ScreenAdapter {
         stage.addActor(createUi());
 
         font = assetManager.get(AssetDescriptors.FONT);
+        font.getData().setScale(1f);
         coinTexture = gamePlayAtlas.findRegion(RegionNames.COIN_TEXTURE);
 
         if (unpurchasedForklifts.size() <= 0) {

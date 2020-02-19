@@ -226,7 +226,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
             viewport.apply();
             stage.draw();
             tmr.render();
-//            b2dr.render(world, camera.combined);
+            b2dr.render(world, camera.combined);
 
             // Testing UI
             dynamicViewport.apply();

@@ -32,6 +32,8 @@ public class ForkliftModel {
     private TextureRegion forkliftRegion, wheelRegion, tubeRegion, forkRegion;
     private int price;
 
+    private float bodyWidth, bodyHeight;
+
 //    public ForkliftModel(ModelName modelName, int numberOfTubes, MapBase map){
 public ForkliftModel(ForkliftData fd, MapBase map, TextureAtlas atlas){
 
@@ -40,33 +42,36 @@ public ForkliftModel(ForkliftData fd, MapBase map, TextureAtlas atlas){
         switch (fd.getName()){
             case SMALL:
                 this.numberOfTubes = fd.getTubes();
-                cabin = new Vector2[5];
-                cabin[0] = new Vector2(1.6f, 1.6f);
-                cabin[1] = new Vector2(1f, 1.6f);
-                cabin[2] = new Vector2(0.8f, 0.8f);
-                cabin[3] = new Vector2(0.8f, 0);
-                cabin[4] = new Vector2(1.6f, 0);
+                cabin = new Vector2[4];
+                cabin[0] = new Vector2(0.9f, 0.2f);
+                cabin[1] = new Vector2(0.8f, 1.0f);
+                cabin[2] = new Vector2(0.2f, 1.0f);
+                cabin[3] = new Vector2(0.2f, 0.3f);
+//                cabin[4] = new Vector2(1.6f, 0);
 
                 engine = new Vector2[4];
-                engine[0] = new Vector2(0.8f, 0.8f);
-                engine[1] = new Vector2(0, 0.6f);
+                engine[0] = new Vector2(1.0f, 0.25f);
+                engine[1] = new Vector2(0, 0.4f);
                 engine[2] = new Vector2(0, 0);
-                engine[3] = new Vector2(0.8f, 0);
+                engine[3] = new Vector2(1.0f, 0);
 
                 tubeSize = new float[2];
                 tubeSize[0] = 0.032f;
-                tubeSize[1] = 0.8f;
+                tubeSize[1] = 0.5f;
 
-                rearWheelRadius = 0.2f;
-                frontWheelRadius = 0.25f;
-                locationOfTubes = 1.65f;
-                frontWheelPosition = new Vector2(1.3f, 0);
-                rearWheelPosition = new Vector2(0.3f, 0);
+                rearWheelRadius = 0.1f;
+                frontWheelRadius = 0.13f;
+                locationOfTubes = 1.05f; // max width + 0.05f
+                frontWheelPosition = new Vector2(0.83f, 0.0f);
+                rearWheelPosition = new Vector2(0.13f, -0.03f);
 
                 // Textures
-                forkliftRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
+                forkliftRegion = atlas.findRegion(RegionNames.SMALL_FORKLIFT);
                 wheelRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
                 forkRegion = atlas.findRegion(RegionNames.FORK_TEXTURE);
+
+                bodyWidth = 1.0f; // The widest number in cabin/engine
+                bodyHeight = 1.0f; // The highest number
                 break;
 
             case MEDIUM:
@@ -97,6 +102,9 @@ public ForkliftModel(ForkliftData fd, MapBase map, TextureAtlas atlas){
                 forkliftRegion = atlas.findRegion(RegionNames.FORKLIFT_BODY);
                 wheelRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
                 forkRegion = atlas.findRegion(RegionNames.FORK_TEXTURE);
+
+                bodyWidth = 1.5f; // The biggest X number in cabin/engine
+                bodyHeight = 1.2f; // The biggest Y number in cabin/engine
 
                 break;
         }
@@ -189,4 +197,11 @@ public ForkliftModel(ForkliftData fd, MapBase map, TextureAtlas atlas){
         return forkRegion;
     }
 
+    public float getBodyWidth() {
+        return bodyWidth;
+    }
+
+    public float getBodyHeight() {
+        return bodyHeight;
+    }
 }

@@ -119,7 +119,8 @@ public class ChoosingScreen extends ScreenAdapter {
 
         // Initialize font
         font = assetManager.get(AssetDescriptors.FONT);
-//        font.getData().setScale(height / 480f);
+        font.getData().setScale(1f);
+//        font.getData().setScale(height / (800/ratio));
         coinTexture = gamePlayAtlas.findRegion(RegionNames.COIN_TEXTURE);
 
 

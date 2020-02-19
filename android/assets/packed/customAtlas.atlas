@@ -1,0 +1,54 @@
+
+customAtlas.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+57bf2fe698ab4156c2d31ce1
+  rotate: false
+  xy: 1, 515
+  size: 700, 488
+  orig: 700, 488
+  offset: 0, 0
+  index: -1
+box
+  rotate: false
+  xy: 1, 1
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+bodytexture
+  rotate: false
+  xy: 703, 731
+  size: 319, 272
+  orig: 319, 272
+  offset: 0, 0
+  index: -1
+SmallForklift
+  rotate: false
+  xy: 515, 149
+  size: 335, 364
+  orig: 335, 364
+  offset: 0, 0
+  index: -1
+wheeltexture
+  rotate: false
+  xy: 515, 78
+  size: 71, 69
+  orig: 71, 69
+  offset: 0, 0
+  index: -1
+coin
+  rotate: false
+  xy: 703, 660
+  size: 64, 69
+  orig: 64, 69
+  offset: 0, 0
+  index: -1
+tubeytexture
+  rotate: false
+  xy: 852, 481
+  size: 43, 248
+  orig: 43, 248
+  offset: 0, 0
+  index: -1

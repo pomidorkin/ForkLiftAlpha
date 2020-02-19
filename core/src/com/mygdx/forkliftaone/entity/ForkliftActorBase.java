@@ -117,7 +117,7 @@ public class ForkliftActorBase extends Actor {
 
         fixDef.shape = forkShape;
         fixDef.density = 0.25f;
-        fixDef.friction = 1f;
+        fixDef.friction = 0.8f;
         fixDef.filter.categoryBits = GameConfig.BIT_FORKLIFT;
         fixDef.filter.maskBits = (GameConfig.BIT_MAP | GameConfig.BIT_OBSTACLE);
         fork.createFixture(fixDef).setUserData(this); // required for collision;
@@ -142,7 +142,8 @@ public class ForkliftActorBase extends Actor {
             pjd.bodyB = forkliftTubes[i];
             pjd.collideConnected = false;
             // model.getFrontWheelRadius() * 0.8f is required to make the position of the tubes lower
-            pjd.localAnchorA.set(model.getLocationOfTubes() + offsetTwo, model.getTubeSize()[1] - model.getFrontWheelRadius() * 0.6f);
+//            pjd.localAnchorA.set(model.getLocationOfTubes() + offsetTwo, model.getTubeSize()[1] - model.getFrontWheelRadius() * 0.6f);
+            pjd.localAnchorA.set(model.getLocationOfTubes() + offsetTwo, model.getTubeSize()[1] - model.getFrontWheelRadius() * 0.4f);
             pjd.localAxisA.set(0, 1.0f);
             prismaticJoints[i] = (PrismaticJoint) world.createJoint(pjd);
             offsetTwo += model.getTubeSize()[0] * 2;
@@ -152,7 +153,8 @@ public class ForkliftActorBase extends Actor {
         RevoluteJointDef rjd  = new RevoluteJointDef();
 
         rjd.enableMotor = true;
-        rjd.maxMotorTorque = 50f;
+//        rjd.maxMotorTorque = 50f;
+        rjd.maxMotorTorque = 3f;
         // Need to assign the value because of the positioning bug (to be remade)
         rjd.motorSpeed = -1;
 
@@ -201,8 +203,11 @@ public class ForkliftActorBase extends Actor {
         wjd.enableMotor = true;
         wjd.maxMotorTorque = 10.0f;
         wjd.motorSpeed = 0;
-        wjd.dampingRatio = 0.8f;
-        wjd.frequencyHz = 7f;
+//        wjd.dampingRatio = 0.8f;
+////        wjd.frequencyHz = 7f;
+
+        wjd.dampingRatio = 0.9f;
+        wjd.frequencyHz = 10f;
 
         wjd.bodyA = forklift;
         wjd.bodyB = frontWheel;
@@ -234,12 +239,19 @@ public class ForkliftActorBase extends Actor {
             return;
         }
 
-                batch.draw(bodyTexture, // Texture
-                        forklift.getPosition().x, forklift.getPosition().y, // Texture position
+//                batch.draw(bodyTexture, // Texture
+//                        forklift.getPosition().x, forklift.getPosition().y, // Texture position
+//                getOriginX(), getOriginY(), // Rotation point (width / 2, height /2 = center)
+//                1.5f, 1.2f, // Width and height of the texture
+//                getScaleX(), getScaleY(), //scaling
+//                        forklift.getAngle()*57.2957f); // Rotation (radiants to degrees)
+
+        batch.draw(bodyTexture, // Texture
+                forklift.getPosition().x, forklift.getPosition().y, // Texture position
                 getOriginX(), getOriginY(), // Rotation point (width / 2, height /2 = center)
-                1.5f, 1.2f, // Width and height of the texture
+                model.getBodyWidth(), model.getBodyHeight(), // Width and height of the texture
                 getScaleX(), getScaleY(), //scaling
-                        forklift.getAngle()*57.2957f); // Rotation (radiants to degrees)
+                forklift.getAngle()*57.2957f); // Rotation (radiants to degrees)
 
         batch.draw(wheelTexture, // Texture
                 frontWheel.getPosition().x-model.getFrontWheelRadius(), frontWheel.getPosition().y -model.getFrontWheelRadius(), // Texture position
