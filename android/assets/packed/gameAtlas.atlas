@@ -1,0 +1,94 @@
+
+gameAtlas.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+57bf2fe698ab4156c2d31ce1
+  rotate: false
+  xy: 1, 515
+  size: 700, 488
+  orig: 700, 488
+  offset: 0, 0
+  index: -1
+ModelOne
+  rotate: false
+  xy: 703, 602
+  size: 292, 401
+  orig: 292, 401
+  offset: 0, 0
+  index: -1
+tubeytexture
+  rotate: false
+  xy: 703, 352
+  size: 43, 248
+  orig: 43, 248
+  offset: 0, 0
+  index: -1
+box
+  rotate: false
+  xy: 1, 1
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+ModelTen
+  rotate: false
+  xy: 515, 6
+  size: 418, 344
+  orig: 418, 344
+  offset: 0, 0
+  index: -1
+wheeltexture
+  rotate: false
+  xy: 515, 444
+  size: 71, 69
+  orig: 71, 69
+  offset: 0, 0
+  index: -1
+coin
+  rotate: false
+  xy: 515, 373
+  size: 64, 69
+  orig: 64, 69
+  offset: 0, 0
+  index: -1
+
+gameAtlas2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ModelFive
+  rotate: false
+  xy: 1, 622
+  size: 381, 350
+  orig: 381, 350
+  offset: 0, 0
+  index: -1
+ModelNine
+  rotate: false
+  xy: 384, 658
+  size: 400, 314
+  orig: 400, 314
+  offset: 0, 0
+  index: -1
+ModelEleven
+  rotate: false
+  xy: 1, 324
+  size: 388, 296
+  orig: 388, 296
+  offset: 0, 0
+  index: -1
+ModelFour
+  rotate: false
+  xy: 1, 1
+  size: 335, 321
+  orig: 335, 321
+  offset: 0, 0
+  index: -1
+ModelTwelve
+  rotate: false
+  xy: 391, 399
+  size: 327, 257
+  orig: 327, 257
+  offset: 0, 0
+  index: -1

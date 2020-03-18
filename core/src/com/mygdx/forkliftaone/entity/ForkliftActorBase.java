@@ -246,27 +246,6 @@ public class ForkliftActorBase extends Actor {
 //                getScaleX(), getScaleY(), //scaling
 //                        forklift.getAngle()*57.2957f); // Rotation (radiants to degrees)
 
-        batch.draw(bodyTexture, // Texture
-                forklift.getPosition().x, forklift.getPosition().y, // Texture position
-                getOriginX(), getOriginY(), // Rotation point (width / 2, height /2 = center)
-                model.getBodyWidth(), model.getBodyHeight(), // Width and height of the texture
-                getScaleX(), getScaleY(), //scaling
-                forklift.getAngle()*57.2957f); // Rotation (radiants to degrees)
-
-        batch.draw(wheelTexture, // Texture
-                frontWheel.getPosition().x-model.getFrontWheelRadius(), frontWheel.getPosition().y -model.getFrontWheelRadius(), // Texture position
-                model.getFrontWheelRadius(), model.getFrontWheelRadius(), // Rotation point (width / 2, height /2 = center)
-                model.getFrontWheelRadius() * 2, model.getFrontWheelRadius() * 2, // Width and height of the texture
-                getScaleX(), getScaleY(), //scaling
-                frontWheel.getAngle()*57.2957f);
-
-        batch.draw(wheelTexture, // Texture
-                rearWheel.getPosition().x-model.getRearWheelRadius(), rearWheel.getPosition().y -model.getRearWheelRadius(), // Texture position
-                model.getRearWheelRadius(), model.getRearWheelRadius(), // Rotation point (width / 2, height /2 = center)
-                model.getRearWheelRadius() * 2, model.getRearWheelRadius() * 2, // Width and height of the texture
-                getScaleX(), getScaleY(), //scaling
-                rearWheel.getAngle()*57.2957f);
-
         // drawing tubes texture (Text)
         for (Body forkliftTube : forkliftTubes){
             batch.draw(forkTexture, // Texture
@@ -276,6 +255,43 @@ public class ForkliftActorBase extends Actor {
                     getScaleX(), getScaleY(), //scaling
                     forkliftTube.getAngle()*57.2957f);
         }
+
+        if (model.isThreeweeler()){
+            batch.draw(wheelTexture, // Texture
+                    rearWheel.getPosition().x-model.getRearWheelRadius(), rearWheel.getPosition().y -model.getRearWheelRadius(), // Texture position
+                    model.getRearWheelRadius(), model.getRearWheelRadius(), // Rotation point (width / 2, height /2 = center)
+                    model.getRearWheelRadius() * 2, model.getRearWheelRadius() * 2, // Width and height of the texture
+                    getScaleX(), getScaleY(), //scaling
+                    rearWheel.getAngle()*57.2957f);
+
+            batch.draw(bodyTexture, // Texture
+                    forklift.getPosition().x, forklift.getPosition().y, // Texture position
+                    getOriginX(), getOriginY(), // Rotation point (width / 2, height /2 = center)
+                    model.getBodyWidth(), model.getBodyHeight(), // Width and height of the texture
+                    getScaleX(), getScaleY(), //scaling
+                    forklift.getAngle()*57.2957f); // Rotation (radiants to degrees)
+        } else {
+            batch.draw(bodyTexture, // Texture
+                    forklift.getPosition().x, forklift.getPosition().y, // Texture position
+                    getOriginX(), getOriginY(), // Rotation point (width / 2, height /2 = center)
+                    model.getBodyWidth(), model.getBodyHeight(), // Width and height of the texture
+                    getScaleX(), getScaleY(), //scaling
+                    forklift.getAngle() * 57.2957f); // Rotation (radiants to degrees)
+
+            batch.draw(wheelTexture, // Texture
+                    rearWheel.getPosition().x - model.getRearWheelRadius(), rearWheel.getPosition().y - model.getRearWheelRadius(), // Texture position
+                    model.getRearWheelRadius(), model.getRearWheelRadius(), // Rotation point (width / 2, height /2 = center)
+                    model.getRearWheelRadius() * 2, model.getRearWheelRadius() * 2, // Width and height of the texture
+                    getScaleX(), getScaleY(), //scaling
+                    rearWheel.getAngle() * 57.2957f);
+        }
+
+        batch.draw(wheelTexture, // Texture
+                frontWheel.getPosition().x-model.getFrontWheelRadius(), frontWheel.getPosition().y -model.getFrontWheelRadius(), // Texture position
+                model.getFrontWheelRadius(), model.getFrontWheelRadius(), // Rotation point (width / 2, height /2 = center)
+                model.getFrontWheelRadius() * 2, model.getFrontWheelRadius() * 2, // Width and height of the texture
+                getScaleX(), getScaleY(), //scaling
+                frontWheel.getAngle()*57.2957f);
 
 
     }
