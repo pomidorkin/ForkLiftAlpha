@@ -45,6 +45,8 @@ public class ForkliftModel {
     public ForkliftModel(ForkliftData fd, MapBase map, TextureAtlas atlas) {
 
         spawnPosition = map.getSpawnCoordinates();
+        tubeRegion = atlas.findRegion(RegionNames.TUBE_TEXTURE);
+        forkRegion = atlas.findRegion(RegionNames.FORK_TEXTURE);
 
         switch (fd.getName()) {
 //            case SMALL:

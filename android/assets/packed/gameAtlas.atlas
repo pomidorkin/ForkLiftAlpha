@@ -10,20 +10,6 @@ repeat: none
   orig: 700, 488
   offset: 0, 0
   index: -1
-ModelOne
-  rotate: false
-  xy: 703, 602
-  size: 292, 401
-  orig: 292, 401
-  offset: 0, 0
-  index: -1
-tubeytexture
-  rotate: false
-  xy: 703, 352
-  size: 43, 248
-  orig: 43, 248
-  offset: 0, 0
-  index: -1
 box
   rotate: false
   xy: 1, 1
@@ -31,25 +17,60 @@ box
   orig: 512, 512
   offset: 0, 0
   index: -1
-ModelTen
+pallete
   rotate: false
-  xy: 515, 6
-  size: 418, 344
-  orig: 418, 344
+  xy: 515, 455
+  size: 467, 58
+  orig: 467, 58
+  offset: 0, 0
+  index: -1
+ModelOne
+  rotate: false
+  xy: 703, 602
+  size: 292, 401
+  orig: 292, 401
+  offset: 0, 0
+  index: -1
+tube
+  rotate: false
+  xy: 984, 361
+  size: 28, 239
+  orig: 28, 239
   offset: 0, 0
   index: -1
 wheeltexture
   rotate: false
-  xy: 515, 444
+  xy: 703, 531
   size: 71, 69
   orig: 71, 69
   offset: 0, 0
   index: -1
 coin
   rotate: false
-  xy: 515, 373
+  xy: 776, 531
   size: 64, 69
   orig: 64, 69
+  offset: 0, 0
+  index: -1
+fork
+  rotate: false
+  xy: 703, 519
+  size: 186, 10
+  orig: 186, 10
+  offset: 0, 0
+  index: -1
+ModelTen
+  rotate: false
+  xy: 515, 15
+  size: 418, 344
+  orig: 418, 344
+  offset: 0, 0
+  index: -1
+tubeytexture
+  rotate: false
+  xy: 935, 111
+  size: 43, 248
+  orig: 43, 248
   offset: 0, 0
   index: -1
 

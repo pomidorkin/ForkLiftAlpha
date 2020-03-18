@@ -248,13 +248,20 @@ public class ForkliftActorBase extends Actor {
 
         // drawing tubes texture (Text)
         for (Body forkliftTube : forkliftTubes){
-            batch.draw(forkTexture, // Texture
+            batch.draw(tubeTexture, // Texture
                     forkliftTube.getPosition().x - model.getTubeSize()[0], forkliftTube.getPosition().y - model.getTubeSize()[1], // Texture position
                     model.getTubeSize()[0], model.getTubeSize()[1], // Rotation point (width / 2, height /2 = center)
                     model.getTubeSize()[0] * 2, model.getTubeSize()[1] * 2, // Width and height of the texture
                     getScaleX(), getScaleY(), //scaling
                     forkliftTube.getAngle()*57.2957f);
         }
+
+        batch.draw(forkTexture, // Texture
+                fork.getPosition().x - GameConfig.FORK_WIDTH, fork.getPosition().y - GameConfig.FORK_HEIGHT, // Texture position
+                GameConfig.FORK_WIDTH, GameConfig.FORK_HEIGHT, // Rotation point (width / 2, height /2 = center)
+                GameConfig.FORK_WIDTH * 2, GameConfig.FORK_HEIGHT * 2, // Width and height of the texture
+                getScaleX(), getScaleY(), //scaling
+                fork.getAngle()*57.2957f);
 
         if (model.isThreeweeler()){
             batch.draw(wheelTexture, // Texture
@@ -387,7 +394,7 @@ public class ForkliftActorBase extends Actor {
         bodyTexture = model.getForkliftRegion();
         tubeTexture = model.getTubeRegion();
         wheelTexture = model.getWheelRegion();
-//        forkTexture = model.getForkRegion();
+        forkTexture = model.getForkRegion();
         forkTexture = model.getForkRegion();
     }
 

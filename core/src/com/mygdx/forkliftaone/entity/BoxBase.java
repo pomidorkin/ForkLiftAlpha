@@ -23,10 +23,11 @@ public abstract class BoxBase extends Actor {
     private Body body;
     private float density;
     private float boxWidth, boxHeight;// Should by multiplied by 2
-    private TextureRegion goodTexture;
+    private TextureRegion goodTexture, palleteTexture;
     private Vector2 position;
     private int price, donatePrice;
     private boolean dead;
+    private float palleteHieght = 0.1f;
 
     public BoxBase(World world, Camera camera, TextureAtlas atlas, float boxDensity,
                    float boxWidth, float boxHeight, String goodTexture, Vector2 coords){
@@ -43,6 +44,7 @@ public abstract class BoxBase extends Actor {
 //        TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.TEST_ATLAS);
 
         this.goodTexture = atlas.findRegion(goodTexture);
+        palleteTexture = atlas.findRegion(RegionNames.PALLETE);
     }
 
     public Body createRubbishBox(){
@@ -66,7 +68,7 @@ public abstract class BoxBase extends Actor {
         box.createFixture(fixDef).setUserData(this); // required for collision
 
 //        ps.setAsBox(0.37f, 0.65f);
-        ps.setAsBox(boxWidth, 0.10f, new Vector2(0, -(boxHeight + 0.10f)), 0);
+        ps.setAsBox(boxWidth, palleteHieght, new Vector2(0, -(boxHeight + palleteHieght)), 0);
         fixDef.shape = ps;
         fixDef.density = density;
         fixDef.friction = 1f;
@@ -94,6 +96,14 @@ public abstract class BoxBase extends Actor {
                         body.getAngle() * 57.2957f); // Rotation (radiants to degrees)
             }
         }
+
+        // Drawing pallete
+        batch.draw(palleteTexture, // Texture
+                body.getPosition().x - boxWidth, body.getPosition().y  - (boxHeight + (palleteHieght * 2f)), // Texture position
+                boxWidth, (boxHeight + (palleteHieght * 2f)), // Rotation point (width / 2, height /2 = center)
+                boxWidth * 2f, palleteHieght * 2f, // Width and height of the texture
+                getScaleX(), getScaleY(), //scaling
+                body.getAngle() * 57.2957f); // Rotation (radiants to degrees)
     }
 
     @Override
