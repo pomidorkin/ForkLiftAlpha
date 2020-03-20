@@ -19,7 +19,7 @@ public class TestMap extends MapBase {
     private Stage stage;
 
     public TestMap(World world, TextureRegion backTexture, TextureRegion middleTexture, Camera camera, Stage stage, TextureAtlas atlas) {
-        super(world, AssetPaths.TEST_TILED_MAP, new Vector2(0.5f, 1.5f), 10f, 1f, 1f, 0.5f);
+        super(world, AssetPaths.TEST_TILED_MAP, new Vector2(10.5f, 24.5f), 10f, 1f, 1f, 0.5f);
 
         this.world = world;
         this.atlas = atlas;

@@ -105,7 +105,8 @@ public class ForkliftActorBase extends Actor {
         BodyDef forkDef = new BodyDef();
         forkDef.type = BodyDef.BodyType.DynamicBody;
         forkDef.fixedRotation = false;
-        forkDef.position.set(model.getSpawnPosition().x * 4, model.getSpawnPosition().y);
+//        forkDef.position.set(model.getSpawnPosition().x * 4, model.getSpawnPosition().y);
+        forkDef.position.set(model.getSpawnPosition().x, model.getSpawnPosition().y);
 
 //        forkDef.position.set(forkliftTubes[model.getNumberOfTubes()-1].getPosition().x * 5, // 5 is a random number
 //                forkliftTubes[model.getNumberOfTubes()-1].getPosition().y); // Should be obtained from the map
