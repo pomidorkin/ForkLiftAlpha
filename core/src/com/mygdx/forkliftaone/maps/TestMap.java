@@ -44,12 +44,12 @@ public class TestMap extends MapBase {
         this.middleTexture = middleTexture;
 
         boxCoords = new Vector2[2];
-        boxCoords[0] = new Vector2(4f, 5f);
-        boxCoords[1] = new Vector2(4.5f, 5f);
+        boxCoords[0] = new Vector2(14f, 5f);
+        boxCoords[1] = new Vector2(14.5f, 5f);
 
         createObstacles(8f, 4f, 0.1f, 1f,
                 8f, 4f, 0.1f, 1f,
-                2.88f, 20.64f, 1.92f, 0.16f);
+                4.16f, 11.68f, 3.2f, 0.16f);
 
     }
 
@@ -190,14 +190,14 @@ public class TestMap extends MapBase {
         // elevatorTimer (here it is 3) marks the pause which the elevator makes (how long it waits
         if (elevatorJoint.getJointTranslation() <= -11.52){
             elevatorTimer += 1 * delta;
-            if (elevatorTimer >= 3f){
+            if (elevatorTimer >= 5f){
                 elevatorJoint.setMotorSpeed(1);
                 elevatorTimer = 0;
             }
 
         } else if (elevatorJoint.getJointTranslation() >= 0){
             elevatorTimer += 1 * delta;
-            if (elevatorTimer >= 3f){
+            if (elevatorTimer >= 5f){
                 elevatorJoint.setMotorSpeed(-1);
                 elevatorTimer = 0;
             }
