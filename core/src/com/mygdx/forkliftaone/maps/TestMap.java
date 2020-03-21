@@ -44,8 +44,8 @@ public class TestMap extends MapBase {
         this.middleTexture = middleTexture;
 
         boxCoords = new Vector2[2];
-        boxCoords[0] = new Vector2(14f, 5f);
-        boxCoords[1] = new Vector2(14.5f, 5f);
+        boxCoords[0] = new Vector2(15.04f, 15.20f); // Go up = y + 1.28 Go right = x + 4.80
+        boxCoords[1] = new Vector2(19.84f, 16.48f);
 
         createObstacles(8f, 4f, 0.1f, 1f,
                 8f, 4f, 0.1f, 1f,
