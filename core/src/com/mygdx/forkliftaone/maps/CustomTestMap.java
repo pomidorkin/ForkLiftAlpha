@@ -43,7 +43,9 @@ public class CustomTestMap extends MapBase {
 ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
     public CustomTestMap(World world, TextureRegion backTexture, TextureRegion middleTexture, Camera camera, Stage stage, TextureAtlas atlas) {
-        super(world, AssetPaths.CUSTOM_TILED_MAP, new Vector2(1.5f, 1.5f), 10f, 1f, 1f, 0.5f);
+        super(world, AssetPaths.CUSTOM_TILED_MAP, new Vector2(1.5f, 1.5f),
+                10f, 1f, 1f, 0.5f, ((TextureRegion)atlas.findRegion(RegionNames.TRUCK_ONE)),
+                1f ,1f, 1f, 1f);
 
         this.world = world;
         this.atlas = atlas;

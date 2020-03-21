@@ -38,23 +38,16 @@ tube
   orig: 28, 239
   offset: 0, 0
   index: -1
-wheeltexture
-  rotate: false
-  xy: 703, 531
-  size: 71, 69
-  orig: 71, 69
-  offset: 0, 0
-  index: -1
 coin
   rotate: false
-  xy: 776, 531
+  xy: 703, 531
   size: 64, 69
   orig: 64, 69
   offset: 0, 0
   index: -1
 fork
   rotate: false
-  xy: 703, 519
+  xy: 769, 590
   size: 186, 10
   orig: 186, 10
   offset: 0, 0
@@ -78,27 +71,53 @@ gameAtlas2.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+fuelCanRight
+  rotate: false
+  xy: 1, 353
+  size: 460, 598
+  orig: 460, 598
+  offset: 0, 0
+  index: -1
 ModelFive
   rotate: false
-  xy: 1, 622
+  xy: 1, 1
   size: 381, 350
   orig: 381, 350
   offset: 0, 0
   index: -1
 ModelNine
   rotate: false
-  xy: 384, 658
+  xy: 463, 637
   size: 400, 314
   orig: 400, 314
   offset: 0, 0
   index: -1
 ModelEleven
   rotate: false
-  xy: 1, 324
+  xy: 463, 339
   size: 388, 296
   orig: 388, 296
   offset: 0, 0
   index: -1
+SmallTruck
+  rotate: false
+  xy: 384, 94
+  size: 631, 243
+  orig: 631, 243
+  offset: 0, 0
+  index: -1
+wheeltexture
+  rotate: false
+  xy: 865, 808
+  size: 143, 143
+  orig: 143, 143
+  offset: 0, 0
+  index: -1
+
+gameAtlas3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
 ModelFour
   rotate: false
   xy: 1, 1
@@ -108,7 +127,7 @@ ModelFour
   index: -1
 ModelTwelve
   rotate: false
-  xy: 391, 399
+  xy: 338, 65
   size: 327, 257
   orig: 327, 257
   offset: 0, 0

@@ -18,13 +18,23 @@ public abstract class MapBase extends Actor{
     private Vector2 spawnCoordinates;
     private String mapName;
     private Sensor sensor;
-    protected TextureRegion backTexture, middleTexture, frontTexture;
+    protected TextureRegion backTexture, middleTexture, frontTexture, truckTexture;
+    private float truckX, truckY, truckWidth, truckHeight;
 
-    public MapBase(World world, String mapName, Vector2 spawnCoordinates, float x, float y, float width, float height){
+    public MapBase(World world, String mapName, Vector2 spawnCoordinates,
+                   float x, float y, float width, float height, TextureRegion truckTexture,
+                   float sensorX, float sensorY, float sensorWidth, float sensorHeight){
         this.world = world;
         this.mapName = mapName;
         this.spawnCoordinates = spawnCoordinates;
-        sensor = new Sensor(world, x, y, width, height);
+        this.truckX = x;
+        this.truckY = y;
+        this.truckWidth = width;
+        this.truckHeight = height;
+
+        this.truckTexture = truckTexture;
+
+        sensor = new Sensor(world, sensorX, sensorY, sensorWidth, sensorHeight);
     }
 
     public void createMap(){
@@ -37,10 +47,12 @@ public abstract class MapBase extends Actor{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-//        batch.draw(background, getX(), getY(), 8f, 4.8f); //viewport width
-//        batch.draw(background, getStage().getCamera().position.x - getStage().getViewport().getWorldWidth()/2f,
-//                getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f,
-//                getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
+       batch.draw(truckTexture, // Texture
+               truckX, truckY, // Texture position
+                    getOriginX(), getOriginY(), // Rotation point (width / 2, height /2 = center)
+               truckWidth, truckHeight, // Width and height of the texture
+                    1f, 1f, //scaling
+                    0); // Rotation (radiants to degrees)
 
 
     }
