@@ -5,65 +5,79 @@ filter: Nearest,Nearest
 repeat: none
 57bf2fe698ab4156c2d31ce1
   rotate: false
-  xy: 1, 515
+  xy: 1, 527
   size: 700, 488
   orig: 700, 488
   offset: 0, 0
   index: -1
 box
   rotate: false
-  xy: 1, 1
+  xy: 1, 13
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
-pallete
-  rotate: false
-  xy: 515, 455
-  size: 467, 58
-  orig: 467, 58
-  offset: 0, 0
-  index: -1
 ModelOne
   rotate: false
-  xy: 703, 602
+  xy: 703, 614
   size: 292, 401
   orig: 292, 401
   offset: 0, 0
   index: -1
-tube
+ModelFive
   rotate: false
-  xy: 984, 361
-  size: 28, 239
-  orig: 28, 239
+  xy: 515, 175
+  size: 381, 350
+  orig: 381, 350
   offset: 0, 0
   index: -1
-coin
+elevator
   rotate: false
-  xy: 703, 531
-  size: 64, 69
-  orig: 64, 69
+  xy: 515, 96
+  size: 427, 77
+  orig: 427, 77
   offset: 0, 0
   index: -1
-fork
+pallete
   rotate: false
-  xy: 769, 590
-  size: 186, 10
-  orig: 186, 10
+  xy: 515, 36
+  size: 467, 58
+  orig: 467, 58
   offset: 0, 0
   index: -1
-ModelTen
+door
   rotate: false
-  xy: 515, 15
-  size: 418, 344
-  orig: 418, 344
+  xy: 898, 279
+  size: 31, 333
+  orig: 31, 333
   offset: 0, 0
   index: -1
 tubeytexture
   rotate: false
-  xy: 935, 111
+  xy: 931, 364
   size: 43, 248
   orig: 43, 248
+  offset: 0, 0
+  index: -1
+tube
+  rotate: false
+  xy: 976, 373
+  size: 28, 239
+  orig: 28, 239
+  offset: 0, 0
+  index: -1
+fork
+  rotate: false
+  xy: 1, 1
+  size: 186, 10
+  orig: 186, 10
+  offset: 0, 0
+  index: -1
+coin
+  rotate: false
+  xy: 703, 543
+  size: 64, 69
+  orig: 64, 69
   offset: 0, 0
   index: -1
 
@@ -71,46 +85,46 @@ gameAtlas2.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-fuelCanRight
-  rotate: false
-  xy: 1, 353
-  size: 460, 598
-  orig: 460, 598
-  offset: 0, 0
-  index: -1
-ModelFive
-  rotate: false
-  xy: 1, 1
-  size: 381, 350
-  orig: 381, 350
-  offset: 0, 0
-  index: -1
-ModelNine
-  rotate: false
-  xy: 463, 637
-  size: 400, 314
-  orig: 400, 314
-  offset: 0, 0
-  index: -1
-ModelEleven
-  rotate: false
-  xy: 463, 339
-  size: 388, 296
-  orig: 388, 296
-  offset: 0, 0
-  index: -1
 SmallTruck
   rotate: false
-  xy: 384, 94
+  xy: 1, 716
   size: 631, 243
   orig: 631, 243
   offset: 0, 0
   index: -1
+ModelEleven
+  rotate: false
+  xy: 634, 663
+  size: 388, 296
+  orig: 388, 296
+  offset: 0, 0
+  index: -1
+fuelCanRight
+  rotate: false
+  xy: 1, 63
+  size: 460, 598
+  orig: 460, 598
+  offset: 0, 0
+  index: -1
 wheeltexture
   rotate: false
-  xy: 865, 808
+  xy: 463, 571
   size: 143, 143
   orig: 143, 143
+  offset: 0, 0
+  index: -1
+ModelNine
+  rotate: false
+  xy: 608, 347
+  size: 400, 314
+  orig: 400, 314
+  offset: 0, 0
+  index: -1
+ModelTen
+  rotate: false
+  xy: 463, 1
+  size: 418, 344
+  orig: 418, 344
   offset: 0, 0
   index: -1
 

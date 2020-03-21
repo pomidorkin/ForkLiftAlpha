@@ -1,6 +1,7 @@
 package com.mygdx.forkliftaone.maps;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -26,13 +27,15 @@ public class TestMap extends MapBase {
     private Stage stage;
 
     private PrismaticJoint prismaticJoint, elevatorJoint;
-    private float elevatorTimer, blinkingTimer;
+    private float elevatorTimer, blinkingTimer, elevatorWidth = 3.2f, elevatorHeight = 0.16f;
+
+    private Body elevatorMain;
 
 
     public TestMap(World world, TextureRegion backTexture, TextureRegion middleTexture, Camera camera, Stage stage, TextureAtlas atlas) {
         super(world, AssetPaths.TEST_TILED_MAP, new Vector2(10.5f, 24.5f),
                 52.8f, 11.2f, 4.2f, 1.52f, ((TextureRegion)atlas.findRegion(RegionNames.TRUCK_ONE)),
-                52.8f ,11.84f, 1f, 1f);
+                52.8f + 1.28f ,11.84f + 1.0f, 1.28f, 1.0f);
 
         this.world = world;
         this.atlas = atlas;
@@ -43,13 +46,14 @@ public class TestMap extends MapBase {
         this.backTexture = backTexture;
         this.middleTexture = middleTexture;
 
-        boxCoords = new Vector2[2];
+        boxCoords = new Vector2[3];
         boxCoords[0] = new Vector2(15.04f, 15.20f); // Go up = y + 1.28 Go right = x + 4.80
         boxCoords[1] = new Vector2(19.84f, 16.48f);
+        boxCoords[2] = new Vector2(8.96f, 3.52f);
 
         createObstacles(8f, 4f, 0.1f, 1f,
                 8f, 4f, 0.1f, 1f,
-                4.16f, 11.68f, 3.2f, 0.16f);
+                4.16f, 11.68f, elevatorWidth, elevatorHeight);
 
     }
 
@@ -143,7 +147,7 @@ public class TestMap extends MapBase {
         elevatorMainDef.fixedRotation = true;
         elevatorMainDef.position.set(elevatorX, elevatorY);
 
-        Body elevatorMain = world.createBody(elevatorMainDef);
+        elevatorMain = world.createBody(elevatorMainDef);
 
         shape = new PolygonShape();
         shape.setAsBox(elevatorWidth, elevatorHeight);
@@ -213,6 +217,23 @@ public class TestMap extends MapBase {
 //            blinkingTimer = 0;
 //        }
 
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        // Drawing wall n` doors here
+//        batch.setProjectionMatrix(camera.combined);
+//        batch.begin();
+
+            batch.draw(atlas.findRegion(RegionNames.ELEVATOR), // Texture
+                    elevatorMain.getPosition().x - elevatorWidth , elevatorMain.getPosition().y - elevatorHeight, // Texture position
+                    getOriginX(), getOriginY(), // Rotation point (width / 2, height /2 = center)
+                    elevatorWidth * 2f, elevatorHeight * 2f, // Width and height of the texture
+                    1f, 1f, //scaling
+                    0); // Rotation (radiants to degrees)
+
+//        batch.end();
     }
 
 

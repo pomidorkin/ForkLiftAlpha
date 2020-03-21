@@ -14,6 +14,8 @@ public class RegionNames {
 
     public static final String TRUCK_ONE = "SmallTruck";
 
+    public static final String DOOR = "door";
+    public static final String ELEVATOR = "elevator";
     public static final String FORKLIFT_WHEEL = "wheeltexture";
     //    public static final String FORK_TEXTURE = "tubeytexture";
     public static final String TUBE_TEXTURE = "tube";
