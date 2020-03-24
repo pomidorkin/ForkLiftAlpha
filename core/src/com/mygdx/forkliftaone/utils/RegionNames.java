@@ -14,14 +14,18 @@ public class RegionNames {
 
     public static final String TRUCK_ONE = "SmallTruck";
 
-    public static final String DOOR = "door";
-    public static final String ELEVATOR = "elevator";
+    //    public static final String DOOR = "door";
+//    public static final String ELEVATOR = "elevator";
+    public static final String DOOR = "doorTwo";
+    public static final String LAYER_ONE = "layerTwoSecond";
+    public static final String LAYER_TWO = "layerOneSecond";
+    public static final String ELEVATOR = "elevatorTwo";
     public static final String FORKLIFT_WHEEL = "wheeltexture";
     //    public static final String FORK_TEXTURE = "tubeytexture";
     public static final String TUBE_TEXTURE = "tube";
     public static final String FORK_TEXTURE = "fork";
     public static final String PALLETE = "pallete";
-    public static final String TEST_BACKGROUND = "57bf2fe698ab4156c2d31ce1";
+    public static final String TEST_BACKGROUND = "background";
     public static final String BOX_TEXTURE = "box";
     public static final String COIN_TEXTURE = "coin";
 }

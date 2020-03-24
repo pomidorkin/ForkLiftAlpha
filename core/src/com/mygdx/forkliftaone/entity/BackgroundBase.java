@@ -12,16 +12,19 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class BackgroundBase extends Actor {
 
-    private TextureRegion backgroundTexture, middleTexture;
+    private TextureRegion backgroundTexture, middleTexture, background;
     private ForkliftActorBase forklift;
     private Vector2 backTexturePosition, middleTexturePosition, frontTexturePosition;
     private Viewport viewport;
+    private Camera camera;
 
-    public BackgroundBase(TextureRegion backgroundTexture, TextureRegion middleTexture, Viewport viewport, ForkliftActorBase forklift, Camera camera) {
-        this.backgroundTexture = backgroundTexture;
-        this.middleTexture = middleTexture;
+    public BackgroundBase(TextureRegion background, TextureRegion layerOne, TextureRegion layerTwo, Viewport viewport, ForkliftActorBase forklift, Camera camera) {
+        this.backgroundTexture = layerOne;
+        this.middleTexture = layerTwo;
+        this.background = background;
         this.forklift = forklift;
         this.viewport = viewport;
+        this.camera = camera;
 
 //        texturePosition = new Vector2(camera.position.x - getStage().getViewport().getWorldWidth()/2f,
 //                getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f);
@@ -39,6 +42,11 @@ public class BackgroundBase extends Actor {
             System.out.println("Region not set on Actor " + getClass().getName());
             return;
         } else {
+
+            batch.draw(background, camera.position.x - getStage().getViewport().getWorldWidth()/2f, camera.position.y - getStage().getViewport().getWorldHeight()/2f,
+                    getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
+
+
             batch.draw(backgroundTexture, backTexturePosition.x,
                         backTexturePosition.y = getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f,
                         getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
@@ -47,12 +55,20 @@ public class BackgroundBase extends Actor {
                         backTexturePosition.y = getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f,
                         getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
 
+//            batch.draw(middleTexture, middleTexturePosition.x,
+//                    middleTexturePosition.y = getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f - 3f,
+//                    getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
+//
+//            batch.draw(middleTexture, middleTexturePosition.x + viewport.getWorldWidth(),
+//                    middleTexturePosition.y = getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f - 3f,
+//                    getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
+
             batch.draw(middleTexture, middleTexturePosition.x,
-                    middleTexturePosition.y = getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f - 3f,
+                    middleTexturePosition.y = getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f,
                     getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
 
             batch.draw(middleTexture, middleTexturePosition.x + viewport.getWorldWidth(),
-                    middleTexturePosition.y = getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f - 3f,
+                    middleTexturePosition.y = getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f,
                     getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
 
         }

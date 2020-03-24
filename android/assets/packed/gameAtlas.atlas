@@ -3,81 +3,95 @@ gameAtlas.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-57bf2fe698ab4156c2d31ce1
+background
   rotate: false
-  xy: 1, 527
-  size: 700, 488
-  orig: 700, 488
+  xy: 1, 533
+  size: 800, 480
+  orig: 800, 480
   offset: 0, 0
   index: -1
 box
   rotate: false
-  xy: 1, 13
+  xy: 1, 19
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
   index: -1
-ModelOne
-  rotate: false
-  xy: 703, 614
-  size: 292, 401
-  orig: 292, 401
-  offset: 0, 0
-  index: -1
-ModelFive
-  rotate: false
-  xy: 515, 175
-  size: 381, 350
-  orig: 381, 350
-  offset: 0, 0
-  index: -1
-elevator
-  rotate: false
-  xy: 515, 96
-  size: 427, 77
-  orig: 427, 77
-  offset: 0, 0
-  index: -1
-pallete
-  rotate: false
-  xy: 515, 36
-  size: 467, 58
-  orig: 467, 58
-  offset: 0, 0
-  index: -1
-door
-  rotate: false
-  xy: 898, 279
-  size: 31, 333
-  orig: 31, 333
-  offset: 0, 0
-  index: -1
-tubeytexture
-  rotate: false
-  xy: 931, 364
-  size: 43, 248
-  orig: 43, 248
-  offset: 0, 0
-  index: -1
-tube
-  rotate: false
-  xy: 976, 373
-  size: 28, 239
-  orig: 28, 239
-  offset: 0, 0
-  index: -1
 fork
   rotate: false
-  xy: 1, 1
+  xy: 1, 7
   size: 186, 10
   orig: 186, 10
   offset: 0, 0
   index: -1
+pallete
+  rotate: false
+  xy: 515, 473
+  size: 467, 58
+  orig: 467, 58
+  offset: 0, 0
+  index: -1
+doorTwo
+  rotate: false
+  xy: 984, 634
+  size: 31, 379
+  orig: 31, 379
+  offset: 0, 0
+  index: -1
+door
+  rotate: false
+  xy: 984, 299
+  size: 31, 333
+  orig: 31, 333
+  offset: 0, 0
+  index: -1
+ModelEleven
+  rotate: false
+  xy: 515, 1
+  size: 388, 296
+  orig: 388, 296
+  offset: 0, 0
+  index: -1
 coin
   rotate: false
-  xy: 703, 543
+  xy: 905, 402
   size: 64, 69
   orig: 64, 69
+  offset: 0, 0
+  index: -1
+elevatorTwo
+  rotate: false
+  xy: 515, 440
+  size: 379, 31
+  orig: 379, 31
+  offset: 0, 0
+  index: -1
+elevator
+  rotate: false
+  xy: 515, 323
+  size: 427, 77
+  orig: 427, 77
+  offset: 0, 0
+  index: -1
+tube
+  rotate: false
+  xy: 944, 161
+  size: 28, 239
+  orig: 28, 239
+  offset: 0, 0
+  index: -1
+tubeytexture
+  rotate: false
+  xy: 974, 49
+  size: 43, 248
+  orig: 43, 248
+  offset: 0, 0
+  index: -1
+wheeltexture
+  rotate: false
+  xy: 803, 870
+  size: 143, 143
+  orig: 143, 143
   offset: 0, 0
   index: -1
 
@@ -85,46 +99,25 @@ gameAtlas2.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-SmallTruck
+layerOneSecond
   rotate: false
-  xy: 1, 716
-  size: 631, 243
-  orig: 631, 243
+  xy: 1, 491
+  size: 800, 480
+  orig: 800, 480
   offset: 0, 0
   index: -1
-ModelEleven
+57bf2fe698ab4156c2d31ce1
   rotate: false
-  xy: 634, 663
-  size: 388, 296
-  orig: 388, 296
+  xy: 1, 1
+  size: 700, 488
+  orig: 700, 488
   offset: 0, 0
   index: -1
-fuelCanRight
+ModelOne
   rotate: false
-  xy: 1, 63
-  size: 460, 598
-  orig: 460, 598
-  offset: 0, 0
-  index: -1
-wheeltexture
-  rotate: false
-  xy: 463, 571
-  size: 143, 143
-  orig: 143, 143
-  offset: 0, 0
-  index: -1
-ModelNine
-  rotate: false
-  xy: 608, 347
-  size: 400, 314
-  orig: 400, 314
-  offset: 0, 0
-  index: -1
-ModelTen
-  rotate: false
-  xy: 463, 1
-  size: 418, 344
-  orig: 418, 344
+  xy: 703, 88
+  size: 292, 401
+  orig: 292, 401
   offset: 0, 0
   index: -1
 
@@ -132,17 +125,64 @@ gameAtlas3.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-ModelFour
+layerTwoSecond
   rotate: false
-  xy: 1, 1
-  size: 335, 321
-  orig: 335, 321
+  xy: 1, 505
+  size: 800, 480
+  orig: 800, 480
+  offset: 0, 0
+  index: -1
+SmallTruck
+  rotate: false
+  xy: 1, 260
+  size: 631, 243
+  orig: 631, 243
   offset: 0, 0
   index: -1
 ModelTwelve
   rotate: false
-  xy: 338, 65
+  xy: 1, 1
   size: 327, 257
   orig: 327, 257
+  offset: 0, 0
+  index: -1
+ModelFive
+  rotate: false
+  xy: 634, 153
+  size: 381, 350
+  orig: 381, 350
+  offset: 0, 0
+  index: -1
+
+gameAtlas4.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+fuelCanRight
+  rotate: false
+  xy: 1, 347
+  size: 460, 598
+  orig: 460, 598
+  offset: 0, 0
+  index: -1
+ModelTen
+  rotate: false
+  xy: 1, 1
+  size: 418, 344
+  orig: 418, 344
+  offset: 0, 0
+  index: -1
+ModelNine
+  rotate: false
+  xy: 463, 631
+  size: 400, 314
+  orig: 400, 314
+  offset: 0, 0
+  index: -1
+ModelFour
+  rotate: false
+  xy: 463, 308
+  size: 335, 321
+  orig: 335, 321
   offset: 0, 0
   index: -1

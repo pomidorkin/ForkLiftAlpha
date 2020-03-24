@@ -27,9 +27,9 @@ public class TestMap extends MapBase {
     private Stage stage;
 
     private PrismaticJoint prismaticJoint, elevatorJoint;
-    private float elevatorTimer, blinkingTimer, elevatorWidth = 3.2f, elevatorHeight = 0.16f;
+    private float elevatorTimer, blinkingTimer, elevatorWidth = 3.2f, elevatorHeight = 0.16f, doorWidth = 0.1f, doorHeight = 1f;
 
-    private Body elevatorMain;
+    private Body elevatorMain, door;
 
 
     public TestMap(World world, TextureRegion backTexture, TextureRegion middleTexture, Camera camera, Stage stage, TextureAtlas atlas) {
@@ -43,8 +43,8 @@ public class TestMap extends MapBase {
         this.stage = stage;
         factory = new BoxFactory();
 
-        this.backTexture = backTexture;
-        this.middleTexture = middleTexture;
+        this.backTexture = atlas.findRegion(RegionNames.LAYER_ONE);
+        this.middleTexture = atlas.findRegion(RegionNames.LAYER_TWO);
 
         boxCoords = new Vector2[3];
         boxCoords[0] = new Vector2(15.04f, 15.20f); // Go up = y + 1.28 Go right = x + 4.80
@@ -52,7 +52,7 @@ public class TestMap extends MapBase {
         boxCoords[2] = new Vector2(8.96f, 3.52f);
 
         createObstacles(8f, 4f, 0.1f, 1f,
-                8f, 4f, 0.1f, 1f,
+                8f, 4f, doorWidth, doorHeight,
                 4.16f, 11.68f, elevatorWidth, elevatorHeight);
 
     }
@@ -92,7 +92,7 @@ public class TestMap extends MapBase {
         doorDef.fixedRotation = true;
         doorDef.position.set(doorX, doorY);
 
-        Body door = world.createBody(doorDef);
+        door = world.createBody(doorDef);
 
         shape = new PolygonShape();
         shape.setAsBox(doorWidth, doorHeight);
@@ -233,8 +233,16 @@ public class TestMap extends MapBase {
                     1f, 1f, //scaling
                     0); // Rotation (radiants to degrees)
 
+        batch.draw(atlas.findRegion(RegionNames.DOOR), // Texture
+                door.getPosition().x - doorWidth , door.getPosition().y - doorHeight, // Texture position
+                getOriginX(), getOriginY(), // Rotation point (width / 2, height /2 = center)
+                doorWidth * 2f, doorHeight * 2f, // Width and height of the texture
+                1f, 1f, //scaling
+                0); // Rotation (radiants to degrees)
+
 //        batch.end();
     }
+
 
 
 }
