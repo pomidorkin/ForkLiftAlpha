@@ -79,8 +79,8 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     //Music
     private Music music;
-    private Sound engineSound;
-    private long soundID;
+    private Sound engineSound, beepingSound;
+    private long soundID, beepSoundID;
     private boolean paused = false;
 
 
@@ -141,9 +141,13 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         // Initializing music
         music = assetManager.get(AssetDescriptors.TEST_MUSIC);
         engineSound = assetManager.get(AssetDescriptors.TEST_ENGINE);
+        beepingSound = assetManager.get(AssetDescriptors.TEST_ENGINE); // Should be changes to the beeping sound
         soundID = engineSound.loop();
+        beepSoundID = beepingSound.loop();
         engineSound.pause(soundID);
+        beepingSound.pause(beepSoundID);
         engineSound.setVolume(soundID, inv.getSd().getSoundVolume());
+        beepingSound.setVolume(beepSoundID, inv.getSd().getSoundVolume());
         paused = true;
         music.play();
         // Volume should be obtained from the savings
@@ -427,6 +431,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
                     forklift.moveForkliftLeft();
                     if (paused){
                         engineSound.resume(soundID);
+                        beepingSound.resume(beepSoundID);
                         paused = false;
                     }
                 } else if (touchpad.getKnobX() > touchpad.getWidth() / 2) {
@@ -439,6 +444,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
                     forklift.stopMoveForkliftLeft();
                     if (!paused){
                         engineSound.pause(soundID);
+                        beepingSound.pause(beepSoundID);
                         paused = true;
                     }
                 }
