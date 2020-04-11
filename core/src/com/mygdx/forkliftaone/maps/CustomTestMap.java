@@ -1,5 +1,6 @@
 package com.mygdx.forkliftaone.maps;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -39,10 +40,12 @@ public class CustomTestMap extends MapBase {
 
     private Inventory inv;
 
+    private AssetManager assetManager;
+
 //    ProcessInventory pi = new ProcessInventory();
 ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
-    public CustomTestMap(World world, TextureRegion backTexture, TextureRegion middleTexture, Camera camera, Stage stage, TextureAtlas atlas) {
+    public CustomTestMap(World world, AssetManager assetManager, TextureRegion backTexture, TextureRegion middleTexture, Camera camera, Stage stage, TextureAtlas atlas) {
         super(world, AssetPaths.CUSTOM_TILED_MAP, new Vector2(1.5f, 1.5f),
                 10f, 1f, 1f, 0.5f, ((TextureRegion)atlas.findRegion(RegionNames.TRUCK_ONE)),
                 1f ,1f, 1f, 1f);
@@ -53,6 +56,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         this.stage = stage;
         inv = pi.read();
         factory = new BoxFactory();
+        this.assetManager = assetManager;
 
         this.backTexture = backTexture;
         this.middleTexture = middleTexture;
@@ -95,18 +99,18 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
     public void spawnBoxes() {
         // Spawn fuel
         for (Vector2 coord : boxCoords[0]) {
-                stage.addActor(factory.getFuelCan(world, camera, atlas, coord));
+                stage.addActor(factory.getFuelCan(world, assetManager, camera, atlas, coord));
 //            stage.addActor(factory.getBox(world, camera, atlas, coord));
         }
 
         // Spawn cheap goods
         for (Vector2 coord : boxCoords[1]) {
-            stage.addActor(factory.getBox(world, camera, atlas, coord));
+            stage.addActor(factory.getBox(world, assetManager, camera, atlas, coord));
         }
 
         // Spawn middle goods
         for (Vector2 coord : boxCoords[2]) {
-            stage.addActor(factory.getBox(world, camera, atlas, coord));
+            stage.addActor(factory.getBox(world, assetManager, camera, atlas, coord));
         }
 
         // Spawn expensive goods
@@ -117,7 +121,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
             for (int i = 0; i < rand; i++){
                 coord = boxCoords[3][i];
                 // Spawn donate boxes here
-                stage.addActor(factory.getBox(world, camera, atlas, coord));
+                stage.addActor(factory.getBox(world, assetManager, camera, atlas, coord));
                 System.out.println("Donate box spawned");
             }
 
@@ -125,14 +129,14 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
                 for (int i = rand; i < boxCoords[3].length; i++){
                     coord = boxCoords[3][i];
                     // Spawn expensive, but not donate boxes here
-                    stage.addActor(factory.getBox(world, camera, atlas, coord));
+                    stage.addActor(factory.getBox(world, assetManager, camera, atlas, coord));
                     System.out.println("Not donate box spawned");
                 }
             }
 
         } else {
             for (Vector2 coord : boxCoords[3]) {
-                stage.addActor(factory.getBox(world, camera, atlas, coord));
+                stage.addActor(factory.getBox(world, assetManager, camera, atlas, coord));
             }
         }
 

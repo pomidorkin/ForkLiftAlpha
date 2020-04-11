@@ -1,5 +1,6 @@
 package com.mygdx.forkliftaone.utils;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,19 +20,19 @@ public class MapModel {
     private MapBase map;
     private TextureRegion backgroundTexture, middleTexture, frontTexture;
 
-    public  MapModel(MapName md, World world, OrthographicCamera camera, Stage stage, TextureAtlas atlas){
+    public  MapModel(MapName md, AssetManager assetManager, World world, OrthographicCamera camera, Stage stage, TextureAtlas atlas){
         switch (md){
             case CUSTOM:
                 this.backgroundTexture = atlas.findRegion(RegionNames.BOX_TEXTURE);
                 this.middleTexture = atlas.findRegion(RegionNames.TEST_BACKGROUND);
 
-                map = new CustomTestMap(world, backgroundTexture, middleTexture, camera, stage, atlas);
+                map = new CustomTestMap(world, assetManager, backgroundTexture, middleTexture, camera, stage, atlas);
                 break;
 
             case TEST:
                 this.backgroundTexture = atlas.findRegion(RegionNames.TEST_BACKGROUND);
                 this.middleTexture = atlas.findRegion(RegionNames.BOX_TEXTURE);
-                map = new TestMap(world, backgroundTexture, middleTexture, camera, stage, atlas);
+                map = new TestMap(world, assetManager, backgroundTexture, middleTexture, camera, stage, atlas);
                 break;
         }
 

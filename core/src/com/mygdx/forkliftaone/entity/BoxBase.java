@@ -1,6 +1,7 @@
 package com.mygdx.forkliftaone.entity;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -28,8 +29,10 @@ public abstract class BoxBase extends Actor {
     private int price, donatePrice;
     private boolean dead;
     private float palleteHieght = 0.1f;
+    AssetManager assetManager;
+    private Sound breakingSound;
 
-    public BoxBase(World world, Camera camera, TextureAtlas atlas, float boxDensity,
+    public BoxBase(World world, AssetManager assetManager, Camera camera, TextureAtlas atlas, float boxDensity,
                    float boxWidth, float boxHeight, String goodTexture, Vector2 coords){
         this.camera = camera;
         this.world = world;
@@ -37,6 +40,8 @@ public abstract class BoxBase extends Actor {
         this.density = boxDensity;
         this.boxWidth = boxWidth;
         this.boxHeight = boxHeight;
+        this.assetManager = assetManager;
+        this.breakingSound = assetManager.get(AssetDescriptors.TEST_ENGINE); // Should be replaced with the breaking sound
 
         this.body = createRubbishBox();
 
@@ -45,6 +50,8 @@ public abstract class BoxBase extends Actor {
 
         this.goodTexture = atlas.findRegion(goodTexture);
         palleteTexture = atlas.findRegion(RegionNames.PALLETE);
+
+        breakingSound = assetManager.get(AssetDescriptors.TEST_ENGINE); // Replace with the breaking sound
     }
 
     public Body createRubbishBox(){
@@ -110,6 +117,7 @@ public abstract class BoxBase extends Actor {
     public void act(float delta) {
         if (dead){
             detroyBox();
+            breakingSound.play();
         }
         super.act(delta);
         isBoxInCamera();

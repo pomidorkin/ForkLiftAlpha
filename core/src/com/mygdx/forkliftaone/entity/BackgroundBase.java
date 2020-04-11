@@ -78,8 +78,9 @@ public class BackgroundBase extends Actor {
     public void act(float delta) {
         super.act(delta);
 
-        backTexturePosition.x -= forklift.getForklift().getLinearVelocity().x * 0.01;
-        middleTexturePosition.x -= forklift.getForklift().getLinearVelocity().x * 0.02;
+        // Background layers scrolling speed
+        backTexturePosition.x -= (forklift.getForklift().getLinearVelocity().x * 0);
+        middleTexturePosition.x -= forklift.getForklift().getLinearVelocity().x * 0.0025;
 
         // Checking if texture is inside the viewport and positioning if not.
         if (viewport.getCamera().position.x - backTexturePosition.x > viewport.getWorldWidth() * 1.5f){

@@ -1,5 +1,6 @@
 package com.mygdx.forkliftaone.maps;
 
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -31,8 +32,10 @@ public class TestMap extends MapBase {
 
     private Body elevatorMain, door;
 
+    private AssetManager assetManager;
 
-    public TestMap(World world, TextureRegion backTexture, TextureRegion middleTexture, Camera camera, Stage stage, TextureAtlas atlas) {
+
+    public TestMap(World world, AssetManager assetManager, TextureRegion backTexture, TextureRegion middleTexture, Camera camera, Stage stage, TextureAtlas atlas) {
         super(world, AssetPaths.TEST_TILED_MAP, new Vector2(10.5f, 24.5f),
                 52.8f, 11.2f, 4.2f, 1.52f, ((TextureRegion)atlas.findRegion(RegionNames.TRUCK_ONE)),
                 52.8f + 1.28f ,11.84f + 1.0f, 1.28f, 1.0f);
@@ -42,6 +45,7 @@ public class TestMap extends MapBase {
         this.camera = camera;
         this.stage = stage;
         factory = new BoxFactory();
+        this.assetManager = assetManager;
 
         this.backTexture = atlas.findRegion(RegionNames.LAYER_ONE);
         this.middleTexture = atlas.findRegion(RegionNames.LAYER_TWO);
@@ -59,7 +63,7 @@ public class TestMap extends MapBase {
 
     public void spawnBoxes() {
         for (Vector2 coord : boxCoords) {
-            stage.addActor(factory.getFuelCan(world, camera, atlas, coord));
+            stage.addActor(factory.getFuelCan(world, assetManager, camera, atlas, coord));
 //            stage.addActor(factory.getBox(world, camera, atlas, coord));
 
         }

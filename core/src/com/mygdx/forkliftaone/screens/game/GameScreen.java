@@ -184,7 +184,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 //        stage.addActor(map);
 //        map.spawnBoxes();
 
-        mapModel = new MapModel(md.getName(), world, camera, stage, gamePlayAtlas);
+        mapModel = new MapModel(md.getName(), assetManager, world, camera, stage, gamePlayAtlas);
         map = mapModel.getMap();
         map.createMap();
 
