@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.forkliftaone.ForkLiftGame;
 import com.mygdx.forkliftaone.screens.game.ChoosingScreen;
 import com.mygdx.forkliftaone.screens.game.GameScreen;
+import com.mygdx.forkliftaone.screens.market.ChooseMarketScreen;
 import com.mygdx.forkliftaone.screens.market.MarketScreen;
 import com.mygdx.forkliftaone.screens.options.OptionsScreen;
 import com.mygdx.forkliftaone.screens.purchase.PurchaseScreen;
@@ -108,8 +109,12 @@ public class MenuScreen extends MenuScreenBase {
         game.setScreen(new ChoosingScreen(game));
     }
 
+//    private void shop(){
+//        game.setScreen(new MarketScreen(game));
+//    }
+
     private void shop(){
-        game.setScreen(new MarketScreen(game));
+        game.setScreen(new ChooseMarketScreen(game));
     }
 
     private void openDonate(){
