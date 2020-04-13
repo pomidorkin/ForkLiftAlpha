@@ -203,34 +203,70 @@ public class MapMarketScreen extends ScreenAdapter {
                 }
             });
 
-            TextButton buyMapButton = new TextButton("Buy Map " + mapData.getPrice() + "$", skin);
+            // Button depends on the currency type (coins/gems)
+//            TextButton buyMapButton = new TextButton("Buy Map " + mapData.getPrice() + "$", skin);
+
+            TextButton buyMapButton;
+
+            if (!mapData.getPrice().isDonateCurrency()){
+                buyMapButton = new TextButton("Buy Map " + mapData.getPrice().getPrice() + "$", skin);
+            } else {
+                buyMapButton = new TextButton("Buy Map " + mapData.getPrice().getPrice() + " gems", skin);
+            }
+
             buyMapButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
 
                     mapData = unpurchasedMaps.get(mapCounter);
-                    if (inv.getBalance() >= mapData.getPrice()) {
+                    if (!mapData.getPrice().isDonateCurrency()) {
+                        if (inv.getBalance() >= mapData.getPrice().getPrice()) {
 
-                        inv.setBalance(inv.getBalance() - mapData.getPrice());
+                            inv.setBalance(inv.getBalance() - mapData.getPrice().getPrice());
 
 
-                        mapData.setPurchased(true);
+                            mapData.setPurchased(true);
 
-                        // Saving models
-                        inv.getAllMaps().add(mapData);
+                            // Saving models
+                            inv.getAllMaps().add(mapData);
 
-                        // Saving
-                        Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency(),
-                                inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps(), inv.getSd());
-                        pi.write(inv2);
+                            // Saving
+                            Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency(),
+                                    inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps(), inv.getSd());
+                            pi.write(inv2);
 
-                        GeneralData gd2 = new GeneralData(gd.getAllModels(), gd.getAllMaps());
-                        pi.write(gd2);
+                            GeneralData gd2 = new GeneralData(gd.getAllModels(), gd.getAllMaps());
+                            pi.write(gd2);
 
-                        // Refreshing market screen
-                        game.setScreen(new MapMarketScreen(game));
-                    } else {
-                        System.out.println("Not enough money. Map price:" + mapData.getPrice());
+                            // Refreshing market screen
+                            game.setScreen(new MapMarketScreen(game));
+                        } else {
+                            System.out.println("Not enough money. Map price:" + mapData.getPrice());
+                        }
+                    }else {
+                        if (inv.getDonateCurrency() >= mapData.getPrice().getPrice()) {
+
+                            inv.setDonateCurrency(inv.getDonateCurrency() - mapData.getPrice().getPrice());
+
+
+                            mapData.setPurchased(true);
+
+                            // Saving models
+                            inv.getAllMaps().add(mapData);
+
+                            // Saving
+                            Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency(),
+                                    inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps(), inv.getSd());
+                            pi.write(inv2);
+
+                            GeneralData gd2 = new GeneralData(gd.getAllModels(), gd.getAllMaps());
+                            pi.write(gd2);
+
+                            // Refreshing market screen
+                            game.setScreen(new MapMarketScreen(game));
+                        } else {
+                            System.out.println("Not enough money. Map price:" + mapData.getPrice());
+                        }
                     }
 
                 }

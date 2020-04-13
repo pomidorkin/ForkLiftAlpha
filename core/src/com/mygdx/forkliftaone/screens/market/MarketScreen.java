@@ -353,9 +353,9 @@ public class MarketScreen extends ScreenAdapter {
                 public void clicked(InputEvent event, float x, float y) {
 
                     mapData = unpurchasedMaps.get(mapCounter);
-                    if (inv.getBalance() >= mapData.getPrice()) {
+                    if (inv.getBalance() >= mapData.getPrice().getPrice()) {
 
-                        inv.setBalance(inv.getBalance() - mapData.getPrice());
+                        inv.setBalance(inv.getBalance() - mapData.getPrice().getPrice());
 
 
                         mapData.setPurchased(true);

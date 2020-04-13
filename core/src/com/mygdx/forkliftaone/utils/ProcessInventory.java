@@ -138,12 +138,12 @@ public class ProcessInventory {
             md = new MapData[2];
             md[0] = new MapData();
             md[0].setName(MapModel.MapName.CUSTOM);
-            md[0].setPrice(100);
+            md[0].setPrice(new PriceHandler(100, false));
             md[0].setPurchased(false);
 
             md[1] = new MapData();
             md[1].setName(MapModel.MapName.TEST);
-            md[1].setPrice(500);
+            md[1].setPrice(new PriceHandler(500, false));
             md[1].setPurchased(true);
 
 

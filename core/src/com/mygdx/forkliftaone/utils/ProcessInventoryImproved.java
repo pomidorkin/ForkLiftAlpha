@@ -157,7 +157,7 @@ public class ProcessInventoryImproved {
             fd[6].setTubes(3);
             fd[6].setName(ForkliftModel.ModelName.MODEL_12);
             fd[6].setEngine(3);
-            fd[6].setPrice(new PriceHandler(1000, true));
+            fd[6].setPrice(new PriceHandler(500, true));
             fd[6].setPurchased(false);
 
             // Map saving
@@ -165,12 +165,12 @@ public class ProcessInventoryImproved {
             md = new MapData[2];
             md[0] = new MapData();
             md[0].setName(MapModel.MapName.CUSTOM);
-            md[0].setPrice(100);
+            md[0].setPrice(new PriceHandler(100, true));
             md[0].setPurchased(false);
 
             md[1] = new MapData();
             md[1].setName(MapModel.MapName.TEST);
-            md[1].setPrice(500);
+            md[1].setPrice(new PriceHandler(500, true));
             md[1].setPurchased(true);
 
 

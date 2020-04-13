@@ -5,7 +5,7 @@ import com.mygdx.forkliftaone.ForkliftModel;
 public class MapData {
     private  MapModel.MapName name;
     private Boolean purchased;
-    private int price;
+    private PriceHandler price;
 
     public Boolean getPurchased() {
         return purchased;
@@ -23,11 +23,11 @@ public class MapData {
         this.name = name;
     }
 
-    public int getPrice() {
+    public PriceHandler getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(PriceHandler price) {
         this.price = price;
     }
 }

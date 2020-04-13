@@ -211,7 +211,7 @@ public class ForkliftMarketScreen extends ScreenAdapter {
 
             // Button depends on the currency type (coins/gems)
 //            TextButton buyButton = new TextButton("Buy " + forkliftData.getPrice().getPrice() + "$", skin);
-            
+
             TextButton buyButton;
             if (!forkliftData.getPrice().isDonateCurrency()) {
                  buyButton = new TextButton("Buy " + forkliftData.getPrice().getPrice() + "$", skin);
