@@ -73,7 +73,7 @@ public class ProcessInventory {
             fd.get(0).setTubes(3);
             fd.get(0).setName(ForkliftModel.ModelName.MODEL_1);
             fd.get(0).setEngine(3);
-            fd.get(0).setPrice(0);
+            fd.get(0).setPrice(new PriceHandler(0, false));
             fd.get(0).setPurchased(true);
 
             // Map saving
@@ -116,21 +116,21 @@ public class ProcessInventory {
             fd[0].setTubes(3);
             fd[0].setName(ForkliftModel.ModelName.MODEL_1);
             fd[0].setEngine(3);
-            fd[0].setPrice(0);
+            fd[0].setPrice(new PriceHandler(0, false));
             fd[0].setPurchased(true);
 
             fd[1] = new ForkliftData();
             fd[1].setTubes(3);
             fd[1].setName(ForkliftModel.ModelName.MODEL_4);
             fd[1].setEngine(3);
-            fd[1].setPrice(3000);
+            fd[1].setPrice(new PriceHandler(3000, false));
             fd[1].setPurchased(false);
 
             fd[2] = new ForkliftData();
             fd[2].setTubes(3);
             fd[2].setName(ForkliftModel.ModelName.MODEL_5);
             fd[2].setEngine(3);
-            fd[2].setPrice(7000);
+            fd[2].setPrice(new PriceHandler(7000, false));
             fd[2].setPurchased(false);
 
             // Map saving

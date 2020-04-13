@@ -67,7 +67,7 @@ public class ProcessInventoryImproved {
             fd.get(0).setTubes(3);
             fd.get(0).setName(ForkliftModel.ModelName.MODEL_1);
             fd.get(0).setEngine(3);
-            fd.get(0).setPrice(0);
+            fd.get(0).setPrice(new PriceHandler(0, false));
             fd.get(0).setPurchased(true);
 
             // Map saving
@@ -81,7 +81,7 @@ public class ProcessInventoryImproved {
             sd.setSoundVolume(1f);
 
 
-            Inventory inv = new Inventory(15000, 0, false, fd, md, sd);
+            Inventory inv = new Inventory(15000, 1000, false, fd, md, sd);
             write(inv);
             return inv;
         }
@@ -114,49 +114,50 @@ public class ProcessInventoryImproved {
             fd[0].setTubes(3);
             fd[0].setName(ForkliftModel.ModelName.MODEL_1);
             fd[0].setEngine(3);
-            fd[0].setPrice(0);
+            fd[0].setPrice(new PriceHandler(0, false));
             fd[0].setPurchased(true);
 
             fd[1] = new ForkliftData();
             fd[1].setTubes(3);
             fd[1].setName(ForkliftModel.ModelName.MODEL_4);
             fd[1].setEngine(3);
-            fd[1].setPrice(3000);
+//            fd[1].setPrice(3000);
+            fd[1].setPrice(new PriceHandler(3000, false));
             fd[1].setPurchased(false);
 
             fd[2] = new ForkliftData();
             fd[2].setTubes(3);
             fd[2].setName(ForkliftModel.ModelName.MODEL_5);
             fd[2].setEngine(3);
-            fd[2].setPrice(1);
+            fd[2].setPrice(new PriceHandler(1, false));
             fd[2].setPurchased(false);
 
             fd[3] = new ForkliftData();
             fd[3].setTubes(3);
             fd[3].setName(ForkliftModel.ModelName.MODEL_9);
             fd[3].setEngine(3);
-            fd[3].setPrice(1);
+            fd[3].setPrice(new PriceHandler(1, false));
             fd[3].setPurchased(false);
 
             fd[4] = new ForkliftData();
             fd[4].setTubes(3);
             fd[4].setName(ForkliftModel.ModelName.MODEL_10);
             fd[4].setEngine(3);
-            fd[4].setPrice(1);
+            fd[4].setPrice(new PriceHandler(1, false));
             fd[4].setPurchased(false);
 
             fd[5] = new ForkliftData();
             fd[5].setTubes(3);
             fd[5].setName(ForkliftModel.ModelName.MODEL_11);
             fd[5].setEngine(3);
-            fd[5].setPrice(1);
+            fd[5].setPrice(new PriceHandler(1, false));
             fd[5].setPurchased(false);
 
             fd[6] = new ForkliftData();
             fd[6].setTubes(3);
             fd[6].setName(ForkliftModel.ModelName.MODEL_12);
             fd[6].setEngine(3);
-            fd[6].setPrice(1000);
+            fd[6].setPrice(new PriceHandler(1000, true));
             fd[6].setPurchased(false);
 
             // Map saving

@@ -246,8 +246,8 @@ public class MarketScreen extends ScreenAdapter {
                 public void clicked(InputEvent event, float x, float y) {
 
                     forkliftData = unpurchasedForklifts.get(counter);
-                    if (inv.getBalance() >= forkliftData.getPrice()) {
-                        inv.setBalance(inv.getBalance() - forkliftData.getPrice());
+                    if (inv.getBalance() >= forkliftData.getPrice().getPrice()) {
+                        inv.setBalance(inv.getBalance() - forkliftData.getPrice().getPrice());
 //                    forkliftData.setPurchased(true);
 
                         forkliftData.setPurchased(true);

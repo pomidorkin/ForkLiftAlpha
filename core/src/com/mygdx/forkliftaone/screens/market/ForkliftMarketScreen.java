@@ -69,7 +69,6 @@ public class ForkliftMarketScreen extends ScreenAdapter {
     float ratio = width / height;
 
 
-
     public ForkliftMarketScreen(ForkLiftGame game) {
         this.game = game;
         this.counter = 0;
@@ -210,39 +209,78 @@ public class ForkliftMarketScreen extends ScreenAdapter {
                 }
             });
 
-            TextButton buyButton = new TextButton("Buy " + forkliftData.getPrice() + "$", skin);
+            // Button depends on the currency type (coins/gems)
+//            TextButton buyButton = new TextButton("Buy " + forkliftData.getPrice().getPrice() + "$", skin);
+            
+            TextButton buyButton;
+            if (!forkliftData.getPrice().isDonateCurrency()) {
+                 buyButton = new TextButton("Buy " + forkliftData.getPrice().getPrice() + "$", skin);
+            } else {
+                 buyButton = new TextButton("Buy " + forkliftData.getPrice().getPrice() + " gems", skin);
+            }
             buyButton.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
 
                     forkliftData = unpurchasedForklifts.get(counter);
-                    if (inv.getBalance() >= forkliftData.getPrice()) {
-                        inv.setBalance(inv.getBalance() - forkliftData.getPrice());
+                    if (!forkliftData.getPrice().isDonateCurrency()) {
+                        if (inv.getBalance() >= forkliftData.getPrice().getPrice()) {
+                            inv.setBalance(inv.getBalance() - forkliftData.getPrice().getPrice());
 //                    forkliftData.setPurchased(true);
 
-                        forkliftData.setPurchased(true);
+                            forkliftData.setPurchased(true);
 
-                        // Saving models
-                        inv.getAllModels().add(forkliftData);
+                            // Saving models
+                            inv.getAllModels().add(forkliftData);
 
-                        // Saving
-                        Inventory inv2 = new Inventory(inv.getBalance(),
-                                inv.getDonateCurrency(), inv.isDonateBoxesPurchased(),
-                                inv.getAllModels(), inv.getAllMaps(), inv.getSd());
-                        pi.write(inv2);
+                            // Saving
+                            Inventory inv2 = new Inventory(inv.getBalance(),
+                                    inv.getDonateCurrency(), inv.isDonateBoxesPurchased(),
+                                    inv.getAllModels(), inv.getAllMaps(), inv.getSd());
+                            pi.write(inv2);
 
-                        GeneralData gd2 = new GeneralData(gd.getAllModels(), gd.getAllMaps());
-                        pi.write(gd2);
+                            GeneralData gd2 = new GeneralData(gd.getAllModels(), gd.getAllMaps());
+                            pi.write(gd2);
 
-                        // Refreshing market screen
-                        game.setScreen(new ForkliftMarketScreen(game));
+                            // Refreshing market screen
+                            game.setScreen(new ForkliftMarketScreen(game));
+                        } else {
+                            MessageDialog menuDialog = new MessageDialog(game, "", "Not enough money", skin);
+                            menuDialog.show(stage);
+                            menuDialog.setWidth(1200 / 2);
+                            menuDialog.setHeight(1200 / ratio / 2);
+                            menuDialog.setPosition(1200 / 2f - (menuDialog.getWidth() / 2), 1200 / ratio / 2f - (menuDialog.getHeight() / 2));
+                            menuDialog.setMovable(false);
+                        }
                     } else {
-                        MessageDialog menuDialog = new MessageDialog(game, "", "Not enough money", skin);
-                        menuDialog.show(stage);
-                        menuDialog.setWidth(1200 / 2);
-                        menuDialog.setHeight(1200 / ratio / 2);
-                        menuDialog.setPosition(1200 / 2f - (menuDialog.getWidth() / 2), 1200 / ratio / 2f - (menuDialog.getHeight() / 2));
-                        menuDialog.setMovable(false);
+                        if (inv.getDonateCurrency() >= forkliftData.getPrice().getPrice()) {
+                            inv.setDonateCurrency(inv.getDonateCurrency() - forkliftData.getPrice().getPrice());
+//                    forkliftData.setPurchased(true);
+
+                            forkliftData.setPurchased(true);
+
+                            // Saving models
+                            inv.getAllModels().add(forkliftData);
+
+                            // Saving
+                            Inventory inv2 = new Inventory(inv.getBalance(),
+                                    inv.getDonateCurrency(), inv.isDonateBoxesPurchased(),
+                                    inv.getAllModels(), inv.getAllMaps(), inv.getSd());
+                            pi.write(inv2);
+
+                            GeneralData gd2 = new GeneralData(gd.getAllModels(), gd.getAllMaps());
+                            pi.write(gd2);
+
+                            // Refreshing market screen
+                            game.setScreen(new ForkliftMarketScreen(game));
+                        } else {
+                            MessageDialog menuDialog = new MessageDialog(game, "", "Not enough money", skin);
+                            menuDialog.show(stage);
+                            menuDialog.setWidth(1200 / 2);
+                            menuDialog.setHeight(1200 / ratio / 2);
+                            menuDialog.setPosition(1200 / 2f - (menuDialog.getWidth() / 2), 1200 / ratio / 2f - (menuDialog.getHeight() / 2));
+                            menuDialog.setMovable(false);
+                        }
                     }
 
                 }
@@ -269,7 +307,6 @@ public class ForkliftMarketScreen extends ScreenAdapter {
         table.row();
         table.add(backButton).colspan(3);
         table.debug();
-
 
 
         Table main = new Table();
@@ -300,8 +337,8 @@ public class ForkliftMarketScreen extends ScreenAdapter {
 //        batch.draw(backgroundTexture, 0, 0,
 //                viewport.getWorldWidth(), viewport.getWorldHeight());
 
-            batch.draw(backgroundPlaceholder, 0, 0,
-                    viewport.getWorldWidth(), viewport.getWorldHeight());
+        batch.draw(backgroundPlaceholder, 0, 0,
+                viewport.getWorldWidth(), viewport.getWorldHeight());
 
 
         if (model != null) {
