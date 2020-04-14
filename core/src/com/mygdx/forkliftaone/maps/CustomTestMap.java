@@ -58,8 +58,11 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         factory = new BoxFactory();
         this.assetManager = assetManager;
 
-        this.backTexture = backTexture;
-        this.middleTexture = middleTexture;
+//        this.backTexture = backTexture;
+//        this.middleTexture = middleTexture;
+        this.backTexture = atlas.findRegion(RegionNames.BOX_TEXTURE);
+        this.middleTexture = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
+        this.frontTexture = atlas.findRegion(RegionNames.BOX_TEXTURE);
 
         // Logic for spawning different number of different goods
         // Total number of good-types (4 = fuel, cheap, middle, expensive)

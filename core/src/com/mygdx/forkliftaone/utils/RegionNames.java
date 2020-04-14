@@ -17,8 +17,8 @@ public class RegionNames {
     //    public static final String DOOR = "door";
 //    public static final String ELEVATOR = "elevator";
     public static final String DOOR = "doorTwo";
-    public static final String LAYER_ONE = "layerTwoSecond";
-    public static final String LAYER_TWO = "layerOneSecond";
+    public static final String LAYER_ONE = "layerOneSecond";
+    public static final String LAYER_TWO = "layerTwoSecond";
     public static final String ELEVATOR = "elevatorTwo";
     public static final String FORKLIFT_WHEEL = "wheeltexture";
     //    public static final String FORK_TEXTURE = "tubeytexture";

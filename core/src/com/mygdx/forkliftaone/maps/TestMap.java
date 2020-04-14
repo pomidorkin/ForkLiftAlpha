@@ -47,8 +47,11 @@ public class TestMap extends MapBase {
         factory = new BoxFactory();
         this.assetManager = assetManager;
 
-        this.backTexture = atlas.findRegion(RegionNames.LAYER_ONE);
-        this.middleTexture = atlas.findRegion(RegionNames.LAYER_TWO);
+//        this.backTexture = atlas.findRegion(RegionNames.LAYER_ONE);
+//        this.middleTexture = atlas.findRegion(RegionNames.LAYER_TWO);
+        this.backTexture = atlas.findRegion(RegionNames.TEST_BACKGROUND);
+        this.middleTexture = atlas.findRegion(RegionNames.LAYER_ONE);
+        this.frontTexture = atlas.findRegion(RegionNames.LAYER_TWO);
 
         boxCoords = new Vector2[3];
         boxCoords[0] = new Vector2(15.04f, 15.20f); // Go up = y + 1.28 Go right = x + 4.80

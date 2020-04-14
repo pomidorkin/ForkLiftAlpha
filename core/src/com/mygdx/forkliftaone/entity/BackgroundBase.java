@@ -1,26 +1,23 @@
 package com.mygdx.forkliftaone.entity;
 
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class BackgroundBase extends Actor {
 
-    private TextureRegion backgroundTexture, middleTexture, background;
+    private TextureRegion middleTexture, frontTexture, background;
     private ForkliftActorBase forklift;
     private Vector2 backTexturePosition, middleTexturePosition, frontTexturePosition;
     private Viewport viewport;
     private Camera camera;
 
     public BackgroundBase(TextureRegion background, TextureRegion layerOne, TextureRegion layerTwo, Viewport viewport, ForkliftActorBase forklift, Camera camera) {
-        this.backgroundTexture = layerOne;
-        this.middleTexture = layerTwo;
+        this.middleTexture = layerOne;
+        this.frontTexture = layerTwo;
         this.background = background;
         this.forklift = forklift;
         this.viewport = viewport;
@@ -38,7 +35,7 @@ public class BackgroundBase extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if (backgroundTexture == null) {
+        if (background == null) {
             System.out.println("Region not set on Actor " + getClass().getName());
             return;
         } else {
@@ -47,11 +44,11 @@ public class BackgroundBase extends Actor {
                     getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
 
 
-            batch.draw(backgroundTexture, backTexturePosition.x,
+            batch.draw(frontTexture, backTexturePosition.x,
                         backTexturePosition.y = getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f,
                         getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
 
-                batch.draw(backgroundTexture, backTexturePosition.x + viewport.getWorldWidth(),
+                batch.draw(frontTexture, backTexturePosition.x + viewport.getWorldWidth(),
                         backTexturePosition.y = getStage().getCamera().position.y - getStage().getViewport().getWorldHeight()/2f,
                         getStage().getCamera().viewportWidth, getStage().getCamera().viewportHeight);
 

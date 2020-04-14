@@ -206,7 +206,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         tmr = new OrthogonalTiledMapRenderer(map.getTiledMap(), 1 / GameConfig.SCALE);
 
         // Parallax background
-        BackgroundBase backBase = new BackgroundBase(gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND), map.getBackTexture(), map.getMiddleTexture(), viewport, forklift, camera);
+        BackgroundBase backBase = new BackgroundBase(map.getBackTexture(), map.getMiddleTexture(), map.getFrontTexture(), viewport, forklift, camera);
 
         // The order determines the drawing consequence
         stage.addActor(backBase);
