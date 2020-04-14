@@ -386,14 +386,14 @@ public class ForkliftModel {
         switch (fd.getName()) {
             case MODEL_1:
                 // Textures
-                forkliftRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
+                forkliftRegion = atlas.findRegion(RegionNames.MODEL_1);
                 wheelRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
                 forkRegion = atlas.findRegion(RegionNames.FORK_TEXTURE);
                 break;
 
             case MODEL_4:
                 // Textures
-                forkliftRegion = atlas.findRegion(RegionNames.BOX_TEXTURE);
+                forkliftRegion = atlas.findRegion(RegionNames.MODEL_4);
                 wheelRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
                 forkRegion = atlas.findRegion(RegionNames.FORK_TEXTURE);
 
@@ -401,31 +401,39 @@ public class ForkliftModel {
 
             case MODEL_9:
                 // Textures
-                forkliftRegion = atlas.findRegion(RegionNames.BOX_TEXTURE);
+                forkliftRegion = atlas.findRegion(RegionNames.MODEL_9);
                 wheelRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
                 forkRegion = atlas.findRegion(RegionNames.FORK_TEXTURE);
+
+                break;
 
             case MODEL_10:
                 // Textures
-                forkliftRegion = atlas.findRegion(RegionNames.BOX_TEXTURE);
+                forkliftRegion = atlas.findRegion(RegionNames.MODEL_10);
                 wheelRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
                 forkRegion = atlas.findRegion(RegionNames.FORK_TEXTURE);
+
+                break;
 
             case MODEL_11:
                 // Textures
-                forkliftRegion = atlas.findRegion(RegionNames.BOX_TEXTURE);
+                forkliftRegion = atlas.findRegion(RegionNames.MODEL_11);
                 wheelRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
                 forkRegion = atlas.findRegion(RegionNames.FORK_TEXTURE);
+
+                break;
 
             case MODEL_12:
                 // Textures
-                forkliftRegion = atlas.findRegion(RegionNames.BOX_TEXTURE);
+                forkliftRegion = atlas.findRegion(RegionNames.MODEL_12);
                 wheelRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
                 forkRegion = atlas.findRegion(RegionNames.FORK_TEXTURE);
 
+                break;
+
             case MODEL_5:
                 // Textures
-                forkliftRegion = atlas.findRegion(RegionNames.BOX_TEXTURE);
+                forkliftRegion = atlas.findRegion(RegionNames.MODEL_5);
                 wheelRegion = atlas.findRegion(RegionNames.FORKLIFT_WHEEL);
                 forkRegion = atlas.findRegion(RegionNames.FORK_TEXTURE);
 

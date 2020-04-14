@@ -287,9 +287,9 @@ public class ForkliftMarketScreen extends ScreenAdapter {
             });
 
             table.row();
-            table.add(previousTB);
-            table.add(buyButton);
-            table.add(nextTB);
+            table.add(previousTB).padBottom(30).padRight(30);
+            table.add(buyButton).padBottom(30).padRight(30);
+            table.add(nextTB).padBottom(30);
         } else {
             System.out.println("No forklifts to buy");
             // Code telling that everything is purchased here
@@ -305,11 +305,12 @@ public class ForkliftMarketScreen extends ScreenAdapter {
         });
 
         table.row();
-        table.add(backButton).colspan(3);
+        table.add(backButton).colspan(3).padBottom(30);
         table.debug();
 
 
         Table main = new Table();
+        main.add().width(1200 / 2f).height(1200 / ratio);
         main.add(table).fill();
         main.row();
 //        main.debug();
@@ -342,10 +343,11 @@ public class ForkliftMarketScreen extends ScreenAdapter {
 
 
         if (model != null) {
+
             batch.draw(model.getForkliftRegion(), // Texture
-                    1200 / 2f - (model.getForkliftRegion().getRegionWidth() / 2f) * 0.75f,
-                    1200 / ratio / 2f - (model.getForkliftRegion().getRegionHeight() / 2f) * 0.75f, // Texture position
-                    (model.getForkliftRegion().getRegionWidth() / 2) * 100f, (model.getForkliftRegion().getRegionHeight() / 2) * 100f, // Rotation point (width / 2, height /2 = center)
+                    1200 / 4f - (model.getForkliftRegion().getRegionWidth() / 2f) * 0.75f,
+                    1200/ratio / 2f - (model.getForkliftRegion().getRegionHeight() / 2f) * 0.75f, // Texture position
+                    model.getForkliftRegion().getRegionWidth() / 2f, model.getForkliftRegion().getRegionHeight() / 2f, // Rotation point (width / 2, height /2 = center)
                     model.getForkliftRegion().getRegionWidth() * 0.75f, model.getForkliftRegion().getRegionHeight() * 0.75f, // Width and height of the texture
                     1f, 1f, //scaling
                     0); // Rotation (radiants to degrees)

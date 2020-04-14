@@ -308,7 +308,7 @@ public class ChoosingScreen extends ScreenAdapter {
         table.debug();
 
         Table main = new Table();
-        main.add().width(1200 / 2).height(1200 / ratio);
+        main.add().width(1200 / 2f).height(1200 / ratio);
 //        main.setWidth(Gdx.graphics.getWidth());
 //        main.align(Align.center | Align.top);
 //        main.setPosition(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight());
