@@ -214,9 +214,13 @@ public class ForkliftMarketScreen extends ScreenAdapter {
 
             TextButton buyButton;
             if (!forkliftData.getPrice().isDonateCurrency()) {
-                 buyButton = new TextButton("Buy " + forkliftData.getPrice().getPrice() + "$", skin);
+//                 buyButton = new TextButton("Buy " + forkliftData.getPrice().getPrice() + "$", skin);
+                buyButton = new TextButton("Buy " + forkliftData.getPrice().getPrice() + "$",
+                        skin.get("dollarButton", TextButton.TextButtonStyle.class));
+
             } else {
-                 buyButton = new TextButton("Buy " + forkliftData.getPrice().getPrice() + " gems", skin);
+                buyButton = new TextButton("Buy " + forkliftData.getPrice().getPrice() + " gems",
+                        skin.get("gemButton", TextButton.TextButtonStyle.class));
             }
             buyButton.addListener(new ClickListener() {
                 @Override
@@ -346,7 +350,7 @@ public class ForkliftMarketScreen extends ScreenAdapter {
 
             batch.draw(model.getForkliftRegion(), // Texture
                     1200 / 4f - (model.getForkliftRegion().getRegionWidth() / 2f) * 0.75f,
-                    1200/ratio / 2f - (model.getForkliftRegion().getRegionHeight() / 2f) * 0.75f, // Texture position
+                    1200 / ratio / 2f - (model.getForkliftRegion().getRegionHeight() / 2f) * 0.75f, // Texture position
                     model.getForkliftRegion().getRegionWidth() / 2f, model.getForkliftRegion().getRegionHeight() / 2f, // Rotation point (width / 2, height /2 = center)
                     model.getForkliftRegion().getRegionWidth() * 0.75f, model.getForkliftRegion().getRegionHeight() * 0.75f, // Width and height of the texture
                     1f, 1f, //scaling

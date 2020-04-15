@@ -209,6 +209,44 @@ com.ray3k.tenpatch.TenPatchDrawable: {
 		regions: []
 		playMode: 2
 	}
+	dollarButtonPatched: {
+		region: dollarButton
+		horizontalStretchAreas: [ 51, 85 ]
+		verticalStretchAreas: [ 0, 97 ]
+		tiling: false
+		minWidth: 145
+		minHeight: 98
+		rightWidth: 70
+		leftWidth: 32
+		bottomHeight: 26
+		topHeight: 28
+		offsetX: 0
+		offsetY: 0
+		offsetXspeed: 0
+		offsetYspeed: 0
+		frameDuration: 0.03
+		regions: []
+		playMode: 2
+	}
+	gemButtonPatched: {
+		region: gemButton
+		horizontalStretchAreas: [ 51, 74 ]
+		verticalStretchAreas: [ 0, 97 ]
+		tiling: false
+		minWidth: 145
+		minHeight: 98
+		rightWidth: 76
+		leftWidth: 26
+		bottomHeight: 22
+		topHeight: 27
+		offsetX: 0
+		offsetY: 0
+		offsetXspeed: 0
+		offsetYspeed: 0
+		frameDuration: 0.03
+		regions: []
+		playMode: 2
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	leftButton: {
@@ -247,6 +285,14 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		font: myfont
 		up: textButtonPatched
 		down: textButtonPushedPatched
+	}
+	dollarButton: {
+		font: myfont
+		up: dollarButtonPatched
+	}
+	gemButton: {
+		font: myfont
+		up: gemButtonPatched
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {

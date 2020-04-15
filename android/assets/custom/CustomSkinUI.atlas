@@ -4,122 +4,136 @@ size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-myfont
-  rotate: false
-  xy: 1, 444
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
 dialog
   rotate: false
-  xy: 1, 131
+  xy: 1, 194
   size: 326, 239
   orig: 326, 239
   offset: 0, 0
   index: -1
+dollarButton
+  rotate: false
+  xy: 515, 819
+  size: 145, 98
+  orig: 145, 98
+  offset: 0, 0
+  index: -1
+gemButton
+  rotate: false
+  xy: 1, 64
+  size: 145, 98
+  orig: 145, 98
+  offset: 0, 0
+  index: -1
 leftButton
   rotate: false
-  xy: 623, 776
+  xy: 452, 427
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 leftButtonPushed
   rotate: false
-  xy: 109, 21
+  xy: 515, 463
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 pause
   rotate: false
-  xy: 1, 1
+  xy: 329, 235
   size: 106, 98
   orig: 106, 98
   offset: 0, 0
   index: -1
 pausePushed
   rotate: false
-  xy: 329, 172
+  xy: 515, 619
   size: 106, 98
   orig: 106, 98
   offset: 0, 0
   index: -1
 rightsButton
   rotate: false
-  xy: 515, 524
+  xy: 437, 347
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 rightsButtonPushed
   rotate: false
-  xy: 515, 444
+  xy: 437, 267
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 squereBackground
   rotate: false
-  xy: 1, 372
+  xy: 1, 435
   size: 449, 70
   orig: 449, 70
   offset: 0, 0
   index: -1
 squereBackgroundSmall
   rotate: false
-  xy: 515, 856
+  xy: 515, 919
   size: 180, 28
   orig: 180, 28
   offset: 0, 0
   index: -1
 squereBar
   rotate: false
-  xy: 515, 886
+  xy: 515, 949
   size: 430, 70
   orig: 430, 70
   offset: 0, 0
   index: -1
 squereBarSmall
   rotate: false
-  xy: 1, 101
+  xy: 1, 164
   size: 180, 28
   orig: 180, 28
   offset: 0, 0
   index: -1
 squereSlider
   rotate: false
-  xy: 452, 408
+  xy: 662, 883
   size: 23, 34
   orig: 23, 34
   offset: 0, 0
   index: -1
 textButton
   rotate: false
-  xy: 329, 272
+  xy: 329, 335
   size: 106, 98
   orig: 106, 98
   offset: 0, 0
   index: -1
 textButtonPushed
   rotate: false
-  xy: 515, 756
+  xy: 515, 719
   size: 106, 98
   orig: 106, 98
   offset: 0, 0
   index: -1
 toucpadBackground
   rotate: false
-  xy: 515, 680
+  xy: 515, 543
   size: 74, 74
   orig: 74, 74
   offset: 0, 0
   index: -1
 toucpadKnob
   rotate: false
-  xy: 515, 604
+  xy: 947, 945
   size: 74, 74
   orig: 74, 74
+  offset: 0, 0
+  index: -1
+myfont
+  rotate: false
+  xy: 1, 507
+  size: 512, 512
+  orig: 512, 512
   offset: 0, 0
   index: -1

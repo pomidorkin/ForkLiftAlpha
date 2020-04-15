@@ -273,9 +273,9 @@ public class MapMarketScreen extends ScreenAdapter {
             });
 
             table.row();
-            table.add(previousMapTB);
-            table.add(buyMapButton);
-            table.add(nextMapTB);
+            table.add(previousMapTB).padBottom(30).padRight(30);
+            table.add(buyMapButton).padBottom(30).padRight(30);
+            table.add(nextMapTB).padBottom(30);
         } else {
             System.out.println("No maps to buy");
             // Code telling that everything is purchased here
@@ -295,10 +295,11 @@ public class MapMarketScreen extends ScreenAdapter {
 
 
         table.row();
-        table.add(backButton).colspan(3);
+        table.add(backButton).colspan(3).padBottom(30);
         table.debug();
 
         Table main = new Table();
+        main.add().width(1200 / 2f).height(1200 / ratio);
         main.add(table).fill();
         main.row();
 //        main.debug();
