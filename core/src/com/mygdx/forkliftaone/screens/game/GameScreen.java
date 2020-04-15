@@ -45,6 +45,7 @@ import com.mygdx.forkliftaone.dialogs.EmptyFuelDialog;
 import com.mygdx.forkliftaone.entity.BackgroundBase;
 import com.mygdx.forkliftaone.entity.ForkliftActorBase;
 import com.mygdx.forkliftaone.entity.FuelCan;
+import com.mygdx.forkliftaone.entity.TruckEntity;
 import com.mygdx.forkliftaone.handlers.SensorContactListener;
 import com.mygdx.forkliftaone.maps.MapBase;
 import com.mygdx.forkliftaone.screens.menu.MenuScreen;
@@ -213,6 +214,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         stage.addActor(forklift);
         stage.addActor(map);
         map.spawnBoxes();
+        stage.addActor(new TruckEntity(map));
 
         // Rubbish
 //        BoxBase box = new TestBox(world, camera, gamePlayAtlas);

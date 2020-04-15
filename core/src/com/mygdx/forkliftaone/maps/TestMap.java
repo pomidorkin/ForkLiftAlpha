@@ -228,10 +228,11 @@ public class TestMap extends MapBase {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
+
         // Drawing wall n` doors here
 //        batch.setProjectionMatrix(camera.combined);
 //        batch.begin();
+        super.draw(batch, parentAlpha);
 
             batch.draw(atlas.findRegion(RegionNames.ELEVATOR), // Texture
                     elevatorMain.getPosition().x - elevatorWidth , elevatorMain.getPosition().y - elevatorHeight, // Texture position
@@ -246,6 +247,7 @@ public class TestMap extends MapBase {
                 doorWidth * 2f, doorHeight * 2f, // Width and height of the texture
                 1f, 1f, //scaling
                 0); // Rotation (radiants to degrees)
+
 
 //        batch.end();
     }

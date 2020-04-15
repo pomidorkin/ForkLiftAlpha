@@ -266,10 +266,11 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
+
         // Drawing wall n` doors here
 //        batch.setProjectionMatrix(camera.combined);
 //        batch.begin();
+        super.draw(batch, parentAlpha);
 
         if (drawing) {
             batch.draw(atlas.findRegion(RegionNames.BOX_TEXTURE), // Texture
@@ -279,6 +280,8 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
                     1f, 1f, //scaling
                     0); // Rotation (radiants to degrees)
         }
+
+
 
 //        batch.end();
     }

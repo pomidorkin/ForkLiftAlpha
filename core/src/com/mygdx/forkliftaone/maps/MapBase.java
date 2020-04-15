@@ -47,12 +47,12 @@ public abstract class MapBase extends Actor{
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-       batch.draw(truckTexture, // Texture
-               truckX, truckY, // Texture position
-                    getOriginX(), getOriginY(), // Rotation point (width / 2, height /2 = center)
-               truckWidth, truckHeight, // Width and height of the texture
-                    1f, 1f, //scaling
-                    0); // Rotation (radiants to degrees)
+//       batch.draw(truckTexture, // Texture
+//               truckX, truckY, // Texture position
+//                    getOriginX(), getOriginY(), // Rotation point (width / 2, height /2 = center)
+//               truckWidth, truckHeight, // Width and height of the texture
+//                    1f, 1f, //scaling
+//                    0); // Rotation (radiants to degrees)
 
 
     }
@@ -96,5 +96,25 @@ public abstract class MapBase extends Actor{
 
     public TextureRegion getFrontTexture() {
         return frontTexture;
+    }
+
+    public TextureRegion getTruckTexture() {
+        return truckTexture;
+    }
+
+    public float getTruckX() {
+        return truckX;
+    }
+
+    public float getTruckY() {
+        return truckY;
+    }
+
+    public float getTruckWidth() {
+        return truckWidth;
+    }
+
+    public float getTruckHeight() {
+        return truckHeight;
     }
 }
