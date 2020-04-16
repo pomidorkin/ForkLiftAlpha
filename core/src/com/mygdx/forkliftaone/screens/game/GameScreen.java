@@ -83,6 +83,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private Sound engineSound, beepingSound;
     private long soundID, beepSoundID;
     private boolean paused = false;
+    private boolean reversePaused = false;
 
 
     //test
@@ -142,7 +143,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         // Initializing music
         music = assetManager.get(AssetDescriptors.TEST_MUSIC);
         engineSound = assetManager.get(AssetDescriptors.TEST_ENGINE);
-        beepingSound = assetManager.get(AssetDescriptors.TEST_ENGINE); // Should be changes to the beeping sound
+        beepingSound = assetManager.get(AssetDescriptors.BACKUP_SOUND); // Should be changes to the beeping sound
         soundID = engineSound.loop();
         beepSoundID = beepingSound.loop();
         engineSound.pause(soundID);
@@ -150,6 +151,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         engineSound.setVolume(soundID, inv.getSd().getSoundVolume());
         beepingSound.setVolume(beepSoundID, inv.getSd().getSoundVolume());
         paused = true;
+        reversePaused = true;
         music.play();
         // Volume should be obtained from the savings
         music.setVolume(inv.getSd().getMusicVolume());
@@ -433,8 +435,12 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
                     forklift.moveForkliftLeft();
                     if (paused){
                         engineSound.resume(soundID);
-                        beepingSound.resume(beepSoundID);
+//                        beepingSound.resume(beepSoundID);
                         paused = false;
+                    }
+                    if (reversePaused){
+                        beepingSound.resume(beepSoundID);
+                        reversePaused = false;
                     }
                 } else if (touchpad.getKnobX() > touchpad.getWidth() / 2) {
                     forklift.moveForkliftRight();
@@ -442,12 +448,20 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
                         engineSound.resume(soundID);
                         paused = false;
                     }
+                    if (!reversePaused){
+                        beepingSound.pause(beepSoundID);
+                        reversePaused = true;
+                    }
                 } else {
                     forklift.stopMoveForkliftLeft();
                     if (!paused){
                         engineSound.pause(soundID);
-                        beepingSound.pause(beepSoundID);
+//                        beepingSound.pause(beepSoundID);
                         paused = true;
+                    }
+                    if (!reversePaused){
+                        beepingSound.pause(beepSoundID);
+                        reversePaused = true;
                     }
                 }
 

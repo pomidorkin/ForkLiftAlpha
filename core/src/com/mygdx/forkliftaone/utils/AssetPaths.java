@@ -11,4 +11,5 @@ public static final String CUSTOM_PACK = "packed/gameAtlas.atlas";
     public static final String CUSTOM_TILED_MAP = "mapAssets/customMap.tmx";
     public static final String TEST_MUSIC = "music.mp3";
     public static final String TEST_ENGINE_SOUND = "engine.wav";
+    public static final String BACKUP_SOUND = "backup.wav";
 }

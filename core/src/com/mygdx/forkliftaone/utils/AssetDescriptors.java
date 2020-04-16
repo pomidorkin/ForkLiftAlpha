@@ -32,4 +32,7 @@ public class AssetDescriptors {
     public static final AssetDescriptor<Sound> TEST_ENGINE =
             new AssetDescriptor<Sound>(AssetPaths.TEST_ENGINE_SOUND, Sound.class);
 
+    public static final AssetDescriptor<Sound> BACKUP_SOUND =
+            new AssetDescriptor<Sound>(AssetPaths.BACKUP_SOUND, Sound.class);
+
 }
