@@ -75,13 +75,13 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     //    private ShapeRenderer shapeRenderer;
     private Table table;
     private Skin skin;
-    private TextButton fuelButton;
+    private ImageButton fuelButton;
     private TextureRegion coinTexture;
 
     //Music
     private Music music;
-    private Sound engineSound, beepingSound;
-    private long soundID, beepSoundID;
+    private Sound engineSound, idleSound, beepingSound;
+    private long soundID, beepSoundID, idleSoundID;
     private boolean paused = false;
     private boolean reversePaused = false;
 
@@ -143,13 +143,17 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         // Initializing music
         music = assetManager.get(AssetDescriptors.TEST_MUSIC);
         engineSound = assetManager.get(AssetDescriptors.TEST_ENGINE);
-        beepingSound = assetManager.get(AssetDescriptors.BACKUP_SOUND); // Should be changes to the beeping sound
+        beepingSound = assetManager.get(AssetDescriptors.BACKUP_SOUND);
+        idleSound = assetManager.get(AssetDescriptors.IDLE_ENGINE); // Should be changed to the idle sound
         soundID = engineSound.loop();
         beepSoundID = beepingSound.loop();
+        idleSoundID = idleSound.loop();
         engineSound.pause(soundID);
         beepingSound.pause(beepSoundID);
+        idleSound.pause(idleSoundID);
         engineSound.setVolume(soundID, inv.getSd().getSoundVolume());
         beepingSound.setVolume(beepSoundID, inv.getSd().getSoundVolume());
+        idleSound.setVolume(idleSoundID, inv.getSd().getSoundVolume());
         paused = true;
         reversePaused = true;
         music.play();
@@ -331,6 +335,14 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
                 1f, 1f, //scaling
                 0); // Rotation (radiants to degrees)
 
+        // Drawing gem image
+        batch.draw(coinTexture, // Texture
+                10f, height - (dynamicViewport.getScreenHeight() / 6f + coinTexture.getRegionHeight() / 2f), // Texture position
+                coinTexture.getRegionWidth() / 2, coinTexture.getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
+                height / 10f, height / 10f, // Width and height of the texture
+                1f, 1f, //scaling
+                0); // Rotation (radiants to degrees)
+
         batch.end();
 
     }
@@ -347,6 +359,10 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         // Saving example
         super.hide();
         music.stop();
+        engineSound.stop();
+        idleSound.stop();
+        beepingSound.stop();
+
         dispose();
     }
 
@@ -435,6 +451,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
                     forklift.moveForkliftLeft();
                     if (paused){
                         engineSound.resume(soundID);
+                        idleSound.pause(idleSoundID);
 //                        beepingSound.resume(beepSoundID);
                         paused = false;
                     }
@@ -446,6 +463,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
                     forklift.moveForkliftRight();
                     if (paused){
                         engineSound.resume(soundID);
+                        idleSound.pause(idleSoundID);
                         paused = false;
                     }
                     if (!reversePaused){
@@ -456,6 +474,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
                     forklift.stopMoveForkliftLeft();
                     if (!paused){
                         engineSound.pause(soundID);
+                        idleSound.resume(idleSoundID);
 //                        beepingSound.pause(beepSoundID);
                         paused = true;
                     }
@@ -532,7 +551,8 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 //        table.setPosition(0, Gdx.graphics.getHeight());
 
         // Fuel button test rough
-        fuelButton = new TextButton("Fill", skin);
+//        fuelButton = new TextButton("Fill", skin);
+        fuelButton = new ImageButton(skin.get("cannisterButton", ImageButton.ImageButtonStyle.class));
         fuelButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

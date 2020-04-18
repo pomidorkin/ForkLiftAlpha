@@ -211,12 +211,12 @@ com.ray3k.tenpatch.TenPatchDrawable: {
 	}
 	dollarButtonPatched: {
 		region: dollarButton
-		horizontalStretchAreas: [ 51, 85 ]
+		horizontalStretchAreas: [ 51, 72 ]
 		verticalStretchAreas: [ 0, 97 ]
 		tiling: false
 		minWidth: 145
 		minHeight: 98
-		rightWidth: 70
+		rightWidth: 76
 		leftWidth: 32
 		bottomHeight: 26
 		topHeight: 28
@@ -247,6 +247,44 @@ com.ray3k.tenpatch.TenPatchDrawable: {
 		regions: []
 		playMode: 2
 	}
+	dollarButtonPushedPatched: {
+		region: dollarButtonPushed
+		horizontalStretchAreas: [ 49, 73 ]
+		verticalStretchAreas: [ 0, 97 ]
+		tiling: false
+		minWidth: 145
+		minHeight: 98
+		rightWidth: 75
+		leftWidth: 21
+		bottomHeight: 26
+		topHeight: 23
+		offsetX: 0
+		offsetY: 0
+		offsetXspeed: 0
+		offsetYspeed: 0
+		frameDuration: 0.03
+		regions: []
+		playMode: 2
+	}
+	gemButtonPushedPatched: {
+		region: gemButtonPushed
+		horizontalStretchAreas: [ 49, 74 ]
+		verticalStretchAreas: [ 0, 97 ]
+		tiling: false
+		minWidth: 145
+		minHeight: 98
+		rightWidth: 71
+		leftWidth: 23
+		bottomHeight: 23
+		topHeight: 25
+		offsetX: 0
+		offsetY: 0
+		offsetXspeed: 0
+		offsetYspeed: 0
+		frameDuration: 0.03
+		regions: []
+		playMode: 2
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	leftButton: {
@@ -260,6 +298,9 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	pauseButton: {
 		imageUp: pause
 		imageDown: pausePushed
+	}
+	cannisterButton: {
+		imageUp: cannisterButton
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
@@ -289,10 +330,12 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	dollarButton: {
 		font: myfont
 		up: dollarButtonPatched
+		down: dollarButtonPushedPatched
 	}
 	gemButton: {
 		font: myfont
 		up: gemButtonPatched
+		down: gemButtonPushedPatched
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {

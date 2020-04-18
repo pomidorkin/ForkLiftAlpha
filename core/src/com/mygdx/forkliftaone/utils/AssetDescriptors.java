@@ -35,4 +35,7 @@ public class AssetDescriptors {
     public static final AssetDescriptor<Sound> BACKUP_SOUND =
             new AssetDescriptor<Sound>(AssetPaths.BACKUP_SOUND, Sound.class);
 
+    public static final AssetDescriptor<Sound> IDLE_ENGINE =
+            new AssetDescriptor<Sound>(AssetPaths.IDLE_ENGINE, Sound.class);
+
 }
