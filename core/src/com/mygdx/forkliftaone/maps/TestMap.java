@@ -108,9 +108,13 @@ public class TestMap extends MapBase {
         }
 
         // Spawn cheap goods
+//        for (Vector2 coord : boxCoords[1]) {
+//            stage.addActor(factory.getBox(world, assetManager, camera, atlas, coord));
+//        }
         for (Vector2 coord : boxCoords[1]) {
-            stage.addActor(factory.getBox(world, assetManager, camera, atlas, coord));
+            stage.addActor(factory.getRandomCheapBox(world, assetManager, camera, atlas, coord));
         }
+
 
         // Spawn middle goods
         for (Vector2 coord : boxCoords[2]) {

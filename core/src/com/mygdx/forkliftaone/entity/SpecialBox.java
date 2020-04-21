@@ -32,11 +32,16 @@ public class SpecialBox extends Actor {
     private int price, donatePrice;
     private boolean dead;
     private float palleteHieght = 0.1f;
+    private float chainHeight = 0.2f;
+    private float chainWidth = 0.02f;
+    private float birdHeight = 0.13f;
+    private float birgWidth = 0.13f;
+
     AssetManager assetManager;
     private Sound breakingSound;
 
     public SpecialBox(World world, AssetManager assetManager, Camera camera, TextureAtlas atlas, float boxDensity,
-                   float boxWidth, float boxHeight, String goodTexture, Vector2 coords){
+                      float boxWidth, float boxHeight, String goodTexture, Vector2 coords) {
         this.camera = camera;
         this.world = world;
         this.position = coords;
@@ -57,7 +62,7 @@ public class SpecialBox extends Actor {
         breakingSound = assetManager.get(AssetDescriptors.TEST_ENGINE); // Replace with the breaking sound
     }
 
-    public Body createRubbishBox(){
+    public Body createRubbishBox() {
 
 
         Body box;
@@ -93,7 +98,7 @@ public class SpecialBox extends Actor {
 
         chain = world.createBody(chainBodyDef);
 //        chain = world.createBody(chainBodyDef);
-        ps.setAsBox(0.1f, 0.1f);
+        ps.setAsBox(chainWidth, chainHeight);
 
         fixDef.shape = ps;
         fixDef.density = 0.05f;
@@ -109,7 +114,7 @@ public class SpecialBox extends Actor {
 
         bird = world.createBody(birdBodyDef);
 //        chain = world.createBody(chainBodyDef);
-        ps.setAsBox(0.1f, 0.1f);
+        ps.setAsBox(birgWidth, birdHeight);
 
         fixDef.shape = ps;
         fixDef.density = 0.05f;
@@ -125,15 +130,15 @@ public class SpecialBox extends Actor {
         rjd.bodyB = chain;
         rjd.collideConnected = false;
         rjd.localAnchorA.set(0, boxHeight);
-        rjd.localAnchorB.set(0f, 0.1f);
+        rjd.localAnchorB.set(0f, chainHeight);
         world.createJoint(rjd);
 
         RevoluteJointDef rjd2 = new RevoluteJointDef();
         rjd2.bodyA = chain;
         rjd2.bodyB = bird;
         rjd2.collideConnected = false;
-        rjd2.localAnchorA.set(0, -0.1f);
-        rjd2.localAnchorB.set(0f, 0.1f);
+        rjd2.localAnchorA.set(0, -chainHeight);
+        rjd2.localAnchorB.set(0f, birdHeight);
         world.createJoint(rjd2);
 
 
@@ -143,15 +148,15 @@ public class SpecialBox extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if(goodTexture == null) {
+        if (goodTexture == null) {
             System.out.println("Region not set on Actor " + getClass().getName());
             return;
         } else {
             if (isBoxInCamera()) {
                 batch.draw(goodTexture, // Texture
-                        body.getPosition().x - boxWidth, body.getPosition().y  - boxHeight, // Texture position
+                        body.getPosition().x - boxWidth, body.getPosition().y - boxHeight, // Texture position
                         boxWidth, boxHeight, // Rotation point (width / 2, height /2 = center)
-                        boxWidth * 2, boxHeight  * 2, // Width and height of the texture
+                        boxWidth * 2, boxHeight * 2, // Width and height of the texture
                         getScaleX(), getScaleY(), //scaling
                         body.getAngle() * 57.2957f); // Rotation (radiants to degrees)
             }
@@ -159,7 +164,7 @@ public class SpecialBox extends Actor {
 
         // Drawing pallete
         batch.draw(palleteTexture, // Texture
-                body.getPosition().x - boxWidth, body.getPosition().y  - (boxHeight + (palleteHieght * 2f)), // Texture position
+                body.getPosition().x - boxWidth, body.getPosition().y - (boxHeight + (palleteHieght * 2f)), // Texture position
                 boxWidth, (boxHeight + (palleteHieght * 2f)), // Rotation point (width / 2, height /2 = center)
                 boxWidth * 2f, palleteHieght * 2f, // Width and height of the texture
                 getScaleX(), getScaleY(), //scaling
@@ -168,7 +173,7 @@ public class SpecialBox extends Actor {
 
     @Override
     public void act(float delta) {
-        if (dead){
+        if (dead) {
             detroyBox();
             breakingSound.play();
         }
@@ -176,15 +181,15 @@ public class SpecialBox extends Actor {
         isBoxInCamera();
     }
 
-    private boolean isBoxInCamera(){
+    private boolean isBoxInCamera() {
         if (camera.frustum.boundsInFrustum(new Vector3(body.getPosition().x, body.getPosition().y, 0),
-                new Vector3(boxWidth * 2, boxHeight * 2, 0))){
+                new Vector3(boxWidth * 2, boxHeight * 2, 0))) {
             return true;
-        }else
-            return  false;
+        } else
+            return false;
     }
 
-    public void detroyBox(){
+    public void detroyBox() {
         world.destroyBody(body);
         this.remove();
     }
@@ -193,7 +198,7 @@ public class SpecialBox extends Actor {
         return price;
     }
 
-    public void setPrice(int price){
+    public void setPrice(int price) {
         this.price = price;
     }
 

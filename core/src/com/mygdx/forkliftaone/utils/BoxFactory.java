@@ -12,7 +12,36 @@ import com.mygdx.forkliftaone.entity.MiddleBox;
 import com.mygdx.forkliftaone.entity.SpecialBox;
 import com.mygdx.forkliftaone.entity.TestBox;
 
+import java.util.Random;
+
 public class BoxFactory {
+    private int variatyOfCheap = 2;
+
+    public BoxBase getRandomCheapBox(World world, AssetManager assetManager, Camera camera, TextureAtlas atlas, Vector2 coords){
+
+        BoxBase randomBox;
+
+        switch (new Random().nextInt(variatyOfCheap) + 1){
+            case (1):
+                randomBox = getBox(world, assetManager, camera, atlas, coords);
+                break;
+            case (2):
+                randomBox = getFuelCan(world, assetManager, camera, atlas, coords);
+                break;
+            default:
+                randomBox = getBox(world, assetManager, camera, atlas, coords);
+        }
+
+        return randomBox;
+    }
+
+//    public BoxBase getRandomMiddleBox(World world, AssetManager assetManager, Camera camera, TextureAtlas atlas, Vector2 coords){
+//        //
+//    }
+//
+//    public BoxBase getRandomExpensiveBox(World world, AssetManager assetManager, Camera camera, TextureAtlas atlas, Vector2 coords){
+//        //
+//    }
 
     public BoxBase getBox(World world, AssetManager assetManager, Camera camera, TextureAtlas atlas, Vector2 coords){
         return new TestBox(world, assetManager, camera, atlas, coords);
