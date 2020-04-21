@@ -15,17 +15,25 @@ import com.badlogic.gdx.physics.box2d.joints.PrismaticJoint;
 import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.forkliftaone.config.GameConfig;
+import com.mygdx.forkliftaone.entity.SpecialBox;
 import com.mygdx.forkliftaone.utils.AssetPaths;
 import com.mygdx.forkliftaone.utils.BoxFactory;
+import com.mygdx.forkliftaone.utils.Inventory;
+import com.mygdx.forkliftaone.utils.ProcessInventoryImproved;
 import com.mygdx.forkliftaone.utils.RegionNames;
 
+import java.util.Random;
+
 public class TestMap extends MapBase {
-    private Vector2[] boxCoords;
+    private Vector2[][] boxCoords;
     private BoxFactory factory;
     private World world;
     private TextureAtlas atlas;
     private Camera camera;
     private Stage stage;
+
+    private Inventory inv;
+    ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
     private PrismaticJoint prismaticJoint, elevatorJoint;
     private float elevatorTimer, blinkingTimer, elevatorWidth = 3.2f, elevatorHeight = 0.16f, doorWidth = 0.1f, doorHeight = 1f;
@@ -44,6 +52,7 @@ public class TestMap extends MapBase {
         this.atlas = atlas;
         this.camera = camera;
         this.stage = stage;
+        inv = pi.read();
         factory = new BoxFactory();
         this.assetManager = assetManager;
 
@@ -53,10 +62,31 @@ public class TestMap extends MapBase {
         this.middleTexture = atlas.findRegion(RegionNames.LAYER_ONE);
         this.frontTexture = atlas.findRegion(RegionNames.LAYER_TWO);
 
-        boxCoords = new Vector2[3];
-        boxCoords[0] = new Vector2(15.04f, 15.20f); // Go up = y + 1.28 Go right = x + 4.80
-        boxCoords[1] = new Vector2(19.84f, 16.48f);
-        boxCoords[2] = new Vector2(8.96f, 3.52f);
+        boxCoords = new Vector2[4][];
+        // Only one fuel will be spawned
+        boxCoords[0] = new Vector2[3];
+        // Two cheap will be spawned
+        boxCoords[1] = new Vector2[2];
+        // Only one middle will be spawned
+        boxCoords[2] = new Vector2[1];
+        // Only one expensive will be spawned
+        boxCoords[3] = new Vector2[5];
+
+        boxCoords[0][0] = new Vector2(15.04f, 15.20f); // Go up = y + 1.28 Go right = x + 4.80
+        boxCoords[0][1] = new Vector2(19.84f, 16.48f);
+        boxCoords[0][2] = new Vector2(8.96f, 3.52f);
+
+        boxCoords[1][0] = new Vector2(15.04f, 16.48f);
+        boxCoords[1][1] = new Vector2(15.04f, 17.76f);
+
+        boxCoords[2][0] = new Vector2(19.84f, 15.20f);
+//        boxCoords[2][1] = new Vector2(5.5f, 5f);
+//
+        boxCoords[3][0] = new Vector2(19.84f, 17.76f);
+        boxCoords[3][1] = new Vector2(24.64f, 15.20f);
+        boxCoords[3][2] = new Vector2(24.64f, 16.48f);
+        boxCoords[3][3] = new Vector2(24.64f, 17.76f);
+        boxCoords[3][4] = new Vector2(29.44f, 15.20f);
 
         createObstacles(8f, 4f, 0.1f, 1f,
                 8f, 4f, doorWidth, doorHeight,
@@ -65,11 +95,58 @@ public class TestMap extends MapBase {
     }
 
     public void spawnBoxes() {
-        for (Vector2 coord : boxCoords) {
+//        for (Vector2 coord : boxCoords) {
+//            stage.addActor(factory.getFuelCan(world, assetManager, camera, atlas, coord));
+////            stage.addActor(factory.getBox(world, camera, atlas, coord));
+//
+//        }
+
+        // Spawn fuel
+        for (Vector2 coord : boxCoords[0]) {
             stage.addActor(factory.getFuelCan(world, assetManager, camera, atlas, coord));
 //            stage.addActor(factory.getBox(world, camera, atlas, coord));
-
         }
+
+        // Spawn cheap goods
+        for (Vector2 coord : boxCoords[1]) {
+            stage.addActor(factory.getBox(world, assetManager, camera, atlas, coord));
+        }
+
+        // Spawn middle goods
+        for (Vector2 coord : boxCoords[2]) {
+            stage.addActor(factory.getBox(world, assetManager, camera, atlas, coord));
+        }
+
+        // Spawn expensive goods
+        // (Logic works OK)
+        if (inv.isDonateBoxesPurchased()){
+            Vector2 coord;
+            int rand = new Random().nextInt(boxCoords[3].length) + 1;
+            for (int i = 0; i < rand; i++){
+                coord = boxCoords[3][i];
+                // Spawn donate boxes here
+                stage.addActor(factory.getBox(world, assetManager, camera, atlas, coord));
+                System.out.println("Donate box spawned");
+            }
+
+            if (boxCoords[3].length > rand){
+                for (int i = rand; i < boxCoords[3].length; i++){
+                    coord = boxCoords[3][i];
+                    // Spawn expensive, but not donate boxes here
+                    stage.addActor(factory.getBox(world, assetManager, camera, atlas, coord));
+                    System.out.println("Not donate box spawned");
+                }
+            }
+
+        } else {
+            for (Vector2 coord : boxCoords[3]) {
+                stage.addActor(factory.getBox(world, assetManager, camera, atlas, coord));
+            }
+        }
+
+        SpecialBox specialBox = new SpecialBox(world, assetManager, camera, atlas,
+                0.1f, 0.5f, 0.5f, RegionNames.BOX_TEXTURE, new Vector2(8.24f, 15.20f));
+
     }
 
     private void createObstacles(float wallX, float wallY, float wallWidth, float wallHeight,

@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.joints.PrismaticJointDef;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.forkliftaone.config.GameConfig;
 import com.mygdx.forkliftaone.entity.DoorSensor;
+import com.mygdx.forkliftaone.entity.SpecialBox;
 import com.mygdx.forkliftaone.utils.AssetPaths;
 import com.mygdx.forkliftaone.utils.BoxFactory;
 import com.mygdx.forkliftaone.utils.Inventory;

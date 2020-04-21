@@ -28,5 +28,6 @@ public class GameConfig {
     public static final short BIT_FORKLIFT = 2;
     public static final short BIT_OBSTACLE = 4;
     public static final short BIT_WALLS = 6;
+    public static final short BIT_INTERNALS = 8;
 
 }
