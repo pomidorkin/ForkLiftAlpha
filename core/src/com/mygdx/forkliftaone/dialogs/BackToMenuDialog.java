@@ -60,7 +60,7 @@ public class BackToMenuDialog extends Dialog {
         if (object.equals(1)) {
             Inventory inv2 = new Inventory(inv.getBalance() + map.getSalary(),
                     inv.getDonateCurrency() + map.getDonateSalary(),
-                    inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps(), inv.getSd());
+                    inv.isDonateBoxesPurchased(), inv.isTutorialPassed(), inv.getAllModels(), inv.getAllMaps(), inv.getSd());
             pi.write(inv2);
             game.setScreen(new MenuScreen(game));
             game.setScreen(new MenuScreen(game));

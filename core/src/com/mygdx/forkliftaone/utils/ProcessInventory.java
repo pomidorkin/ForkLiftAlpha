@@ -87,7 +87,7 @@ public class ProcessInventory {
             sd.setSoundVolume(1f);
 
 
-            Inventory inv = new Inventory(15000, 0, false, fd, md, sd);
+            Inventory inv = new Inventory(15000, 0, false, false, fd, md, sd);
             write(inv);
             return inv;
         }

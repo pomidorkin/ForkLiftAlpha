@@ -28,4 +28,7 @@ public class RegionNames {
     public static final String TEST_BACKGROUND = "background";
     public static final String BOX_TEXTURE = "box";
     public static final String COIN_TEXTURE = "coin";
+    public static final String BIRD_TEXTURE = "canary1";
+    public static final String BARREL_TEXTURE = "barrel";
+    public static final String CAGE_TEXTURE = "cage";
 }

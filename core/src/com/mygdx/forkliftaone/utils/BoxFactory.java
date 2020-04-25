@@ -55,7 +55,7 @@ public class BoxFactory {
         return new MiddleBox(world, assetManager, camera, atlas, coords);
     }
 
-//    public SpecialBox getSpecialBox(World world, AssetManager assetManager, Camera camera, TextureAtlas atlas, Vector2 coords){
-//        return new SpecialBox(World world, AssetManager assetManager, Camera camera, TextureAtlas atlas, Vector2 coords);
-//    }
+    public SpecialBox getSpecialBox(World world, AssetManager assetManager, Camera camera, TextureAtlas atlas, Vector2 coords){
+        return new SpecialBox(world, assetManager, camera, atlas, coords);
+    }
 }

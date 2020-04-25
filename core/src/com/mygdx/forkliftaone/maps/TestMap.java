@@ -118,7 +118,8 @@ public class TestMap extends MapBase {
 
         // Spawn middle goods
         for (Vector2 coord : boxCoords[2]) {
-            stage.addActor(factory.getBox(world, assetManager, camera, atlas, coord));
+//            stage.addActor(factory.getBox(world, assetManager, camera, atlas, coord));
+            stage.addActor(factory.getSpecialBox(world, assetManager, camera, atlas, coord));
         }
 
         // Spawn expensive goods
@@ -148,8 +149,11 @@ public class TestMap extends MapBase {
             }
         }
 
-        SpecialBox specialBox = new SpecialBox(world, assetManager, camera, atlas,
-                0.1f, 0.5f, 0.5f, RegionNames.BOX_TEXTURE, new Vector2(8.24f, 15.20f));
+
+//        stage.addActor(factory.getSpecialBox(world, assetManager, camera, atlas, coord));
+//        SpecialBox specialBox = new SpecialBox(world, assetManager, camera, atlas,
+//                0.1f, 0.3f, 0.3f, RegionNames.BOX_TEXTURE, new Vector2(15.04f, 15.20f));
+//        stage.addActor(specialBox);
 
     }
 

@@ -10,14 +10,15 @@ public class Inventory {
     private List<ForkliftData> allModels;
     private List<MapData> allMaps;
     private int balance, donateCurrency;
-    private boolean donateBoxesPurchased;
+    private boolean donateBoxesPurchased, tutorialPassed;
     private SettingsData sd;
 
-    public Inventory(int balance, int donateCurrency, boolean donateBoxesPurchased,
+    public Inventory(int balance, int donateCurrency, boolean donateBoxesPurchased, boolean tutorialPassed,
                      List<ForkliftData> fd, List<MapData> md, SettingsData sd){
         this.balance = balance;
         this.donateCurrency = donateCurrency;
         this.donateBoxesPurchased = donateBoxesPurchased;
+        this.tutorialPassed = tutorialPassed;
         this.allMaps = md;
         this.sd = sd;
         allModels = fd;
@@ -53,6 +54,14 @@ public class Inventory {
 
     public void setDonateBoxesPurchased(boolean donateBoxesPurchased) {
         this.donateBoxesPurchased = donateBoxesPurchased;
+    }
+
+    public boolean isTutorialPassed() {
+        return tutorialPassed;
+    }
+
+    public void setTutorialPassed(boolean tutorialPassed) {
+        this.tutorialPassed = tutorialPassed;
     }
 
     public SettingsData getSd() {

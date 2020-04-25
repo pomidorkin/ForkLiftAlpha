@@ -206,12 +206,12 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
                         if (transaction.getIdentifier().equals(MY_CONSUMABLE)) {
                             buyButton.setBought(fromRestore);
                             // Test (Should be changed later)
-                            Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency() + 10, inv.isDonateBoxesPurchased(),
+                            Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency() + 10, inv.isDonateBoxesPurchased(), inv.isTutorialPassed(),
                                     inv.getAllModels(), inv.getAllMaps(), inv.getSd());
                             pi.write(inv2);
                             game.setScreen(new PurchaseScreen(game));
                         } else if (transaction.getIdentifier().equals(MY_BOX)) {
-                            Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency(), true,
+                            Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency(), true, inv.isTutorialPassed(),
                                     inv.getAllModels(), inv.getAllMaps(), inv.getSd());
                             pi.write(inv2);
                             game.setScreen(new PurchaseScreen(game));

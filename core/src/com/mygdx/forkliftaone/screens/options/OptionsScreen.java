@@ -54,7 +54,7 @@ public class OptionsScreen extends MenuScreenBase {
                 sd.setSoundVolume(soundSlider.getValue());
 
                 Inventory inv2 = new Inventory(inv.getBalance(),
-                        inv.getDonateCurrency(), inv.isDonateBoxesPurchased(),
+                        inv.getDonateCurrency(), inv.isDonateBoxesPurchased(), inv.isTutorialPassed(),
                         inv.getAllModels(), inv.getAllMaps(), sd);
                 pi.write(inv2);
 

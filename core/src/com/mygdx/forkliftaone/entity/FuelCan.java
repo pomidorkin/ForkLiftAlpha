@@ -12,7 +12,7 @@ import java.util.Random;
 public class FuelCan extends BoxBase {
     private boolean active;
     public FuelCan(World world, AssetManager assetManager, Camera camera, TextureAtlas atlas, Vector2 coords) {
-        super(world, assetManager, camera, atlas, 0.1f, 0.3f, 0.21f, RegionNames.FORKLIFT_WHEEL, coords);
+        super(world, assetManager, camera, atlas, 0.1f, 0.23f, 0.3f, BOX_TYPE.REGULAR_BOX, RegionNames.BARREL_TEXTURE, coords);
 
         setPrice(0);
         setDonatePrice(0);

@@ -137,7 +137,7 @@ public class ForkliftActorBase extends Actor {
             // Need to assign the value because of the positioning bug (to be remade)
             pjd.motorSpeed = -1;
             pjd.enableLimit = true;
-            pjd.upperTranslation = (i+1) * (1.5f * model.getTubeSize()[1]); // Limit of movement based on length of the tube
+            pjd.upperTranslation = (i+1) * (1.6f * model.getTubeSize()[1]); // Limit of movement based on length of the tube
 
             pjd.bodyA = forklift;
             pjd.bodyB = forkliftTubes[i];
@@ -310,7 +310,8 @@ public class ForkliftActorBase extends Actor {
 
         //Fuel burning speed
         if (fuelTank > 0){
-            fuelTank -= 1f * delta;
+//            fuelTank -= 1f * delta;
+            fuelTank -= 0f * delta;
         }
 
     }

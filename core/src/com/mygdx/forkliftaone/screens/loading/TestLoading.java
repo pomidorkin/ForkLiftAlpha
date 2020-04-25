@@ -17,7 +17,10 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.forkliftaone.ForkLiftGame;
 import com.mygdx.forkliftaone.screens.menu.MenuScreen;
 import com.mygdx.forkliftaone.screens.tests.LayoutTestScreen;
+import com.mygdx.forkliftaone.screens.tutorial.TutorialScreen;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
+import com.mygdx.forkliftaone.utils.Inventory;
+import com.mygdx.forkliftaone.utils.ProcessInventoryImproved;
 
 public class TestLoading extends ScreenAdapter {
     // == attributes ==
@@ -30,6 +33,9 @@ public class TestLoading extends ScreenAdapter {
     private final ForkLiftGame game;
     private final AssetManager assetManager;
 
+    ProcessInventoryImproved pi = new ProcessInventoryImproved();
+    private Inventory inv;
+
     private Skin skin;
     private Table table;
     private ProgressBar pb;
@@ -41,6 +47,7 @@ public class TestLoading extends ScreenAdapter {
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage = new Stage(viewport, game.getBatch());
         assetManager = game.getAssetManager();
+        inv = pi.read();
     }
 
     @Override
@@ -78,7 +85,15 @@ public class TestLoading extends ScreenAdapter {
         stage.draw();
 
         if(changeScreen) {
-            game.setScreen(new MenuScreen(game));
+
+            // Проверять на прохождение туториала
+            if (!inv.isTutorialPassed()){
+                game.setScreen(new TutorialScreen(game));
+            } else {
+                game.setScreen(new MenuScreen(game));
+            }
+
+
 //            game.setScreen(new LayoutTestScreen(game)); // Testing lining up & layout
         }
     }

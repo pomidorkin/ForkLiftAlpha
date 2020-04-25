@@ -114,7 +114,8 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
         // Spawn middle goods
         for (Vector2 coord : boxCoords[2]) {
-            stage.addActor(factory.getBox(world, assetManager, camera, atlas, coord));
+//            stage.addActor(factory.getBox(world, assetManager, camera, atlas, coord));
+            stage.addActor(factory.getSpecialBox(world, assetManager, camera, atlas, coord));
         }
 
         // Spawn expensive goods

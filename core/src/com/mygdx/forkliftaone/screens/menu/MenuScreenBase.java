@@ -21,12 +21,12 @@ public abstract class MenuScreenBase extends ScreenAdapter {
     protected final ForkLiftGame game;
     protected final AssetManager assetManager;
 
-    private Viewport viewport;
+    protected Viewport viewport;
     private Stage stage;
-    private SpriteBatch batch;
-    private OrthographicCamera uiCamera;
+    protected SpriteBatch batch;
+    protected OrthographicCamera uiCamera;
 
-    TextureRegion backgoundRegion;
+    protected TextureRegion backgoundRegion;
 
     float width = Gdx.graphics.getWidth();
     float height = Gdx.graphics.getHeight();
@@ -66,7 +66,7 @@ public abstract class MenuScreenBase extends ScreenAdapter {
         stage.draw();
     }
 
-    private void draw(){
+    public void draw(){
         batch.setProjectionMatrix(uiCamera.combined);
         batch.begin();
         batch.draw(backgoundRegion, 0,0,

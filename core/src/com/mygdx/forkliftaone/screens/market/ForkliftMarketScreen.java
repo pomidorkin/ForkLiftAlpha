@@ -239,7 +239,7 @@ public class ForkliftMarketScreen extends ScreenAdapter {
 
                             // Saving
                             Inventory inv2 = new Inventory(inv.getBalance(),
-                                    inv.getDonateCurrency(), inv.isDonateBoxesPurchased(),
+                                    inv.getDonateCurrency(), inv.isDonateBoxesPurchased(), inv.isTutorialPassed(),
                                     inv.getAllModels(), inv.getAllMaps(), inv.getSd());
                             pi.write(inv2);
 
@@ -268,7 +268,7 @@ public class ForkliftMarketScreen extends ScreenAdapter {
 
                             // Saving
                             Inventory inv2 = new Inventory(inv.getBalance(),
-                                    inv.getDonateCurrency(), inv.isDonateBoxesPurchased(),
+                                    inv.getDonateCurrency(), inv.isDonateBoxesPurchased(), inv.isTutorialPassed(),
                                     inv.getAllModels(), inv.getAllMaps(), inv.getSd());
                             pi.write(inv2);
 

@@ -358,7 +358,8 @@ public class ForkliftModel {
 
                 tubeSize = new float[2];
                 tubeSize[0] = 0.032f;
-                tubeSize[1] = 0.5f;
+//                tubeSize[1] = 0.5f;
+                tubeSize[1] = 1.0f;
 
                 rearWheelRadius = 0.4f;
                 frontWheelRadius = 0.45f;

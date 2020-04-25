@@ -231,7 +231,7 @@ public class MapMarketScreen extends ScreenAdapter {
                             inv.getAllMaps().add(mapData);
 
                             // Saving
-                            Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency(),
+                            Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency(), inv.isTutorialPassed(),
                                     inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps(), inv.getSd());
                             pi.write(inv2);
 
@@ -255,7 +255,7 @@ public class MapMarketScreen extends ScreenAdapter {
                             inv.getAllMaps().add(mapData);
 
                             // Saving
-                            Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency(),
+                            Inventory inv2 = new Inventory(inv.getBalance(), inv.getDonateCurrency(), inv.isTutorialPassed(),
                                     inv.isDonateBoxesPurchased(), inv.getAllModels(), inv.getAllMaps(), inv.getSd());
                             pi.write(inv2);
 
