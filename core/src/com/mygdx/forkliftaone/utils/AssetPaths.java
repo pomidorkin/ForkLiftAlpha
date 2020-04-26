@@ -14,4 +14,7 @@ public class AssetPaths {
     public static final String TEST_ENGINE_SOUND = "engineSounds.wav";
     public static final String BACKUP_SOUND = "backup.wav";
     public static final String IDLE_ENGINE = "idle.wav";
+    public static final String BREAK_SOUND = "break.wav";
+    public static final String SERVO_SOUND = "servo.wav";
+    public static final String FILLING_SOUND = "fill.wav";
 }

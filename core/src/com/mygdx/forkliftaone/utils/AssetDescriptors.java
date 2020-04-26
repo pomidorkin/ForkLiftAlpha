@@ -38,4 +38,13 @@ public class AssetDescriptors {
     public static final AssetDescriptor<Sound> IDLE_ENGINE =
             new AssetDescriptor<Sound>(AssetPaths.IDLE_ENGINE, Sound.class);
 
+    public static final AssetDescriptor<Sound> BREAK_SOUND =
+            new AssetDescriptor<Sound>(AssetPaths.BREAK_SOUND, Sound.class);
+
+    public static final AssetDescriptor<Sound> SERVO_SOUND =
+            new AssetDescriptor<Sound>(AssetPaths.SERVO_SOUND, Sound.class);
+
+    public static final AssetDescriptor<Sound> FILLING_SOUND =
+            new AssetDescriptor<Sound>(AssetPaths.FILLING_SOUND, Sound.class);
+
 }

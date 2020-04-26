@@ -146,6 +146,9 @@ public class TestLoading extends ScreenAdapter {
         assetManager.load(AssetDescriptors.TEST_ENGINE);
         assetManager.load(AssetDescriptors.IDLE_ENGINE);
         assetManager.load(AssetDescriptors.BACKUP_SOUND);
+        assetManager.load(AssetDescriptors.BREAK_SOUND);
+        assetManager.load(AssetDescriptors.FILLING_SOUND);
+        assetManager.load(AssetDescriptors.SERVO_SOUND);
         assetManager.finishLoading();//?
     }
 }

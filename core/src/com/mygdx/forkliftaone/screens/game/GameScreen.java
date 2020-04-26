@@ -80,10 +80,11 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
 
     //Music
     private Music music;
-    private Sound engineSound, idleSound, beepingSound;
-    private long soundID, beepSoundID, idleSoundID;
+    private Sound engineSound, idleSound, beepingSound, servoSound, fillingSound;
+    private long soundID, beepSoundID, idleSoundID, servoSoundID, fillingSoundID;
     private boolean paused = false;
     private boolean reversePaused = false;
+    private boolean servoPaused = false;
 
 
     //test
@@ -144,16 +145,22 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         music = assetManager.get(AssetDescriptors.TEST_MUSIC);
         engineSound = assetManager.get(AssetDescriptors.TEST_ENGINE);
         beepingSound = assetManager.get(AssetDescriptors.BACKUP_SOUND);
+        servoSound = assetManager.get(AssetDescriptors.SERVO_SOUND);
+        fillingSound = assetManager.get(AssetDescriptors.FILLING_SOUND);
         idleSound = assetManager.get(AssetDescriptors.IDLE_ENGINE); // Should be changed to the idle sound
         soundID = engineSound.loop();
         beepSoundID = beepingSound.loop();
         idleSoundID = idleSound.loop();
+        servoSoundID = servoSound.loop();
         engineSound.pause(soundID);
         beepingSound.pause(beepSoundID);
         idleSound.pause(idleSoundID);
+        servoSound.pause(servoSoundID);
         engineSound.setVolume(soundID, inv.getSd().getSoundVolume());
         beepingSound.setVolume(beepSoundID, inv.getSd().getSoundVolume());
         idleSound.setVolume(idleSoundID, inv.getSd().getSoundVolume());
+        servoSound.setVolume(servoSoundID, inv.getSd().getSoundVolume());
+        fillingSound.setVolume(fillingSoundID, inv.getSd().getSoundVolume());
         paused = true;
         reversePaused = true;
         music.play();
@@ -362,6 +369,8 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         engineSound.stop();
         idleSound.stop();
         beepingSound.stop();
+        servoSound.stop();
+        fillingSound.stop();
 
         dispose();
     }
@@ -496,21 +505,21 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
             public void changed(ChangeEvent event, Actor actor) {
                 if (rightTouchpad.getKnobY() < rightTouchpad.getHeight() / 2) {
                     forklift.moveTubeDown();
-                    if (paused){
-                        engineSound.resume(soundID);
-                        paused = false;
+                    if (servoPaused){
+                        servoSound.resume(servoSoundID);
+                        servoPaused = false;
                     }
                 } else if (rightTouchpad.getKnobY() > rightTouchpad.getHeight() / 2) {
                     forklift.moveTubeUp();
-                    if (paused){
-                        engineSound.resume(soundID);
-                        paused = false;
+                    if (servoPaused){
+                        servoSound.resume(servoSoundID);
+                        servoPaused = false;
                     }
                 } else {
                     forklift.stopMoveTubeUp();
-                    if (!paused){
-                        engineSound.pause(soundID);
-                        paused = true;
+                    if (!servoPaused){
+                        servoSound.pause(servoSoundID);
+                        servoPaused = true;
                     }
                 }
 
@@ -564,6 +573,8 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
                         ((FuelCan) can).detroyBox();
                     }
                 }
+
+                fillingSound.play();
 
             }
         });

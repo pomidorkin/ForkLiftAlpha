@@ -49,7 +49,7 @@ public abstract class BoxBase extends Actor {
         this.boxWidth = boxWidth;
         this.boxHeight = boxHeight;
         this.assetManager = assetManager;
-        this.breakingSound = assetManager.get(AssetDescriptors.TEST_ENGINE); // Should be replaced with the breaking sound
+        this.breakingSound = assetManager.get(AssetDescriptors.BREAK_SOUND); // Should be replaced with the breaking sound
 
         this.type = type;
         this.body = createBox(type);
@@ -62,7 +62,7 @@ public abstract class BoxBase extends Actor {
         this.birdTexture = atlas.findRegion(RegionNames.BIRD_TEXTURE);
         this.cageTexture = atlas.findRegion(RegionNames.CAGE_TEXTURE);
 
-        breakingSound = assetManager.get(AssetDescriptors.TEST_ENGINE); // Replace with the breaking sound
+        breakingSound = assetManager.get(AssetDescriptors.BREAK_SOUND); // Replace with the breaking sound
     }
 
     enum BOX_TYPE{
