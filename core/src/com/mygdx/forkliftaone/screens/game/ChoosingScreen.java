@@ -62,7 +62,7 @@ public class ChoosingScreen extends ScreenAdapter {
     private ForkliftData forkliftData;
     private MapData mapData;
     private Inventory inv;
-    private TextureRegion coinTexture;
+    private TextureRegion coinTexture, gemTexture;
 
     private SpriteBatch batch;
     TextureRegion backgoundRegion;
@@ -122,6 +122,7 @@ public class ChoosingScreen extends ScreenAdapter {
         font.getData().setScale(1f);
 //        font.getData().setScale(height / (800/ratio));
         coinTexture = gamePlayAtlas.findRegion(RegionNames.COIN_TEXTURE);
+        gemTexture = gamePlayAtlas.findRegion(RegionNames.GEM_TEXTURE);
 
 
 //        MapData mapData = new MapData();
@@ -357,6 +358,14 @@ public class ChoosingScreen extends ScreenAdapter {
         // Drawing coin image
         batch.draw(coinTexture, // Texture
                 10f, 1200/ratio - 1200/ratio / 10f - 10f, // Texture position
+                coinTexture.getRegionWidth() / 2, coinTexture.getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
+                1200/ratio / 10f, 1200/ratio / 10f, // Width and height of the texture
+                1f, 1f, //scaling
+                0); // Rotation (radiants to degrees)
+
+        // Drawing gem image
+        batch.draw(gemTexture, // Texture
+                10f, 1200/ratio - ((1200/ratio / 10f - 10f) + coinTexture.getRegionHeight() * 1.5f), // Texture position
                 coinTexture.getRegionWidth() / 2, coinTexture.getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
                 1200/ratio / 10f, 1200/ratio / 10f, // Width and height of the texture
                 1f, 1f, //scaling

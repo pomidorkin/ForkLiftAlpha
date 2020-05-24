@@ -57,7 +57,7 @@ public class MapMarketScreen extends ScreenAdapter {
 
     private final GlyphLayout layout = new GlyphLayout();
     private BitmapFont font;
-    private TextureRegion coinTexture;
+    private TextureRegion coinTexture, gemTexture;
 
     private List<MapData> unpurchasedMaps;
 
@@ -106,6 +106,7 @@ public class MapMarketScreen extends ScreenAdapter {
         font = assetManager.get(AssetDescriptors.FONT);
         font.getData().setScale(1f);
         coinTexture = gamePlayAtlas.findRegion(RegionNames.COIN_TEXTURE);
+        gemTexture = gamePlayAtlas.findRegion(RegionNames.GEM_TEXTURE);
 
         if (unpurchasedMaps.size() <= 0) {
             mapModel = null;
@@ -342,7 +343,7 @@ public class MapMarketScreen extends ScreenAdapter {
         font.draw(batch, layout, (1200/ratio / 10f) * 1.5f, 1200/ratio - 1200/ratio  / 10f / 2);
 
         // draw gems
-        String donate = "Gems: " + inv.getDonateCurrency();
+        String donate = "" + inv.getDonateCurrency();
         layout.setText(font, donate);
         font.draw(batch, layout,
                 (1200/ratio / 10f) * 1.5f,
@@ -352,6 +353,14 @@ public class MapMarketScreen extends ScreenAdapter {
         // Drawing coin image
         batch.draw(coinTexture, // Texture
                 10f, 1200/ratio - 1200/ratio / 10f - 10f, // Texture position
+                coinTexture.getRegionWidth() / 2, coinTexture.getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
+                1200/ratio / 10f, 1200/ratio / 10f, // Width and height of the texture
+                1f, 1f, //scaling
+                0); // Rotation (radiants to degrees)
+
+        // Drawing gem image
+        batch.draw(gemTexture, // Texture
+                10f, 1200/ratio - ((1200/ratio / 10f - 10f) + coinTexture.getRegionHeight() * 1.5f), // Texture position
                 coinTexture.getRegionWidth() / 2, coinTexture.getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
                 1200/ratio / 10f, 1200/ratio / 10f, // Width and height of the texture
                 1f, 1f, //scaling

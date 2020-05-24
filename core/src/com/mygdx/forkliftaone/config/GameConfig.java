@@ -7,8 +7,8 @@ public class GameConfig {
     private GameConfig() {
     }
 
-    public static final float WIDTH = 1200f; // pixels
-    public static final float HEIGHT = 800f; // pixels
+    public static final float WIDTH = 1200; // pixels
+    public static final float HEIGHT = 800; // pixels
 //    public static final float WIDTH = (Gdx.graphics.getWidth());
 //    public static final float HEIGHT = (Gdx.graphics.getHeight());
 
