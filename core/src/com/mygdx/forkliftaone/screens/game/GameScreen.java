@@ -129,12 +129,13 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         // Initializing UI
         uiCamera = new OrthographicCamera();
         dynamicCamera = new OrthographicCamera();
-        uiViewport = new FitViewport(800, 800/ratio, uiCamera);
+//        uiViewport = new FitViewport(800, 800/ratio, uiCamera);
+        uiViewport = new FitViewport(1200, 1200/ratio, uiCamera);
         dynamicViewport = new FitViewport(width, height, dynamicCamera);
 //        uiViewport = new FitViewport(width, height, uiCamera);
         font = assetManager.get(AssetDescriptors.FONT);
 //        font.getData().setScale(height / 480f); // Should be fixed
-        font.getData().setScale(height / (800/ratio));
+        font.getData().setScale(height / (1200/ratio));
 //        shapeRenderer = new ShapeRenderer();
         uiStage = new Stage(uiViewport, game.getBatch());
 
@@ -451,7 +452,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
                 menuDialog.show(uiStage);
                 menuDialog.setWidth(1200/2);
                 menuDialog.setHeight(1200/ratio/2);
-                menuDialog.setPosition(800/2f - (menuDialog.getWidth()/2), 800/ratio/2f - (menuDialog.getHeight()/2));
+                menuDialog.setPosition(1200/2f - (menuDialog.getWidth()/2), 1200/ratio/2f - (menuDialog.getHeight()/2));
                 menuDialog.setMovable(false);
             }
         });
@@ -462,14 +463,14 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         // The size of the fuel icon can be changed here
 //        table.add(bar).width(Gdx.graphics.getWidth() / 8).height(10f);
 
-        table.add().height(800/ratio/3 - 50);// Adding an empty column (Empty cell)
-        table.add(bar).top().width((800 - (800 / ratio /3) * 2f) / 4f);
-        table.add(menuButton).width(800/ratio/6).height(800/ratio/6).right().top();
+        table.add().height(1200/ratio/3 - 50);// Adding an empty column (Empty cell)
+        table.add(bar).top().width((1200 - (1200 / ratio /3) * 2f) / 4f);
+        table.add(menuButton).width(1200/ratio/6).height(1200/ratio/6).right().top();
         table.row();
-        table.add().width(800/5).height(800/ratio/3);
+        table.add().width(1200/5f).height(1200/ratio/3);
 //        table.add().width((800/5) * 3f  - 50).height(800/ratio/3);
-        table.add().width((800 - ((800 / ratio /3) * 2f)) - 100f);
-        table.add().width(800/5).height(800/ratio/3);
+        table.add().width((1200 - ((1200 / ratio /3) * 2f)) - 100f);
+        table.add().width(1200/5f).height(1200/ratio/3);
         table.row();
 
         // Touchpad test
@@ -558,9 +559,19 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         });
 
 
-        table.add(touchpad).height(800/ratio/3).width(800/ratio/3);
+//        table.add(touchpad).height(1200/ratio/3).width(1200/ratio/3);
+//        table.add();
+//        table.add(rightTouchpad).height(1200/ratio/3).width(1200/ratio/3);
+//        table.row();
+
+
+        table.add().height(1200/ratio/12).width(1200/ratio/12);
         table.add();
-        table.add(rightTouchpad).height(800/ratio/3).width(800/ratio/3);
+        table.add().height(1200/ratio/12).width(1200/ratio/12);
+        table.row();
+        table.add(touchpad).height(1200/ratio/4).width(1200/ratio/4);
+        table.add();
+        table.add(rightTouchpad).height(1200/ratio/4).width(1200/ratio/4);
         table.row();
 
         // Debug enabled
@@ -610,17 +621,17 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
             }
         });
 
-        localTable.add().height(800/ratio/3 - 50);// Adding an empty column (Empty cell)
-        localTable.add().width((800 - ((800 / ratio /3) * 2f)) - 100f);
-        localTable.add().width(800/5);
+        localTable.add().height(1200/ratio/3 - 50);// Adding an empty column (Empty cell)
+        localTable.add().width((1200 - ((1200 / ratio /3) * 2f)) - 100f);
+        localTable.add().width(1200/5f);
         localTable.row();
-        localTable.add(fuelButton).width(800/ratio/6).height(800/ratio/6).left();
-        localTable.add().width((800 - ((800 / ratio /3) * 2f)) - 100f);
-        localTable.add().width(800/5).height(800/ratio/3);
+        localTable.add(fuelButton).width(1200/ratio/6).height(1200/ratio/6).left();
+        localTable.add().width((1200 - ((1200 / ratio /3) * 2f)) - 100f);
+        localTable.add().width(1200/5f).height(800/ratio/3);
         localTable.row();
-        localTable.add().height(800/ratio/3).width(800/ratio/3);
+        localTable.add().height(1200/ratio/3).width(1200/ratio/3);
         localTable.add();
-        localTable.add().height(800/ratio/3).width(800/ratio/3);
+        localTable.add().height(1200/ratio/3).width(1200/ratio/3);
 
         localTable.debug();
 

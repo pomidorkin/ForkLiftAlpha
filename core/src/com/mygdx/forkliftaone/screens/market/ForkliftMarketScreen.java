@@ -362,32 +362,62 @@ public class ForkliftMarketScreen extends ScreenAdapter {
 
 
         // draw balance
+//        String balanceText = "" + inv.getBalance();
+//        layout.setText(font, balanceText);
+////        font.draw(batch, layout, (uiViewport.getScreenHeight() / 10f) * 1.5f, height - uiViewport.getScreenHeight() / 10f / 2);
+//        font.draw(batch, layout, (1200 / ratio / 10f) * 1.5f, 1200 / ratio - 1200 / ratio / 10f / 2);
+//
+//        // draw gems
+//        String donate = "" + inv.getDonateCurrency();
+//        layout.setText(font, donate);
+//        font.draw(batch, layout,
+//                (1200 / ratio / 10f) * 1.5f,
+//                1200 / ratio - 1200 / ratio / 6f
+//        );
+
+        // draw balance
         String balanceText = "" + inv.getBalance();
         layout.setText(font, balanceText);
 //        font.draw(batch, layout, (uiViewport.getScreenHeight() / 10f) * 1.5f, height - uiViewport.getScreenHeight() / 10f / 2);
-        font.draw(batch, layout, (1200 / ratio / 10f) * 1.5f, 1200 / ratio - 1200 / ratio / 10f / 2);
+        font.draw(batch, layout, (height  / 10f) * 1.5f, height - height / 10f - (height / 20f) + ((height / 10f) * 0.70f));
 
         // draw gems
         String donate = "" + inv.getDonateCurrency();
         layout.setText(font, donate);
         font.draw(batch, layout,
-                (1200 / ratio / 10f) * 1.5f,
-                1200 / ratio - 1200 / ratio / 6f
+                (height  / 10f) * 1.5f,
+                height - ((height / 10f - (height / 20f)) + height / 10f * 2.1f)  + ((height / 10f) * 0.70f)
         );
 
         // Drawing coin image
+//        batch.draw(coinTexture, // Texture
+//                10f, 1200 / ratio - 1200 / ratio / 10f - 10f, // Texture position
+//                coinTexture.getRegionWidth() / 2, coinTexture.getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
+//                1200 / ratio / 10f, 1200 / ratio / 10f, // Width and height of the texture
+//                1f, 1f, //scaling
+//                0); // Rotation (radiants to degrees)
+//
+//        // Drawing gem image
+//        batch.draw(gemTexture, // Texture
+//                10f, 1200/ratio - ((1200/ratio / 10f - 10f) + coinTexture.getRegionHeight() * 1.5f), // Texture position
+//                coinTexture.getRegionWidth() / 2, coinTexture.getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
+//                1200/ratio / 10f, 1200/ratio / 10f, // Width and height of the texture
+//                1f, 1f, //scaling
+//                0); // Rotation (radiants to degrees)
+
+        // Drawing coin image
         batch.draw(coinTexture, // Texture
-                10f, 1200 / ratio - 1200 / ratio / 10f - 10f, // Texture position
+                10f, height - height / 10f - (height / 20f), // Texture position
                 coinTexture.getRegionWidth() / 2, coinTexture.getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
-                1200 / ratio / 10f, 1200 / ratio / 10f, // Width and height of the texture
+                height / 10f, height / 10f, // Width and height of the texture
                 1f, 1f, //scaling
                 0); // Rotation (radiants to degrees)
 
         // Drawing gem image
         batch.draw(gemTexture, // Texture
-                10f, 1200/ratio - ((1200/ratio / 10f - 10f) + coinTexture.getRegionHeight() * 1.5f), // Texture position
+                10f, height - ((height / 10f - (height / 20f)) + height / 10f * 2.1f), // Texture position
                 coinTexture.getRegionWidth() / 2, coinTexture.getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
-                1200/ratio / 10f, 1200/ratio / 10f, // Width and height of the texture
+                height / 10f, height / 10f, // Width and height of the texture
                 1f, 1f, //scaling
                 0); // Rotation (radiants to degrees)
 
