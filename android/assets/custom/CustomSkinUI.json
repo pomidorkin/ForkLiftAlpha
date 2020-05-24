@@ -1,5 +1,8 @@
 {
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	good_times: {
+		file: good times.fnt
+	}
 	myfont: {
 		file: myfont.fnt
 	}
@@ -9,6 +12,12 @@ com.badlogic.gdx.graphics.Color: {
 		r: 1
 		g: 0
 		b: 0
+		a: 1
+	}
+	RGBA_255_190_45_255: {
+		r: 1
+		g: 0.74509805
+		b: 0.1764706
 		a: 1
 	}
 	RGBA_255_255_255_255: {
@@ -306,6 +315,7 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
 		font: myfont
+		fontColor: RGBA_255_190_45_255
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
@@ -358,7 +368,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
 		background: dialogPached
-		titleFont: myfont
+		titleFont: good_times
+		titleFontColor: RGBA_255_190_45_255
 	}
 }
 }

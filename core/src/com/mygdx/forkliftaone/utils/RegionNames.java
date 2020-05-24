@@ -31,4 +31,5 @@ public class RegionNames {
     public static final String BIRD_TEXTURE = "canary1";
     public static final String BARREL_TEXTURE = "barrel";
     public static final String CAGE_TEXTURE = "cage";
+    public static final String GEM_TEXTURE = "gem";
 }

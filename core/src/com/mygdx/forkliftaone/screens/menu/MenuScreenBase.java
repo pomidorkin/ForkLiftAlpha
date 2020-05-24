@@ -87,6 +87,7 @@ public abstract class MenuScreenBase extends ScreenAdapter {
     @Override
     public void dispose() {
         stage.dispose();
+//        batch.dispose();
     }
 
 }

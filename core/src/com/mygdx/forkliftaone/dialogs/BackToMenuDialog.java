@@ -2,6 +2,7 @@ package com.mygdx.forkliftaone.dialogs;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.forkliftaone.ForkLiftGame;
 import com.mygdx.forkliftaone.maps.MapBase;
@@ -18,6 +19,8 @@ public class BackToMenuDialog extends Dialog {
     Inventory inv;
     MapBase map;
 
+//     Skin skin;
+
     float width = Gdx.graphics.getWidth();
     float height = Gdx.graphics.getHeight();
     float ratio = width / height;
@@ -28,6 +31,8 @@ public class BackToMenuDialog extends Dialog {
         this.gs = gs;
         this.inv = pi.read();
         this.map = map;
+
+//        this.skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
     }
 
 //    {
@@ -45,6 +50,7 @@ public class BackToMenuDialog extends Dialog {
     {
         add().height(((1200 / ratio / 2f) / 3f));
         text("Do you want to go back to the menu?");
+//        text("Do you want to go back to the menu?", skin.get(Label.LabelStyle.class));
         row();
         button("Menu", 1);
         button("Continue", 2);

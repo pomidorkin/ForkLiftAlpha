@@ -76,7 +76,7 @@ public class GameScreen extends ScreenAdapter implements InputProcessor {
     private Table table;
     private Skin skin;
     private ImageButton fuelButton;
-    private TextureRegion coinTexture;
+    private TextureRegion coinTexture, gemTexture;
 
     //Music
     private Music music;
@@ -194,6 +194,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 //        TextureRegion wheelRegion = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
 //        TextureRegion backgoundRegion = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
         this.coinTexture = gamePlayAtlas.findRegion(RegionNames.COIN_TEXTURE);
+        this.gemTexture = gamePlayAtlas.findRegion(RegionNames.GEM_TEXTURE);
 
 //        map = new TestMap(world, camera, stage, gamePlayAtlas);
 //        map = new CustomTestMap(world, camera, stage, gamePlayAtlas);
@@ -324,7 +325,7 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
 
 
         // draw gems
-        String donate = "Gems: " + inv.getDonateCurrency() + " +" + scl.getDonateSalary();
+        String donate = inv.getDonateCurrency() + " +" + scl.getDonateSalary();
         layout.setText(font, donate);
         font.draw(batch, layout,
                 (dynamicViewport.getScreenHeight() / 10f) * 1.5f,
@@ -338,15 +339,15 @@ ProcessInventoryImproved pi = new ProcessInventoryImproved();
         batch.draw(coinTexture, // Texture
                 10f, height - dynamicViewport.getScreenHeight() / 10f - 10f, // Texture position
                 coinTexture.getRegionWidth() / 2, coinTexture.getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
-                height / 10f, height / 10f, // Width and height of the texture
+                height / 11f, height / 11f, // Width and height of the texture
                 1f, 1f, //scaling
                 0); // Rotation (radiants to degrees)
 
         // Drawing gem image
-        batch.draw(coinTexture, // Texture
+        batch.draw(gemTexture, // Texture
                 10f, height - (dynamicViewport.getScreenHeight() / 6f + coinTexture.getRegionHeight() / 2f), // Texture position
                 coinTexture.getRegionWidth() / 2, coinTexture.getRegionHeight() / 2, // Rotation point (width / 2, height /2 = center)
-                height / 10f, height / 10f, // Width and height of the texture
+                height / 11f, height / 11f, // Width and height of the texture
                 1f, 1f, //scaling
                 0); // Rotation (radiants to degrees)
 

@@ -6,6 +6,9 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
@@ -21,6 +24,7 @@ import com.mygdx.forkliftaone.screens.tutorial.TutorialScreen;
 import com.mygdx.forkliftaone.utils.AssetDescriptors;
 import com.mygdx.forkliftaone.utils.Inventory;
 import com.mygdx.forkliftaone.utils.ProcessInventoryImproved;
+import com.mygdx.forkliftaone.utils.RegionNames;
 
 public class TestLoading extends ScreenAdapter {
     // == attributes ==
@@ -29,6 +33,10 @@ public class TestLoading extends ScreenAdapter {
     private float progress;
     private float waitTime = 0.75f;
     private boolean changeScreen;
+
+    protected SpriteBatch batch;
+    protected Texture backgoundRegion;
+    protected OrthographicCamera uiCamera;
 
     private final ForkLiftGame game;
     private final AssetManager assetManager;
@@ -41,10 +49,17 @@ public class TestLoading extends ScreenAdapter {
     private ProgressBar pb;
     private Stage stage;
 
+    float width = Gdx.graphics.getWidth();
+    float height = Gdx.graphics.getHeight();
+    float ratio = width / height;
+
     // == constructors ==
     public TestLoading(ForkLiftGame game) {
         this.game = game;
-        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        this.batch = game.getBatch();
+//        viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        uiCamera = new OrthographicCamera();
+        viewport = new FitViewport(1200, 1200/ratio, uiCamera);
         stage = new Stage(viewport, game.getBatch());
         assetManager = game.getAssetManager();
         inv = pi.read();
@@ -54,10 +69,15 @@ public class TestLoading extends ScreenAdapter {
     public void show() {
 
 //        skin = new Skin(Gdx.files.internal("neon/neon-ui.json"));
-        skin = new Skin(Gdx.files.internal("freezing/freezing-ui.json"));
+//        skin = new Skin(Gdx.files.internal("freezing/freezing-ui.json"));
+        skin = new Skin(Gdx.files.internal("custom/CustomSkinUI.json"));
+
+
+        backgoundRegion = new Texture(Gdx.files.internal("upacked/background.png"));
 
         // How to access different fields within the json class
-        pb = new ProgressBar(0.0f, Gdx.graphics.getWidth()/2, 0.01f, false, skin.get("fancy", ProgressBar.ProgressBarStyle.class));
+//        pb = new ProgressBar(0.0f, Gdx.graphics.getWidth()/2, 0.01f, false, skin.get("fancy", ProgressBar.ProgressBarStyle.class));
+        pb = new ProgressBar(0.0f, Gdx.graphics.getWidth()/2, 0.01f, false, skin);
 
 //        pb.setAnimateDuration(0.25f);
 
@@ -81,6 +101,8 @@ public class TestLoading extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         viewport.apply();
 
+        draw();
+
         pb.setValue(assetManager.getProgress() * Gdx.graphics.getWidth()/2);
         stage.draw();
 
@@ -98,6 +120,14 @@ public class TestLoading extends ScreenAdapter {
         }
     }
 
+    public void draw(){
+        batch.setProjectionMatrix(uiCamera.combined);
+        batch.begin();
+        batch.draw(backgoundRegion, 0,0,
+                viewport.getWorldWidth(), viewport.getWorldHeight());
+        batch.end();
+    }
+
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
@@ -113,6 +143,8 @@ public class TestLoading extends ScreenAdapter {
     public void dispose() {
         stage.dispose();
         skin.dispose();
+        backgoundRegion.dispose();
+//        batch.dispose();
     }
 
     // == private methods ==

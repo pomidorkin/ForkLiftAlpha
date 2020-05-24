@@ -322,8 +322,10 @@ public class ForkliftActorBase extends Actor {
 
     public void moveForkliftRight(){
         System.out.println("Key D is pressed");
-        //Movement logic
-        frontWheelJoint.setMotorSpeed(-1.3f/model.getFrontWheelRadius());
+        //Movement logic with interpolation
+//        frontWheelJoint.setMotorSpeed(-1.3f/model.getFrontWheelRadius());
+        float motorSpeed = (-1.3f/model.getFrontWheelRadius());
+        frontWheelJoint.setMotorSpeed(frontWheelJoint.getMotorSpeed() + ( motorSpeed - frontWheelJoint.getMotorSpeed()) * 0.025f);
     }
 
     public void moveForkliftLeft(){

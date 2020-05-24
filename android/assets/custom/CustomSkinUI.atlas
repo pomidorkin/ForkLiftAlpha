@@ -4,156 +4,163 @@ size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+good times
+  rotate: false
+  xy: 1, 403
+  size: 505, 78
+  orig: 505, 78
+  offset: 0, 0
+  index: -1
 cannisterButton
   rotate: false
-  xy: 947, 922
+  xy: 623, 454
   size: 75, 98
   orig: 75, 98
   offset: 0, 0
   index: -1
 dialog
   rotate: false
-  xy: 1, 195
+  xy: 515, 684
   size: 326, 239
   orig: 326, 239
   offset: 0, 0
   index: -1
 dollarButton
   rotate: false
-  xy: 515, 820
+  xy: 1, 201
   size: 145, 98
   orig: 145, 98
   offset: 0, 0
   index: -1
 dollarButtonPushed
   rotate: false
-  xy: 515, 720
+  xy: 1, 101
   size: 145, 98
   orig: 145, 98
   offset: 0, 0
   index: -1
 gemButton
   rotate: false
-  xy: 1, 65
+  xy: 515, 554
   size: 145, 98
   orig: 145, 98
   offset: 0, 0
   index: -1
 gemButtonPushed
   rotate: false
-  xy: 515, 620
+  xy: 1, 1
   size: 145, 98
   orig: 145, 98
   offset: 0, 0
   index: -1
 leftButton
   rotate: false
-  xy: 437, 352
+  xy: 433, 323
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 leftButtonPushed
   rotate: false
-  xy: 437, 272
+  xy: 148, 221
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 pause
   rotate: false
-  xy: 329, 236
+  xy: 515, 454
   size: 106, 98
   orig: 106, 98
   offset: 0, 0
   index: -1
 pausePushed
   rotate: false
-  xy: 329, 136
+  xy: 508, 354
   size: 106, 98
   orig: 106, 98
   offset: 0, 0
   index: -1
 rightsButton
   rotate: false
-  xy: 437, 192
+  xy: 148, 141
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 rightsButtonPushed
   rotate: false
-  xy: 623, 540
+  xy: 148, 61
   size: 61, 78
   orig: 61, 78
   offset: 0, 0
   index: -1
 squereBackground
   rotate: false
-  xy: 1, 436
+  xy: 515, 925
   size: 449, 70
   orig: 449, 70
   offset: 0, 0
   index: -1
 squereBackgroundSmall
   rotate: false
-  xy: 515, 920
+  xy: 1, 301
   size: 180, 28
   orig: 180, 28
   offset: 0, 0
   index: -1
 squereBar
   rotate: false
-  xy: 515, 950
+  xy: 1, 331
   size: 430, 70
   orig: 430, 70
   offset: 0, 0
   index: -1
 squereBarSmall
   rotate: false
-  xy: 1, 165
+  xy: 515, 654
   size: 180, 28
   orig: 180, 28
   offset: 0, 0
   index: -1
 squereSlider
   rotate: false
-  xy: 1, 29
+  xy: 966, 961
   size: 23, 34
   orig: 23, 34
   offset: 0, 0
   index: -1
 textButton
   rotate: false
-  xy: 329, 336
+  xy: 843, 825
   size: 106, 98
   orig: 106, 98
   offset: 0, 0
   index: -1
 textButtonPushed
   rotate: false
-  xy: 515, 520
+  xy: 843, 725
   size: 106, 98
   orig: 106, 98
   offset: 0, 0
   index: -1
 toucpadBackground
   rotate: false
-  xy: 452, 432
+  xy: 616, 378
   size: 74, 74
   orig: 74, 74
   offset: 0, 0
   index: -1
 toucpadKnob
   rotate: false
-  xy: 528, 444
+  xy: 843, 649
   size: 74, 74
   orig: 74, 74
   offset: 0, 0
   index: -1
 myfont
   rotate: false
-  xy: 1, 508
+  xy: 1, 483
   size: 512, 512
   orig: 512, 512
   offset: 0, 0
