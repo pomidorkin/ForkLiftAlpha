@@ -136,7 +136,8 @@ public class ChoosingScreen extends ScreenAdapter {
 //        stage.addActor(map);
         uiStage.addActor(map);
 
-        model = new ForkliftModel(forkliftData, map, gamePlayAtlas);
+//        model = new ForkliftModel(forkliftData, map, gamePlayAtlas);
+        model = new ForkliftModel(forkliftData, gamePlayAtlas);
 
         b2dr = new Box2DDebugRenderer();
         uiStage.addActor(createUi());

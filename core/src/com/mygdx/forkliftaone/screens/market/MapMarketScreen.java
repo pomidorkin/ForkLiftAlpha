@@ -113,7 +113,7 @@ public class MapMarketScreen extends ScreenAdapter {
         } else {
             mapModel = new MapModel(unpurchasedMaps.get(mapCounter).getName(), gamePlayAtlas);
         }
-        backgroundPlaceholder = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
+        backgroundPlaceholder = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
         Gdx.input.setInputProcessor(stage);
 
     }

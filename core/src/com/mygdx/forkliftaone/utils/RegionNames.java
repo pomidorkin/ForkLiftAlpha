@@ -12,6 +12,14 @@ public class RegionNames {
     public static final String MODEL_11 = "ModelEleven";
     public static final String MODEL_12 = "ModelTwelve";
 
+    public static final String MODEL_1_WHEELS = "model1Wheels";
+    public static final String MODEL_4_WHEELS = "model4Wheels";
+    public static final String MODEL_5_WHEELS = "model5Wheels";
+    public static final String MODEL_9_WHEELS = "model9Wheels";
+    public static final String MODEL_10_WHEELS = "model10Wheels";
+    public static final String MODEL_11_WHEELS = "model11Wheels";
+    public static final String MODEL_12_WHEELS = "model12Wheels";
+
     public static final String TRUCK_ONE = "SmallTruck";
 
     //    public static final String DOOR = "door";

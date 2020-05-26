@@ -117,7 +117,7 @@ public class ForkliftMarketScreen extends ScreenAdapter {
             model = new ForkliftModel(unpurchasedForklifts.get(counter), gamePlayAtlas);
         }
 
-        backgroundPlaceholder = gamePlayAtlas.findRegion(RegionNames.FORKLIFT_WHEEL);
+        backgroundPlaceholder = gamePlayAtlas.findRegion(RegionNames.TEST_BACKGROUND);
         Gdx.input.setInputProcessor(stage);
 
     }

@@ -134,44 +134,44 @@ filter: Nearest,Nearest
 repeat: none
 SmallTruck
   rotate: false
-  xy: 1, 773
+  xy: 1, 771
   size: 631, 243
   orig: 631, 243
   offset: 0, 0
   index: -1
 ModelEleven
   rotate: false
-  xy: 634, 720
+  xy: 634, 718
   size: 388, 296
   orig: 388, 296
   offset: 0, 0
   index: -1
-fuelCanRight
+model10Wheels
   rotate: false
-  xy: 1, 120
-  size: 460, 598
-  orig: 460, 598
+  xy: 1, 393
+  size: 628, 376
+  orig: 628, 376
+  offset: 0, 0
+  index: -1
+model9Wheels
+  rotate: false
+  xy: 1, 1
+  size: 615, 390
+  orig: 615, 390
   offset: 0, 0
   index: -1
 ModelNine
   rotate: false
-  xy: 463, 404
+  xy: 618, 77
   size: 400, 314
   orig: 400, 314
   offset: 0, 0
   index: -1
-ModelOne
+ModelFour
   rotate: false
-  xy: 463, 1
-  size: 292, 401
-  orig: 292, 401
-  offset: 0, 0
-  index: -1
-cage
-  rotate: false
-  xy: 757, 181
-  size: 262, 221
-  orig: 262, 221
+  xy: 631, 395
+  size: 335, 321
+  orig: 335, 321
   offset: 0, 0
   index: -1
 
@@ -179,30 +179,84 @@ gameAtlas4.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+fuelCanRight
+  rotate: false
+  xy: 1, 407
+  size: 460, 598
+  orig: 460, 598
+  offset: 0, 0
+  index: -1
+model1Wheels
+  rotate: false
+  xy: 463, 576
+  size: 536, 429
+  orig: 536, 429
+  offset: 0, 0
+  index: -1
+model5Wheels
+  rotate: false
+  xy: 1, 27
+  size: 599, 378
+  orig: 599, 378
+  offset: 0, 0
+  index: -1
 ModelFive
   rotate: false
-  xy: 1, 580
+  xy: 602, 224
   size: 381, 350
   orig: 381, 350
   offset: 0, 0
   index: -1
-ModelFour
+cage
   rotate: false
-  xy: 1, 257
-  size: 335, 321
-  orig: 335, 321
+  xy: 602, 1
+  size: 262, 221
+  orig: 262, 221
+  offset: 0, 0
+  index: -1
+
+gameAtlas5.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+model11Wheels
+  rotate: false
+  xy: 1, 658
+  size: 596, 341
+  orig: 596, 341
+  offset: 0, 0
+  index: -1
+model4Wheels
+  rotate: false
+  xy: 1, 302
+  size: 525, 354
+  orig: 525, 354
+  offset: 0, 0
+  index: -1
+model12Wheels
+  rotate: false
+  xy: 1, 1
+  size: 530, 299
+  orig: 530, 299
+  offset: 0, 0
+  index: -1
+ModelOne
+  rotate: false
+  xy: 599, 598
+  size: 292, 401
+  orig: 292, 401
   offset: 0, 0
   index: -1
 ModelTwelve
   rotate: false
-  xy: 384, 673
+  xy: 528, 339
   size: 327, 257
   orig: 327, 257
   offset: 0, 0
   index: -1
 gem
   rotate: false
-  xy: 1, 1
+  xy: 533, 83
   size: 292, 254
   orig: 292, 254
   offset: 0, 0
